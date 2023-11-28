@@ -7,13 +7,25 @@ class CustomWidgets {
       width: MediaQuery.of(context).size.width,
       color: AppColors.appBar,
       child: SafeArea(
-        child: Center(
-            child: Text(
-          appName,
-          style: TextStyle(
-              fontWeight: FontWeight.bold, color: AppColors.appBarTitle),
-        )),
-      ));
+          child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              appName,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold, color: AppColors.appBarTitle),
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.add),
+              style: ButtonStyle(
+                  iconColor: MaterialStateProperty.all(Colors.white)),
+            )
+          ],
+        ),
+      )));
 
   static Widget customButton(String text) {
     return TextButton(
