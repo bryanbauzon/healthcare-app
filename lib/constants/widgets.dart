@@ -14,4 +14,16 @@ class CustomWidgets {
               fontWeight: FontWeight.bold, color: AppColors.appBarTitle),
         )),
       ));
+
+  static Widget customButton(String text) {
+    return TextButton(
+      style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(Colors.cyan),
+          foregroundColor: MaterialStateProperty.all(Colors.white)),
+      onPressed: () {
+        debugPrint('Received click');
+      },
+      child: Text(text),
+    );
+  }
 }
