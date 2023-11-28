@@ -3,7 +3,7 @@ import 'package:holy_trinity_healthcare/constants/strings.dart';
 import 'package:holy_trinity_healthcare/constants/widgets.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(const MaterialApp(home: MainApp()));
 }
 
 class MainApp extends StatelessWidget {
@@ -11,13 +11,11 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-          body: Column(
-        children: [
-          CustomWidgets.customAppBar(context, StringConstants.appName),
-        ],
-      )),
-    );
+    return Scaffold(
+        body: Column(
+      children: [
+        CustomWidgets.customAppBar(context, StringConstants.appName, false),
+      ],
+    ));
   }
 }
