@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static Color appBar = Colors.cyan;
-  static Color appBarTitle = Colors.white;
+  static Color theme = Colors.cyan;
+  static Color white = Colors.white;
 }
