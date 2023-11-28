@@ -16,12 +16,19 @@ class MainApp extends StatelessWidget {
           body: Column(
         children: [
           CustomWidgets.customAppBar(context, StringConstants.appName),
-          Container(
-            color: Colors.amber,
-            child: const Center(
-              child: Text('Hello'),
-            ),
-          )
+          Expanded(
+              child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CustomWidgets.customButton(StringConstants.saveForNow),
+                        CustomWidgets.customButton(StringConstants.submit),
+                      ],
+                    ),
+                  )))
         ],
       )),
     );
