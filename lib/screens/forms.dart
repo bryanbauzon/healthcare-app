@@ -16,7 +16,7 @@ class _FormsState extends State<Forms> {
     return Scaffold(
         body: Column(
       children: [
-        CustomWidgets.customAppBar(context, StringConstants.forms, true),
+        CustomWidgets.customAppBar(context, StringConstants.formScreen, true),
         Expanded(
             child: Align(
                 alignment: Alignment.bottomCenter,
