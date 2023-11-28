@@ -1,3 +1,3 @@
-# holy_trinity_healthcare
+# Holy Trinity Healthcare
 
 A new Flutter project.
