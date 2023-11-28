@@ -1,39 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:holy_trinity_healthcare/constants/colors.dart';
 
-class CustomWidgets {
-  static Widget customAppBar(BuildContext context, String appName) => Container(
-      height: 90,
-      width: MediaQuery.of(context).size.width,
-      color: AppColors.appBar,
-      child: SafeArea(
-          child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              appName,
-              style: TextStyle(
-                  fontWeight: FontWeight.bold, color: AppColors.appBarTitle),
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.add),
-              style: ButtonStyle(
-                  iconColor: MaterialStateProperty.all(Colors.white)),
-            )
-          ],
-        ),
-      )));
+import '../screens/forms.dart';
 
-  static Widget customButton(String text) {
+class CustomWidgets {
+  static Widget customAppBar(
+          BuildContext context, String appName, bool isForm) =>
+      Container(
+          height: 90,
+          width: MediaQuery.of(context).size.width,
+          color: AppColors.theme,
+          child: SafeArea(
+              child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  appName,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: AppColors.white),
+                ),
+                !isForm
+                    ? IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Forms()));
+                        },
+                        icon: const Icon(Icons.add),
+                        style: ButtonStyle(
+                            iconColor: MaterialStateProperty.all(Colors.white)),
+                      )
+                    : Container()
+              ],
+            ),
+          )));
+
+  static Widget customButton(BuildContext context, String text) {
     return TextButton(
       style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Colors.cyan),
-          foregroundColor: MaterialStateProperty.all(Colors.white)),
+          backgroundColor: MaterialStateProperty.all(AppColors.theme),
+          foregroundColor: MaterialStateProperty.all(AppColors.white)),
       onPressed: () {
-        debugPrint('Received click');
+        Navigator.pop(context);
       },
       child: Text(text),
     );

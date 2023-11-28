@@ -16,7 +16,7 @@ class _FormsState extends State<Forms> {
     return Scaffold(
         body: Column(
       children: [
-        CustomWidgets.customAppBar(context, StringConstants.forms),
+        CustomWidgets.customAppBar(context, StringConstants.forms, true),
         Expanded(
             child: Align(
                 alignment: Alignment.bottomCenter,
@@ -25,8 +25,10 @@ class _FormsState extends State<Forms> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      CustomWidgets.customButton(StringConstants.saveForNow),
-                      CustomWidgets.customButton(StringConstants.submit),
+                      CustomWidgets.customButton(
+                          context, StringConstants.saveForNow),
+                      CustomWidgets.customButton(
+                          context, StringConstants.submit),
                     ],
                   ),
                 )))
