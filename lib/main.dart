@@ -17,7 +17,8 @@ class MainApp extends StatelessWidget {
     return Scaffold(
         body: Column(
           children: [
-            CustomWidgets.customAppBar(context, StringConstants.appName),
+            CustomWidgets.customAppBar(context, StringConstants.appName,
+                StringConstants.appDescription),
           ],
         ),
         floatingActionButton: FloatingActionButton(

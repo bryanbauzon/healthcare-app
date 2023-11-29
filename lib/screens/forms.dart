@@ -17,7 +17,8 @@ class _FormsState extends State<Forms> {
     return Scaffold(
         body: Column(
           children: [
-            CustomWidgets.customAppBar(context, StringConstants.appName),
+            CustomWidgets.customAppBar(context, StringConstants.appName,
+                StringConstants.appDescription),
             const Padding(
               padding: EdgeInsets.all(20),
               child: Text(
