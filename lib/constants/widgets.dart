@@ -111,7 +111,10 @@ class CustomWidgets {
           child: Container(
               height: 80,
               width: 170,
-              color: Colors.green,
+              decoration: BoxDecoration(
+                color: Colors.green,
+                borderRadius: BorderRadius.circular(10),
+              ),
               child: Center(
                 child: Text(
                   title,
