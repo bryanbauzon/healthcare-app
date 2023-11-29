@@ -41,15 +41,27 @@ class CustomWidgets {
             ),
           )));
 
-  static Widget customButton(BuildContext context, String text) {
+  static Widget customButton(
+      BuildContext context, String text, VoidCallback onTap) {
     return TextButton(
       style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(AppColors.theme),
           foregroundColor: MaterialStateProperty.all(AppColors.white)),
-      onPressed: () {
-        Navigator.pop(context);
-      },
+      onPressed: onTap,
       child: Text(text),
     );
   }
+
+  static Widget customTextFormField(String fieldName) => TextFormField(
+        decoration: InputDecoration(
+          hintText: fieldName,
+          border: InputBorder.none,
+        ),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Please enter some text';
+          }
+          return null;
+        },
+      );
 }

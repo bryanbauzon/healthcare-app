@@ -11,28 +11,48 @@ class Forms extends StatefulWidget {
 }
 
 class _FormsState extends State<Forms> {
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-      children: [
-        CustomWidgets.customAppBar(context, StringConstants.formScreen, true),
-        Expanded(
-            child: Align(
-                alignment: Alignment.bottomCenter,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              CustomWidgets.customAppBar(
+                  context, StringConstants.formScreen, true),
+              Form(
+                key: _formKey,
                 child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  child: Column(
                     children: [
-                      CustomWidgets.customButton(
-                          context, StringConstants.saveForNow),
-                      CustomWidgets.customButton(
-                          context, StringConstants.submit),
+                      CustomWidgets.customTextFormField('Test'),
+                      CustomWidgets.customTextFormField('Test'),
+                      CustomWidgets.customTextFormField('Test'),
+                      CustomWidgets.customTextFormField('Test'),
                     ],
                   ),
-                )))
-      ],
-    ));
+                ),
+              )
+            ],
+          ),
+        ),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CustomWidgets.customButton(
+                  context, StringConstants.saveForNow, () {}),
+              CustomWidgets.customButton(context, StringConstants.submit, () {
+                if (_formKey.currentState!.validate()) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Processing Data')),
+                  );
+                }
+              }),
+            ],
+          ),
+        ));
   }
 }
