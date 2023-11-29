@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:holy_trinity_healthcare/constants/colors.dart';
 
-import '../screens/forms.dart';
-
 class CustomWidgets {
   static Widget customAppBar(BuildContext context, String appName) => Container(
       height: 90,
