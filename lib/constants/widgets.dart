@@ -105,7 +105,7 @@ class CustomWidgets {
         child: GestureDetector(
           onTap: () {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('${title} in procress...')),
+              SnackBar(content: Text('${title} in progress...')),
             );
           },
           child: Container(
