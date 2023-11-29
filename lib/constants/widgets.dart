@@ -33,7 +33,8 @@ class CustomWidgets {
                         },
                         icon: const Icon(Icons.add),
                         style: ButtonStyle(
-                            iconColor: MaterialStateProperty.all(Colors.white)),
+                            iconColor:
+                                MaterialStateProperty.all(AppColors.white)),
                       )
                     : Container()
               ],
