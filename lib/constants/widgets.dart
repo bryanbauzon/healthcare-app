@@ -19,7 +19,9 @@ class CustomWidgets {
                 Text(
                   appName,
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, color: AppColors.white),
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.white),
                 ),
                 !isForm
                     ? IconButton(
