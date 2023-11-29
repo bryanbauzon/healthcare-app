@@ -15,26 +15,32 @@ class _FormsState extends State<Forms> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              CustomWidgets.customAppBar(context, StringConstants.appName),
-              Form(
-                key: _formKey,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10, right: 10),
-                  child: Column(
-                    children: [
-                      CustomWidgets.customTextFormField('Test'),
-                      CustomWidgets.customTextFormField('Test'),
-                      CustomWidgets.customTextFormField('Test'),
-                      CustomWidgets.customTextFormField('Test'),
-                    ],
-                  ),
+        body: Column(
+          children: [
+            CustomWidgets.customAppBar(context, StringConstants.appName),
+            const Padding(
+              padding: EdgeInsets.all(20),
+              child: Text(
+                StringConstants.forms,
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
+            SingleChildScrollView(
+                child: Form(
+              key: _formKey,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10, right: 10),
+                child: Column(
+                  children: [
+                    CustomWidgets.customTextFormField('Test'),
+                    CustomWidgets.customTextFormField('Test'),
+                    CustomWidgets.customTextFormField('Test'),
+                    CustomWidgets.customTextFormField('Test'),
+                  ],
                 ),
-              )
-            ],
-          ),
+              ),
+            ))
+          ],
         ),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(10),
