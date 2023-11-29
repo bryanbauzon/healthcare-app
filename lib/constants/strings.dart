@@ -7,4 +7,5 @@ class StringConstants {
 
   static const String saveForNow = 'Save For Now';
   static const String submit = 'Submit';
+  static const String nursesDocument = 'Nurses Document';
 }
