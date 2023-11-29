@@ -55,7 +55,6 @@ class CustomWidgets {
   static Widget customTextFormField(String fieldName) => TextFormField(
         decoration: InputDecoration(
           hintText: fieldName,
-          border: InputBorder.none,
         ),
         validator: (value) {
           if (value == null || value.isEmpty) {

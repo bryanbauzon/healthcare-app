@@ -19,7 +19,7 @@ class _FormsState extends State<Forms> {
           child: Column(
             children: [
               CustomWidgets.customAppBar(
-                  context, StringConstants.formScreen, true),
+                  context, StringConstants.appName, true),
               Form(
                 key: _formKey,
                 child: Padding(
@@ -46,6 +46,7 @@ class _FormsState extends State<Forms> {
                   context, StringConstants.saveForNow, () {}),
               CustomWidgets.customButton(context, StringConstants.submit, () {
                 if (_formKey.currentState!.validate()) {
+                  Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Processing Data')),
                   );
