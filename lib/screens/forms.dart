@@ -18,8 +18,7 @@ class _FormsState extends State<Forms> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              CustomWidgets.customAppBar(
-                  context, StringConstants.appName, true),
+              CustomWidgets.customAppBar(context, StringConstants.appName),
               Form(
                 key: _formKey,
                 child: Padding(
@@ -45,12 +44,13 @@ class _FormsState extends State<Forms> {
               CustomWidgets.customButton(
                   context, StringConstants.saveForNow, () {}),
               CustomWidgets.customButton(context, StringConstants.submit, () {
-                if (_formKey.currentState!.validate()) {
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Processing Data')),
-                  );
-                }
+                Navigator.pop(context);
+                // if (_formKey.currentState!.validate()) {
+
+                //   ScaffoldMessenger.of(context).showSnackBar(
+                //     const SnackBar(content: Text('Processing Data')),
+                //   );
+                // }
               }),
             ],
           ),
