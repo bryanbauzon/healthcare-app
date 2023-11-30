@@ -11,26 +11,37 @@ class CustomWidgets {
           color: AppColors.theme,
           child: SafeArea(
               child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Column(
+            padding: const EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 10),
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  appName,
-                  style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.white),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      appName,
+                      style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.white),
+                    ),
+                    Text(
+                      appDescription,
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: AppColors.white),
+                    ),
+                  ],
                 ),
-                Text(
-                  appDescription,
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.white),
-                ),
+            Expanded(child:  Align(
+              alignment: Alignment.centerRight,
+              child:  IconButton(onPressed: (){
+                showSnackBar(context,'info here...');
+              }, icon: Icon(Icons.info_outline, size: 50, color: AppColors.white,)),
+            ))
               ],
-            ),
+            )
           )));
 
   static Widget customButton(
@@ -152,4 +163,9 @@ class CustomWidgets {
               )),
         ),
       );
+
+  static void showSnackBar(BuildContext context, String message) =>
+  ScaffoldMessenger.of(context).showSnackBar(
+     SnackBar(content: Text(message)),
+  );
 }
