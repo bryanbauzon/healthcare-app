@@ -15,6 +15,7 @@ class CustomWidgets {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                // Image.asset('images/logo.png',height: 150, width: 150,),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,7 +69,7 @@ class CustomWidgets {
       );
 
   static Widget customMenuTiles(BuildContext context, String title,
-          bool isEnabled, VoidCallback onTap, Color color, IconData ic) =>
+          bool isEnabled, VoidCallback onTap, IconData ic) =>
       Padding(
         padding: const EdgeInsets.all(10),
         child: GestureDetector(
@@ -77,7 +78,7 @@ class CustomWidgets {
             height: 150,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-              color: color,
+              color: isEnabled ? AppColors.enabled : AppColors.disabled,
               borderRadius: BorderRadius.circular(10),
             ),
             child: Center(
@@ -96,7 +97,7 @@ class CustomWidgets {
                         width: 80,
                         child:  Icon(
                           ic,
-                          color: color,
+                          color: isEnabled ? AppColors.enabled : AppColors.disabled,
                           size: 45,
                         ),
                       ),
@@ -134,32 +135,42 @@ class CustomWidgets {
       );
 
   static Widget comingSoonMenuTiles(BuildContext context) =>
-      customMenuTiles(context, 'Coming Soon', true, () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Coming Soon!')),
-        );
-      }, Colors.grey, Icons.warning_amber);
+      customMenuTiles(context, StringConstants.comingSoon, false, () {
+        showSnackBar(context,StringConstants.comingSoon);
+      },Icons.warning_amber);
 
-  static Widget dummyDocument(BuildContext context, String title) => Padding(
+  static Widget dummyDocument(BuildContext context, String title, bool isEnabled) => Padding(
         padding: const EdgeInsets.all(10),
         child: GestureDetector(
           onTap: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('$title in progress...')),
-            );
+            if(isEnabled) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('$title in progress...')),
+              );
+            }
           },
           child: Container(
-              height: 80,
-              width: 170,
+              height: 210,
+              width: 420,
               decoration: BoxDecoration(
-                color: Colors.green,
+                color: isEnabled? AppColors.enabled: AppColors.disabled,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Center(
-                child: Text(
-                  title,
-                  style: TextStyle(color: AppColors.white),
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children:[
+                  Icon(Icons.account_tree_outlined,
+                 color: AppColors.white,
+                    size: 40,
+                 ),
+                  Padding(padding: const EdgeInsets.only(left:20),child: Text(
+                    title,
+                    style: TextStyle(color: AppColors.white,
+                        fontSize: 30,
+                      fontWeight: FontWeight.bold
+                    ),
+                  ),)
+                ]
               )),
         ),
       );

@@ -23,20 +23,23 @@ class _NursesDocument extends State<NursesDocument> {
             const Padding(
               padding: EdgeInsets.only(top: 20, bottom: 20),
               child: Text(StringConstants.nursesDocument,
-                  style: TextStyle(fontSize: 25)),
+                  style: TextStyle(fontSize: 40,
+                  fontWeight: FontWeight.bold
+                  )),
             ),
             Wrap(
               children: [
-                CustomWidgets.dummyDocument(context, 'Document 1'),
-                CustomWidgets.dummyDocument(context, 'Document 2')
+                CustomWidgets.dummyDocument(context, 'Document 1',true),
+                CustomWidgets.dummyDocument(context, 'Document 2',false)
               ],
             ),
             Wrap(
               children: [
-                CustomWidgets.dummyDocument(context, 'Document 3'),
-                CustomWidgets.dummyDocument(context, 'Document 4')
+                CustomWidgets.dummyDocument(context, 'Document 3',false),
+                CustomWidgets.dummyDocument(context, 'Document 4',false)
               ],
-            )
+            ),
+            // Image.asset('images/logo.png',width: 520,height: 320,)
           ],
         ),
       ),
