@@ -24,7 +24,7 @@ class MainApp extends StatelessWidget {
           children: [
             Text('WELCOME!',
               style: TextStyle(
-                fontSize: 30,
+                fontSize: 40,
                 fontWeight: FontWeight.bold
               ),
             ),
