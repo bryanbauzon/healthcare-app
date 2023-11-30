@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:holy_trinity_healthcare/constants/colors.dart';
+import 'package:holy_trinity_healthcare/constants/strings.dart';
 
 class CustomWidgets {
   static Widget customAppBar(
           BuildContext context, String appName, String appDescription) =>
       Container(
-          height: 95,
+          height: 150,
           width: MediaQuery.of(context).size.width,
           color: AppColors.theme,
           child: SafeArea(
@@ -17,14 +18,14 @@ class CustomWidgets {
                 Text(
                   appName,
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 28,
                       fontWeight: FontWeight.bold,
                       color: AppColors.white),
                 ),
                 Text(
                   appDescription,
                   style: TextStyle(
-                      fontSize: 13,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: AppColors.white),
                 ),
@@ -62,33 +63,61 @@ class CustomWidgets {
         child: GestureDetector(
           onTap: onTap,
           child: Container(
-            height: 120,
+            height: 150,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
               color: color,
               borderRadius: BorderRadius.circular(10),
             ),
             child: Center(
-                child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  ic,
-                  color: AppColors.white,
-                  size: 45,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                        color: AppColors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
+                child:Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  child:  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.white,
+                          borderRadius: BorderRadius.circular(50)
+                        ),
+
+                        height: 80,
+                        width: 80,
+                        child:  Icon(
+                          ic,
+                          color: color,
+                          size: 45,
+                        ),
+                      ),
+                     SizedBox(
+                       width: MediaQuery.of(context).size.width/2,
+                       child:  Column(
+                         mainAxisAlignment: MainAxisAlignment.center,
+                         children: [
+                           Text(
+                             title,
+                             style: TextStyle(
+                                 color: AppColors.white,
+                                 fontSize: 30,
+                                 fontWeight: FontWeight.bold),
+                           ),
+                           Padding(
+                             padding: const EdgeInsets.only(left: 20, right: 20),
+                             child: Text(
+                               StringConstants.dummyDescriptionShort,
+                               textAlign: TextAlign.center,
+                               style: TextStyle(
+                                 color: AppColors.white,
+                                 fontSize: 15,
+                               ),
+                             ),
+                           )
+                         ],),
+                     )
+                    ],
                   ),
                 )
-              ],
-            )),
+            ),
           ),
         ),
       );
@@ -98,14 +127,14 @@ class CustomWidgets {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Coming Soon!')),
         );
-      }, Colors.grey, Icons.warning);
+      }, Colors.grey, Icons.warning_amber);
 
   static Widget dummyDocument(BuildContext context, String title) => Padding(
         padding: const EdgeInsets.all(10),
         child: GestureDetector(
           onTap: () {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('${title} in progress...')),
+              SnackBar(content: Text('$title in progress...')),
             );
           },
           child: Container(

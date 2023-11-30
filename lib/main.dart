@@ -18,6 +18,24 @@ class MainApp extends StatelessWidget {
         children: [
           CustomWidgets.customAppBar(
               context, StringConstants.appName, StringConstants.appDescription),
+
+       const Padding(padding:  EdgeInsets.only(top:20, left: 25, right: 25),
+        child:  Column(
+          children: [
+            Text('WELCOME!',
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold
+              ),
+            ),
+            Text(StringConstants.dummyDescriptionLong,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 18
+              ),
+            ),
+          ],
+        )),
           CustomWidgets.customMenuTiles(
               context, StringConstants.nursesDocument, true, () {
             Navigator.push(
