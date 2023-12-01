@@ -22,30 +22,32 @@ class _SplashState extends State<Splash> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body:Center(
-        child:  Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body:Container(
+//         child:  Column(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             crossAxisAlignment: CrossAxisAlignment.center,
+//
+//             children:[
+//               Image.asset(AppConstants.Splash, fit: BoxFit.cover,),
+//                const Text(AppConstants.appName,),
+//             ]
+//         ),
+//       )
+//     );
+//   }
+// }
 
-            children:[
-              Image.asset(AppConstants.logo, height: 220, width: 220,),
-               Text(AppConstants.appName,
-              style: TextStyle(
-                color: AppColors.theme,
-                fontSize: 32,
-                fontWeight: FontWeight.bold
-              ),
-              ), const Text(AppConstants.appDescription,
-                style: TextStyle(
-                    fontSize: 28,
-                ),
-              )
-            ]
-        ),
-      )
-    );
-  }
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    body: Container(
+      decoration: const BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage(AppConstants.Splash), fit: BoxFit.cover)),
+    ),
+  );
+}//splash art updated
 }

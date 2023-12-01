@@ -1,5 +1,6 @@
 class AppConstants {
   static const String logo = 'images/logo.png';
+  static const String Splash = 'images/splashScreen.png';
   static const String appName = 'Holy Trinity Healthcare ';
   static const String appDescription =
       'Meeting the needs of todays patients at home';
@@ -9,8 +10,8 @@ class AppConstants {
   static const String saveForNow = 'Save For Now';
   static const String submit = 'Submit';
   static const String nursesDocument = 'NURSES DOCUMENT';
-  static const String dummyDescriptionShort = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget viverra tellus. Donec in erat maximus.';
-  static const String dummyDescriptionLong = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean lobortis, mi sed mollis accumsan, nibh felis posuere ipsum, vel porta neque nunc quis est. Aenean fermentum arcu nec tellus commodo suscipit. Suspendisse tortor massa, pulvinar id lacinia eget, laoreet sed velit. Nulla congue turpis quis rhoncus vehicula. Phasellus vestibulum feugiat eleifend. Integer sed tincidunt odio. Vestibulum ullamcorper tincidunt velit, at venenatis augue rhoncus in.';
+  static const String dummyDescriptionShort = 'Compiled nurses document for new patient care';
+  static const String dummyDescriptionLong = 'HTH Holy Trinity Healthcare  has been providiing quality home health care services in the Houston and surrounding Southesast Texas communities since 2006.  We provide highly skilled, compassionate, reliable Professionals and Care Givers to individuals in need of home health care.';
   static const String comingSoon = 'COMING SOON!';
 
   static const String vitalSign = 'VITAL SIGNS';
