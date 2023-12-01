@@ -29,14 +29,14 @@ class _NursesDocument extends State<NursesDocument> {
             ),
             Wrap(
               children: [
-                CustomWidgets.dummyDocument(context, 'Document 1',true),
-                CustomWidgets.dummyDocument(context, 'Document 2',false)
+                CustomWidgets.documentTiles(context, 'Vital Signs',true),
+                CustomWidgets.documentTiles(context, 'Document 2',false)
               ],
             ),
             Wrap(
               children: [
-                CustomWidgets.dummyDocument(context, 'Document 3',false),
-                CustomWidgets.dummyDocument(context, 'Document 4',false)
+                CustomWidgets.documentTiles(context, 'Document 3',false),
+                CustomWidgets.documentTiles(context, 'Document 4',false)
               ],
             ),
             // Image.asset('images/logo.png',width: 520,height: 320,)

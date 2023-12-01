@@ -139,7 +139,7 @@ class CustomWidgets {
         showSnackBar(context,StringConstants.comingSoon);
       },Icons.warning_amber);
 
-  static Widget dummyDocument(BuildContext context, String title, bool isEnabled) => Padding(
+  static Widget documentTiles(BuildContext context, String title, bool isEnabled) => Padding(
         padding: const EdgeInsets.all(10),
         child: GestureDetector(
           onTap: () {
