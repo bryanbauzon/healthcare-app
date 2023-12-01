@@ -19,19 +19,15 @@ class _HomeState extends State<Home> {
         children: [
           CustomWidgets.customAppBar(
               context, StringConstants.appName, StringConstants.appDescription),
-           // Padding(
-           //    padding: const EdgeInsets.only(top: 20, left: 25, right: 25),
-           //    child:
-           //        Image.asset(
-           //          'images/logo.png',
-           //          width: 620,
-           //          height: 420,
-           //        ),
-           //    ),
-          const Text(
-            'WELCOME!',
-            style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
-          ),
+           Padding(
+              padding: const EdgeInsets.only(top: 20, left: 25, right: 25),
+              child: const Text(
+                'WELCOME!',
+                style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+              ),
+
+              ),
+
           Expanded(child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.only(top:20, left: 25, right: 25),

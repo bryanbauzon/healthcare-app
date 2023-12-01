@@ -17,7 +17,9 @@ class CustomWidgets {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Image.asset('images/logo.png',height: 150, width: 150,),
+               Padding(padding: const EdgeInsets.only(right: 20),
+               child:  Image.asset(StringConstants.logo,height: 80, width: 80,),
+               ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,

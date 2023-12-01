@@ -1,4 +1,5 @@
 class StringConstants {
+  static const String logo = 'images/logo.png';
   static const String appName = 'Holy Trinity Healthcare ';
   static const String appDescription =
       'Meeting the needs of todays patients at home';
