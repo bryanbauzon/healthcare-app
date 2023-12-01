@@ -16,19 +16,19 @@ class _SplashState extends State<Splash> {
 
     Future.delayed(const Duration(seconds: 5), () {
       Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const Home()));
+          context, MaterialPageRoute(builder: (context) => const Home()));
     });
   }
 
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
-    body: Container(
-      decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(AppConstants.Splash), fit: BoxFit.cover)),
-    ),
-  );
-}//splash art updated
+//test
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(AppConstants.Splash), fit: BoxFit.cover)),
+      ),
+    );
+  } //splash art updated
 }
