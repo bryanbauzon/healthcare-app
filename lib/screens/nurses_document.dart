@@ -29,7 +29,7 @@ class _NursesDocument extends State<NursesDocument> {
             ),
             Wrap(
               children: [
-                CustomWidgets.documentTiles(context, 'Vital Signs',true),
+                CustomWidgets.documentTiles(context, StringConstants.vitalSign,true),
                 CustomWidgets.documentTiles(context, 'Document 2',false)
               ],
             ),

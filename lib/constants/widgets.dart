@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:holy_trinity_healthcare/constants/colors.dart';
 import 'package:holy_trinity_healthcare/constants/strings.dart';
 
+import '../utils/utils.dart';
+
 class CustomWidgets {
   static Widget customAppBar(
           BuildContext context, String appName, String appDescription) =>
@@ -56,17 +58,30 @@ class CustomWidgets {
     );
   }
 
-  static Widget customTextFormField(String fieldName) => TextFormField(
-        decoration: InputDecoration(
-          hintText: fieldName,
+  static Widget customTextFormField(String fieldName) =>
+  Padding(padding: const EdgeInsets.fromLTRB(10, 10, 10, 5),
+  child: TextFormField(
+    keyboardType: Utils.getTextInputTypeByField(fieldName),
+    decoration: InputDecoration(
+      hintText: fieldName,
+    focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(
+        color: AppColors.theme
+      )
+    ),
+      border: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: AppColors.theme,
         ),
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'Please enter some text';
-          }
-          return null;
-        },
-      );
+      ),
+    ),
+    validator: (value) {
+      if (value == null || value.isEmpty) {
+        return 'This field is required.';
+      }
+      return null;
+    },
+  ),);
 
   static Widget customMenuTiles(BuildContext context, String title,
           bool isEnabled, VoidCallback onTap, IconData ic) =>
@@ -144,9 +159,7 @@ class CustomWidgets {
         child: GestureDetector(
           onTap: () {
             if(isEnabled) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('$title in progress...')),
-              );
+              Utils.redirectToForms(context,title);
             }
           },
           child: Container(
@@ -159,7 +172,7 @@ class CustomWidgets {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children:[
-                  Icon(Icons.account_tree_outlined,
+                  Icon(Utils.documentTilesIcon(title),
                  color: AppColors.white,
                     size: 40,
                  ),
@@ -179,4 +192,47 @@ class CustomWidgets {
   ScaffoldMessenger.of(context).showSnackBar(
      SnackBar(content: Text(message)),
   );
+
+  static Widget vitalSignsForm(BuildContext context)=>
+    SafeArea(child:  Column(
+      children: [
+       const Padding(padding:  EdgeInsets.only(left: 20),child:  Align(
+         alignment: Alignment.centerLeft,
+         child: Text(
+           StringConstants.personalInfo,
+           style: TextStyle(
+             fontSize: 25,
+             fontWeight: FontWeight.bold
+           ),
+         ),
+       ),),
+     SizedBox(
+       width:  MediaQuery.of(context).size.width,
+       child:   Row(
+       children: [
+         Expanded(
+           child:  CustomWidgets.customTextFormField(StringConstants.lName),),
+         Expanded(
+           child:  CustomWidgets.customTextFormField(StringConstants.fName),),
+         Expanded(
+           child:  CustomWidgets.customTextFormField(StringConstants.mName),)
+       ],
+     ),),
+
+        SizedBox(
+          width:  MediaQuery.of(context).size.width,
+          child: Row(
+            children: [
+             Expanded(child:  CustomWidgets.customTextFormField(StringConstants.birthday),),
+              SizedBox(
+                width: 220,
+                child:  CustomWidgets.customTextFormField(StringConstants.age),
+              )
+            ],
+          ),
+        ),
+        CustomWidgets.customTextFormField(StringConstants.address),
+      ],
+    ));
+
 }

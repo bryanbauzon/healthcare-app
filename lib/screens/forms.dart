@@ -4,7 +4,9 @@ import '../constants/strings.dart';
 import '../constants/widgets.dart';
 
 class Forms extends StatefulWidget {
-  const Forms({super.key});
+
+  const Forms({super.key, required this.title});
+  final String title;
 
   @override
   State<Forms> createState() => _FormsState();
@@ -19,11 +21,12 @@ class _FormsState extends State<Forms> {
           children: [
             CustomWidgets.customAppBar(context, StringConstants.appName,
                 StringConstants.appDescription),
-            const Padding(
-              padding: EdgeInsets.all(20),
+             Padding(
+              padding: const EdgeInsets.all(20),
               child: Text(
-                StringConstants.forms,
-                style: TextStyle(fontSize: 20),
+                widget.title,
+                style:const TextStyle(fontSize: 40,
+                fontWeight: FontWeight.bold),
               ),
             ),
             SingleChildScrollView(
@@ -31,14 +34,7 @@ class _FormsState extends State<Forms> {
               key: _formKey,
               child: Padding(
                 padding: const EdgeInsets.only(left: 10, right: 10),
-                child: Column(
-                  children: [
-                    CustomWidgets.customTextFormField('Test'),
-                    CustomWidgets.customTextFormField('Test'),
-                    CustomWidgets.customTextFormField('Test'),
-                    CustomWidgets.customTextFormField('Test'),
-                  ],
-                ),
+                child:CustomWidgets.vitalSignsForm(context)
               ),
             ))
           ],
