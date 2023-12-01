@@ -15,13 +15,13 @@ class Forms extends StatefulWidget {
 class _FormsState extends State<Forms> {
   final _formKey = GlobalKey<FormState>();
   void validateForm(){
-    Navigator.pop(context);
-    // if (_formKey.currentState!.validate()) {
-    //
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     const SnackBar(content: Text('Processing Data')),
-    //   );
-    //}
+   Navigator.pop(context);
+   //  if (_formKey.currentState!.validate()) {
+   //
+   //    ScaffoldMessenger.of(context).showSnackBar(
+   //      const SnackBar(content: Text('Processing Data')),
+   //    );
+   //  }
   }
   @override
   Widget build(BuildContext context) {

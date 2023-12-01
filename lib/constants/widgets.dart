@@ -103,12 +103,23 @@ class CustomWidgets {
   ):
    Align(
      alignment: Alignment.centerLeft,
-     child:  DropdownMenu(
-         width:220,
-         hintText: fieldName,
-         dropdownMenuEntries: list.map<DropdownMenuEntry<String>>((String val){
-           return DropdownMenuEntry<String>(value: val, label: val);
-         }).toList()),
+     child:  DropdownButtonFormField(
+       hint: Text(fieldName),
+         items: list.map<DropdownMenuItem<String>>((String val){
+           return DropdownMenuItem<String>
+             (value: val, child: Text(val));
+         }).toList(),
+       onChanged: (String? value) {
+        //
+     },
+     validator: (value){
+       if (value == null || value.isEmpty) {
+         return 'This field is required.';
+       }
+       return null;
+     },
+     ),
+
    )
     
     ,);}
