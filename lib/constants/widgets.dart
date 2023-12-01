@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:holy_trinity_healthcare/constants/colors.dart';
-import 'package:holy_trinity_healthcare/constants/strings.dart';
+import 'package:holy_trinity_healthcare/constants/app_constants.dart';
 
 import '../utils/utils.dart';
 
@@ -18,7 +18,7 @@ class CustomWidgets {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                Padding(padding: const EdgeInsets.only(right: 20),
-               child:  Image.asset(StringConstants.logo,height: 80, width: 80,),
+               child:  Image.asset(AppConstants.logo,height: 80, width: 80,),
                ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -51,12 +51,28 @@ class CustomWidgets {
 
   static Widget customButton(
       BuildContext context, String text, VoidCallback onTap) {
-    return TextButton(
-      style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(AppColors.theme),
-          foregroundColor: MaterialStateProperty.all(AppColors.white)),
-      onPressed: onTap,
-      child: Text(text),
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          height: 60,
+          width: 130,
+          decoration:  BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            color: AppColors.theme
+          ),
+          child: Center(
+            child: Text(text,
+              style:  TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: AppColors.white
+              ),
+            ),
+          )
+        ),
+      ),
     );
   }
 
@@ -127,13 +143,13 @@ class CustomWidgets {
                              title,
                              style: TextStyle(
                                  color: AppColors.white,
-                                 fontSize: 30,
+                                 fontSize: AppConstants.menuTitleFontSize,
                                  fontWeight: FontWeight.bold),
                            ),
                            Padding(
                              padding: const EdgeInsets.only(left: 20, right: 20),
                              child: Text(
-                               StringConstants.dummyDescriptionShort,
+                               AppConstants.dummyDescriptionShort,
                                textAlign: TextAlign.center,
                                style: TextStyle(
                                  color: AppColors.white,
@@ -152,8 +168,8 @@ class CustomWidgets {
       );
 
   static Widget comingSoonMenuTiles(BuildContext context) =>
-      customMenuTiles(context, StringConstants.comingSoon, false, () {
-        showSnackBar(context,StringConstants.comingSoon);
+      customMenuTiles(context, AppConstants.comingSoon, false, () {
+        showSnackBar(context,AppConstants.comingSoon);
       },Icons.warning_amber);
 
   static Widget documentTiles(BuildContext context, String title, bool isEnabled) => Padding(
@@ -201,7 +217,7 @@ class CustomWidgets {
        const Padding(padding:  EdgeInsets.only(left: 20),child:  Align(
          alignment: Alignment.centerLeft,
          child: Text(
-           StringConstants.personalInfo,
+           AppConstants.personalInfo,
            style: TextStyle(
              fontSize: 25,
              fontWeight: FontWeight.bold
@@ -213,11 +229,11 @@ class CustomWidgets {
        child:   Row(
        children: [
          Expanded(
-           child:  CustomWidgets.customTextFormField(StringConstants.lName),),
+           child:  CustomWidgets.customTextFormField(AppConstants.lName),),
          Expanded(
-           child:  CustomWidgets.customTextFormField(StringConstants.fName),),
+           child:  CustomWidgets.customTextFormField(AppConstants.fName),),
          Expanded(
-           child:  CustomWidgets.customTextFormField(StringConstants.mName),)
+           child:  CustomWidgets.customTextFormField(AppConstants.mName),)
        ],
      ),),
 
@@ -225,15 +241,15 @@ class CustomWidgets {
           width:  MediaQuery.of(context).size.width,
           child: Row(
             children: [
-             Expanded(child:  CustomWidgets.customTextFormField(StringConstants.birthday),),
+             Expanded(child:  CustomWidgets.customTextFormField(AppConstants.birthday),),
               SizedBox(
                 width: 220,
-                child:  CustomWidgets.customTextFormField(StringConstants.age),
+                child:  CustomWidgets.customTextFormField(AppConstants.age),
               )
             ],
           ),
         ),
-        CustomWidgets.customTextFormField(StringConstants.address),
+        CustomWidgets.customTextFormField(AppConstants.address),
       ],
     ));
 

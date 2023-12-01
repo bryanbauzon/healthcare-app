@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:holy_trinity_healthcare/constants/colors.dart';
 
-import '../constants/strings.dart';
+import '../constants/app_constants.dart';
 import '../constants/widgets.dart';
 
 class NursesDocument extends StatefulWidget {
@@ -18,18 +18,18 @@ class _NursesDocument extends State<NursesDocument> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            CustomWidgets.customAppBar(context, StringConstants.appName,
-                StringConstants.appDescription),
+            CustomWidgets.customAppBar(context, AppConstants.appName,
+                AppConstants.appDescription),
             const Padding(
               padding: EdgeInsets.only(top: 20, bottom: 20),
-              child: Text(StringConstants.nursesDocument,
-                  style: TextStyle(fontSize: 40,
+              child: Text(AppConstants.nursesDocument,
+                  style: TextStyle(fontSize: AppConstants.headerFontSize,
                   fontWeight: FontWeight.bold
                   )),
             ),
             Wrap(
               children: [
-                CustomWidgets.documentTiles(context, StringConstants.vitalSign,true),
+                CustomWidgets.documentTiles(context, AppConstants.vitalSign,true),
                 CustomWidgets.documentTiles(context, 'Document 2',false)
               ],
             ),

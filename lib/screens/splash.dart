@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:holy_trinity_healthcare/constants/colors.dart';
-import 'package:holy_trinity_healthcare/constants/strings.dart';
+import 'package:holy_trinity_healthcare/constants/app_constants.dart';
 import 'package:holy_trinity_healthcare/screens/home.dart';
 
 class Splash extends StatefulWidget {
@@ -31,14 +31,14 @@ class _SplashState extends State<Splash> {
             crossAxisAlignment: CrossAxisAlignment.center,
 
             children:[
-              Image.asset(StringConstants.logo, height: 220, width: 220,),
-               Text(StringConstants.appName,
+              Image.asset(AppConstants.logo, height: 220, width: 220,),
+               Text(AppConstants.appName,
               style: TextStyle(
                 color: AppColors.theme,
                 fontSize: 32,
                 fontWeight: FontWeight.bold
               ),
-              ), const Text(StringConstants.appDescription,
+              ), const Text(AppConstants.appDescription,
                 style: TextStyle(
                     fontSize: 28,
                 ),

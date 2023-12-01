@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constants/strings.dart';
+import '../constants/app_constants.dart';
 import '../constants/widgets.dart';
 
 class Forms extends StatefulWidget {
@@ -14,18 +14,28 @@ class Forms extends StatefulWidget {
 
 class _FormsState extends State<Forms> {
   final _formKey = GlobalKey<FormState>();
+
+  void validateForm(){
+    Navigator.pop(context);
+    // if (_formKey.currentState!.validate()) {
+    //
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     const SnackBar(content: Text('Processing Data')),
+    //   );
+    // }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Column(
           children: [
-            CustomWidgets.customAppBar(context, StringConstants.appName,
-                StringConstants.appDescription),
+            CustomWidgets.customAppBar(context, AppConstants.appName,
+                AppConstants.appDescription),
              Padding(
               padding: const EdgeInsets.all(20),
               child: Text(
                 widget.title,
-                style:const TextStyle(fontSize: 40,
+                style:const TextStyle(fontSize: AppConstants.headerFontSize,
                 fontWeight: FontWeight.bold),
               ),
             ),
@@ -42,19 +52,11 @@ class _FormsState extends State<Forms> {
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(10),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CustomWidgets.customButton(
-                  context, StringConstants.saveForNow, () {}),
-              CustomWidgets.customButton(context, StringConstants.submit, () {
-                Navigator.pop(context);
-                // if (_formKey.currentState!.validate()) {
-
-                //   ScaffoldMessenger.of(context).showSnackBar(
-                //     const SnackBar(content: Text('Processing Data')),
-                //   );
-                // }
-              }),
+                  context, AppConstants.saveForNow, () {}),
+              CustomWidgets.customButton(context, AppConstants.submit,validateForm),
             ],
           ),
         ));

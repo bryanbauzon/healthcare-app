@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constants/strings.dart';
+import '../constants/app_constants.dart';
 import '../constants/widgets.dart';
 import 'nurses_document.dart';
 
@@ -18,12 +18,12 @@ class _HomeState extends State<Home> {
         body: Column(
         children: [
           CustomWidgets.customAppBar(
-              context, StringConstants.appName, StringConstants.appDescription),
-           Padding(
-              padding: const EdgeInsets.only(top: 20, left: 25, right: 25),
-              child: const Text(
+              context, AppConstants.appName, AppConstants.appDescription),
+           const Padding(
+              padding:  EdgeInsets.only(top: 20, left: 25, right: 25),
+              child:  Text(
                 'WELCOME!',
-                style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: AppConstants.headerFontSize, fontWeight: FontWeight.bold),
               ),
 
               ),
@@ -35,12 +35,12 @@ class _HomeState extends State<Home> {
                 children: [
 
                   const Text(
-                    StringConstants.dummyDescriptionLong,
+                    AppConstants.dummyDescriptionLong,
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 18),
                   ),
                   CustomWidgets.customMenuTiles(
-                      context, StringConstants.nursesDocument, true, () {
+                      context, AppConstants.nursesDocument, true, () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(

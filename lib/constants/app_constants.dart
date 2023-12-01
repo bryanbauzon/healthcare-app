@@ -1,4 +1,4 @@
-class StringConstants {
+class AppConstants {
   static const String logo = 'images/logo.png';
   static const String appName = 'Holy Trinity Healthcare ';
   static const String appDescription =
@@ -23,4 +23,7 @@ class StringConstants {
   static const String birthday = 'Birthday';
   static const String age = 'Age';
   static const String address = 'Address';
+
+  static const double headerFontSize = 40;
+  static const double menuTitleFontSize = 30;
 }
