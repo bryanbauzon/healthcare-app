@@ -76,9 +76,10 @@ class CustomWidgets {
     );
   }
 
-  static Widget customTextFormField(String fieldName) =>
-  Padding(padding: const EdgeInsets.fromLTRB(10, 10, 10, 5),
-  child: TextFormField(
+  static Widget customTextFormField(BuildContext context,String fieldName, bool isDropdown) {
+  List<String> list = Utils.retrieveDropdownList(fieldName, isDropdown);
+      return Padding(padding: const EdgeInsets.fromLTRB(10, 10, 10, 5),
+  child: !isDropdown ?TextFormField(
     keyboardType: Utils.getTextInputTypeByField(fieldName),
     decoration: InputDecoration(
       hintText: fieldName,
@@ -99,7 +100,18 @@ class CustomWidgets {
       }
       return null;
     },
-  ),);
+  ):
+   Align(
+     alignment: Alignment.centerLeft,
+     child:  DropdownMenu(
+         width:220,
+         hintText: fieldName,
+         dropdownMenuEntries: list.map<DropdownMenuEntry<String>>((String val){
+           return DropdownMenuEntry<String>(value: val, label: val);
+         }).toList()),
+   )
+    
+    ,);}
 
   static Widget customMenuTiles(BuildContext context, String title,
           bool isEnabled, VoidCallback onTap, IconData ic) =>
@@ -211,15 +223,15 @@ class CustomWidgets {
      SnackBar(content: Text(message)),
   );
 
-  static Widget vitalSignsForm(BuildContext context)=>
-    SafeArea(child:  Column(
+  static Widget personalInfo(BuildContext context){
+    return SafeArea(child:  Column(
       children: [
        const Padding(padding:  EdgeInsets.only(left: 20),child:  Align(
          alignment: Alignment.centerLeft,
          child: Text(
            AppConstants.personalInfo,
            style: TextStyle(
-             fontSize: 25,
+             fontSize: AppConstants.formTitle,
              fontWeight: FontWeight.bold
            ),
          ),
@@ -229,11 +241,11 @@ class CustomWidgets {
        child:   Row(
        children: [
          Expanded(
-           child:  CustomWidgets.customTextFormField(AppConstants.lName),),
+           child:  CustomWidgets.customTextFormField(context,AppConstants.lName, false),),
          Expanded(
-           child:  CustomWidgets.customTextFormField(AppConstants.fName),),
+           child:  CustomWidgets.customTextFormField(context,AppConstants.fName, false),),
          Expanded(
-           child:  CustomWidgets.customTextFormField(AppConstants.mName),)
+           child:  CustomWidgets.customTextFormField(context,AppConstants.mName, false),)
        ],
      ),),
 
@@ -241,16 +253,17 @@ class CustomWidgets {
           width:  MediaQuery.of(context).size.width,
           child: Row(
             children: [
-             Expanded(child:  CustomWidgets.customTextFormField(AppConstants.birthday),),
+             Expanded(child:  CustomWidgets.customTextFormField(context,AppConstants.birthday,false),),
               SizedBox(
                 width: 220,
-                child:  CustomWidgets.customTextFormField(AppConstants.age),
+                child:  CustomWidgets.customTextFormField(context,AppConstants.age,false),
               )
             ],
           ),
         ),
-        CustomWidgets.customTextFormField(AppConstants.address),
+        CustomWidgets.customTextFormField(context,AppConstants.address,false),
+
       ],
-    ));
+    ));}
 
 }

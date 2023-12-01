@@ -34,4 +34,14 @@ class Utils{
     }
     return type;
   }
+
+  static List<String> retrieveDropdownList(String fieldName, bool isDropdown){
+    List<String> list = [];
+    if(isDropdown){
+      if(fieldName.contains(AppConstants.RR)){
+        list = AppConstants.RRList;
+      }
+    }
+    return list;
+  }
 }

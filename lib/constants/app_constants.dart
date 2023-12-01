@@ -27,4 +27,8 @@ class AppConstants {
 
   static const double headerFontSize = 40;
   static const double menuTitleFontSize = 30;
+  static const double formTitle = 25;
+
+  static const List<String> RRList = <String>['Within Normal Limits', 'Labored', 'Wheezing', 'Rales', 'Diminished'];
+  static const String RR = 'Respiratory Rate';
 }

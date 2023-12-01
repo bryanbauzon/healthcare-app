@@ -14,7 +14,6 @@ class Forms extends StatefulWidget {
 
 class _FormsState extends State<Forms> {
   final _formKey = GlobalKey<FormState>();
-
   void validateForm(){
     Navigator.pop(context);
     // if (_formKey.currentState!.validate()) {
@@ -22,10 +21,12 @@ class _FormsState extends State<Forms> {
     //   ScaffoldMessenger.of(context).showSnackBar(
     //     const SnackBar(content: Text('Processing Data')),
     //   );
-    // }
+    //}
   }
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
         body: Column(
           children: [
@@ -44,7 +45,12 @@ class _FormsState extends State<Forms> {
               key: _formKey,
               child: Padding(
                 padding: const EdgeInsets.only(left: 10, right: 10),
-                child:CustomWidgets.vitalSignsForm(context)
+                child:Column(
+                  children: [
+                    CustomWidgets.personalInfo(context),
+                    CustomWidgets.customTextFormField(context,AppConstants.RR, true),
+                  ],
+                )
               ),
             ))
           ],
