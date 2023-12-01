@@ -24,11 +24,29 @@ class AppConstants {
   static const String birthday = 'Birthday';
   static const String age = 'Age';
   static const String address = 'Address';
+  static const String temperature = 'Temperature';
+  static const String BP = 'Blood Pressure';
+  static const String BPR = 'Blood Pressure Right Arm';
+  static const String BPL = 'Blood Pressure Left Arm';
+  static const String HR = 'Heart Rate';
+  static const String SOB = 'Shortness Of Breath';
+  static const String oxygenUse = 'Oxygen Use';
+  static const String painLevelToday = 'Pain Level Today';
+  static const String bodylocationToday = 'Location of Pain';
+  static const String painLevelLastVisit = 'Pain Level Last Visit';
+  static const String bodylocationTLastVisit = 'Location of Pain Last Visit';
+  static const String medicationPlan = 'Medication Plan';
+  static const int oxygenStat = 0;
+
 
   static const double headerFontSize = 40;
   static const double menuTitleFontSize = 30;
   static const double formTitle = 25;
 
   static const List<String> RRList = <String>['Within Normal Limits', 'Labored', 'Wheezing', 'Rales', 'Diminished'];
+  static const List<String> DiminishedList =  <String>['Right upper lobe', 'Right middle lobe', ' Right lower lobe', ' Left upper lobe', 'Left lower lobe'];
+  static const List<String> SOBList = <String>['Minimal', 'Moderate', 'At Rest'];
+  static const List<String> OxygenUseList = <String>['Continues','Intermittent'];
+  static const List<String> HRList = <String>['Regular','Irregular'];
   static const String RR = 'Respiratory Rate';
 }
