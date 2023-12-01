@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:holy_trinity_healthcare/constants/colors.dart';
 import 'package:holy_trinity_healthcare/constants/app_constants.dart';
 import 'package:holy_trinity_healthcare/screens/home.dart';
 
@@ -21,24 +20,6 @@ class _SplashState extends State<Splash> {
           MaterialPageRoute(builder: (context) => const Home()));
     });
   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body:Container(
-//         child:  Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             crossAxisAlignment: CrossAxisAlignment.center,
-//
-//             children:[
-//               Image.asset(AppConstants.Splash, fit: BoxFit.cover,),
-//                const Text(AppConstants.appName,),
-//             ]
-//         ),
-//       )
-//     );
-//   }
-// }
 
 @override
 Widget build(BuildContext context) {

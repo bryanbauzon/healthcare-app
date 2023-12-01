@@ -39,7 +39,6 @@ class _NursesDocument extends State<NursesDocument> {
                 CustomWidgets.documentTiles(context, 'Document 4',false)
               ],
             ),
-            // Image.asset('images/logo.png',width: 520,height: 320,)
           ],
         ),
       ),
