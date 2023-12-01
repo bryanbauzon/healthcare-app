@@ -20,7 +20,6 @@ class _SplashState extends State<Splash> {
     });
   }
 
-//test commit
   @override
   Widget build(BuildContext context) {
     return Scaffold(
