@@ -90,7 +90,7 @@ class CustomWidgets {
         child: GestureDetector(
           onTap: onTap,
           child: Container(
-            height: 150,
+            height: 220,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
               color: isEnabled ? AppColors.enabled : AppColors.disabled,
