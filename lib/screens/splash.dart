@@ -26,7 +26,7 @@ class _SplashState extends State<Splash> {
       body: Container(
         decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage(AppConstants.Splash), fit: BoxFit.cover)),
+                image: AssetImage(AppConstants.splash), fit: BoxFit.cover)),
       ),
     );
   } //splash art updated

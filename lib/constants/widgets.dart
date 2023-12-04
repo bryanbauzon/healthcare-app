@@ -76,10 +76,10 @@ class CustomWidgets {
     );
   }
 
-  static Widget customTextFormField(BuildContext context,String fieldName, bool isDropdown) {
-  List<String> list = Utils.retrieveDropdownList(fieldName, isDropdown);
-      return Padding(padding: const EdgeInsets.fromLTRB(10, 10, 10, 5),
-  child: !isDropdown ?TextFormField(
+  static Widget customTextFormField(BuildContext context,String fieldName) {
+  // List<String> list = Utils.retrieveDropdownList(fieldName, isDropdown);
+      return Padding(padding: const EdgeInsets.only(left: 20, right: 20,top: 10),
+  child:TextFormField(
     keyboardType: Utils.getTextInputTypeByField(fieldName),
     decoration: InputDecoration(
       hintText: fieldName,
@@ -100,27 +100,8 @@ class CustomWidgets {
       }
       return null;
     },
-  ):
-   Align(
-     alignment: Alignment.centerLeft,
-     child:  DropdownButtonFormField(
-       hint: Text(fieldName),
-         items: list.map<DropdownMenuItem<String>>((String val){
-           return DropdownMenuItem<String>
-             (value: val, child: Text(val));
-         }).toList(),
-       onChanged: (String? value) {
-        //
-     },
-     validator: (value){
-       if (value == null || value.isEmpty) {
-         return 'This field is required.';
-       }
-       return null;
-     },
-     ),
+  )
 
-   )
     
     ,);}
 
@@ -237,26 +218,17 @@ class CustomWidgets {
   static Widget personalInfo(BuildContext context){
     return SafeArea(child:  Column(
       children: [
-       const Padding(padding:  EdgeInsets.only(left: 20),child:  Align(
-         alignment: Alignment.centerLeft,
-         child: Text(
-           AppConstants.personalInfo,
-           style: TextStyle(
-             fontSize: AppConstants.formTitle,
-             fontWeight: FontWeight.bold
-           ),
-         ),
-       ),),
+        setFormTitle(AppConstants.personalInfo),
      SizedBox(
        width:  MediaQuery.of(context).size.width,
        child:   Row(
        children: [
          Expanded(
-           child:  CustomWidgets.customTextFormField(context,AppConstants.lName, false),),
+           child:  CustomWidgets.customTextFormField(context,AppConstants.lName),),
          Expanded(
-           child:  CustomWidgets.customTextFormField(context,AppConstants.fName, false),),
+           child:  CustomWidgets.customTextFormField(context,AppConstants.fName),),
          Expanded(
-           child:  CustomWidgets.customTextFormField(context,AppConstants.mName, false),)
+           child:  CustomWidgets.customTextFormField(context,AppConstants.mName),)
        ],
      ),),
 
@@ -264,17 +236,71 @@ class CustomWidgets {
           width:  MediaQuery.of(context).size.width,
           child: Row(
             children: [
-             Expanded(child:  CustomWidgets.customTextFormField(context,AppConstants.birthday,false),),
+             Expanded(child:  Padding(
+               padding: const EdgeInsets.only(right: 10),
+               child: CustomWidgets.customTextFormField(context,AppConstants.birthday),
+             )),
               SizedBox(
                 width: 220,
-                child:  CustomWidgets.customTextFormField(context,AppConstants.age,false),
+                child:  CustomWidgets.customTextFormField(context,AppConstants.age),
               )
             ],
           ),
         ),
-        CustomWidgets.customTextFormField(context,AppConstants.address,false),
+        CustomWidgets.customTextFormField(context,AppConstants.address),
 
       ],
     ));}
 
+  static Widget bloodPressure(BuildContext context){
+    return SafeArea(child:  Column(
+      children: [
+        setFormTitle(AppConstants.bloodPressure),
+        SizedBox(
+          width:  MediaQuery.of(context).size.width,
+          child:   Row(
+            children: [
+              Expanded(
+                child:  Padding(
+                  padding: const EdgeInsets.only(right:10),
+                  child: CustomWidgets.customTextFormField(context,AppConstants.bloodPressureRightArm),
+                )),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left:10),
+                  child:  CustomWidgets.customTextFormField(context,AppConstants.bloodPressureLeftArm),
+                ),),
+            ],
+          ),),
+      ],
+    ));}
+
+  static Widget oxygenStats(BuildContext context){
+    return SafeArea(child:  Column(
+      children: [
+        setFormTitle(AppConstants.oxygenStat),
+       Align(
+         alignment: Alignment.centerLeft,
+         child:  SizedBox(
+           width: 250,
+           child:   Expanded(
+             child: Padding(
+               padding: const EdgeInsets.only(left:10),
+               child:  CustomWidgets.customTextFormField(context,AppConstants.oxygenStat),
+             ),),),
+       )
+      ],
+    ));}
+
+  static Widget setFormTitle(String title) =>
+      Padding(padding:  const EdgeInsets.only(left: 20,top: 20),child:  Align(
+        alignment: Alignment.centerLeft,
+        child:  Text(
+            title,
+            style: const TextStyle(
+                fontSize: AppConstants.formTitle,
+                fontWeight: FontWeight.bold
+            )
+        )
+      ),);
 }

@@ -27,7 +27,7 @@ class Utils{
 
   static TextInputType getTextInputTypeByField(String field){
     TextInputType type = TextInputType.text;
-    if(field.contains(AppConstants.age)){
+    if(AppConstants.typeInputNumberList.contains(field)){
        type = TextInputType.number;
     }else if(field.contains(AppConstants.birthday)){
       type = TextInputType.datetime;
@@ -35,13 +35,15 @@ class Utils{
     return type;
   }
 
-  static List<String> retrieveDropdownList(String fieldName, bool isDropdown){
+  static List<String> retrieveDropdownList(String fieldName){
     List<String> list = [];
-    if(isDropdown){
-      if(fieldName.contains(AppConstants.RR)){
-        list = AppConstants.RRList;
+      if(fieldName.contains(AppConstants.respiratoryRate)){
+        list = AppConstants.respiratoryRateList;
+      }else if(fieldName.contains(AppConstants.heartRate)){
+        list = AppConstants.heartRateList;
+      }else if(fieldName.contains(AppConstants.respiratoryRateList.last)){
+        list = AppConstants.diminishedList;
       }
-    }
     return list;
   }
 }
