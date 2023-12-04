@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:holy_trinity_healthcare/constants/colors.dart';
 import 'package:holy_trinity_healthcare/constants/app_constants.dart';
 
+import '../screens/forms.dart';
 import '../utils/utils.dart';
 
 class CustomWidgets {
@@ -181,7 +182,7 @@ class CustomWidgets {
         child: GestureDetector(
           onTap: () {
             if(isEnabled) {
-              Utils.redirectToForms(context,title);
+              Utils.navigateToScreen(context, Forms(title:title));
             }
           },
           child: Container(

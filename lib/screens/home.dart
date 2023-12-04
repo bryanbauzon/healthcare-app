@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../constants/app_constants.dart';
 import '../constants/widgets.dart';
+import '../utils/utils.dart';
 import 'nurses_document.dart';
 
 class Home extends StatefulWidget {
@@ -29,7 +30,7 @@ class _HomeState extends State<Home> {
 
           Expanded(child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.only(top:20, left: 25, right: 25),
+              padding: const EdgeInsets.only(top:20, left: 25, right: 25, bottom: 40),
               child: Column(
                 children: [
 
@@ -40,10 +41,7 @@ class _HomeState extends State<Home> {
                   ),
                   CustomWidgets.customMenuTiles(
                       context, AppConstants.nursesDocument, true, () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const NursesDocument()));
+                    Utils.navigateToScreen(context, const NursesDocument());
                   }, Icons.account_tree_outlined),
                   CustomWidgets.comingSoonMenuTiles(context),
 
