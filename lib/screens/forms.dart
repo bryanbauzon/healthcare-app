@@ -18,7 +18,7 @@ class _FormsState extends State<Forms> {
   final _formKey = GlobalKey<FormState>();
   bool isDiminished = false;
   void validateForm(){
-   Navigator.pop(context);
+    Navigator.pop(context);
    //  if (_formKey.currentState!.validate()) {
    //
    //    ScaffoldMessenger.of(context).showSnackBar(
@@ -30,7 +30,7 @@ class _FormsState extends State<Forms> {
   Widget build(BuildContext context) {
 
    Widget customDropdown(String fieldName){
-     List<String> list = Utils.retrieveDropdownList(fieldName);
+     List<String> list = Utils.retrieveDropdownListByFieldName(fieldName);
      return  Align(
          alignment: Alignment.centerLeft,
          child:  Column(
@@ -79,7 +79,6 @@ class _FormsState extends State<Forms> {
        ),
      );
    };
-   
 
 
     return Scaffold(
@@ -99,15 +98,23 @@ class _FormsState extends State<Forms> {
               Form(
                 key: _formKey,
                 child: Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    padding: const EdgeInsets.only(left: 10, right: 10, bottom: 50),
                     child:Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         CustomWidgets.personalInfo(context),
                         CustomWidgets.bloodPressure(context),
                         customDropdown(AppConstants.heartRate),
                         customDropdown(AppConstants.respiratoryRate),
                         isDiminished? customDropdown(AppConstants.respiratoryRateList.last):Container(),
-                        CustomWidgets.oxygenStats(context)
+
+                        CustomWidgets.oxygenStats(context),
+                        customDropdown(AppConstants.sortOfBreath),
+                        customDropdown(AppConstants.oxygenUse),
+
+                        CustomWidgets.painLevelFields(context, AppConstants.painLevelToday),
+                        CustomWidgets.painLevelFields(context, AppConstants.painLevelLastVisit),
+                        CustomWidgets.medicationPlan(context),
                       ],
                     )
                 ),
@@ -121,7 +128,10 @@ class _FormsState extends State<Forms> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CustomWidgets.customButton(
-                  context, AppConstants.saveForNow, () {}),
+                  context, AppConstants.saveForNow, () {
+                    Navigator.of(context).pop();
+                    CustomWidgets.showSnackBar(context, AppConstants.saving);
+              }),
               CustomWidgets.customButton(context, AppConstants.submit,validateForm),
             ],
           ),

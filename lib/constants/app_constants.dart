@@ -1,5 +1,3 @@
-
-
 class AppConstants {
   static const String logo = 'images/logo.png';
   static const String splash = 'images/splashScreen.png';
@@ -28,7 +26,7 @@ class AppConstants {
   static const String address = 'Address';
   static const String temperature = 'Temperature';
 
-  static const String oxygenUse = 'Oxygen Use';
+
   static const String painLevelToday = 'Pain Level Today';
   static const String bodyLocationToday = 'Location of Pain';
   static const String painLevelLastVisit = 'Pain Level Last Visit';
@@ -40,7 +38,7 @@ class AppConstants {
   static const double menuTitleFontSize = 30;
   static const double formTitle = 25;
 
-  static const List<String> typeInputNumberList = <String>[age,bloodPressureRightArm, bloodPressureLeftArm,oxygenStat];
+  static const List<String> typeInputNumberList = <String>[age,bloodPressureRightArm, bloodPressureLeftArm,oxygenStat, birthday];
 
   static const String bloodPressure = 'Blood Pressure';
   static const String bloodPressureRightArm = 'Right Arm';
@@ -48,17 +46,19 @@ class AppConstants {
 
   static const String respiratoryRate = 'Respiratory Rate';
   static const List<String> respiratoryRateList = <String>['Within Normal Limits', 'Labored', 'Wheezing', 'Rales', 'Diminished'];
-
+  static const String diminished = 'Diminished';
   static const List<String> diminishedList =  <String>['Right Upper Lobe',
     'Right Middle Lobe', ' Right Lower Lobe', ' Left Upper Lobe', 'Left Lower Lobe'];
 
   static const String sortOfBreath = 'Shortness Of Breath';
   static const List<String> sortOfBreathList = <String>['Minimal', 'Moderate', 'At Rest'];
+
+  static const String oxygenUse = 'Oxygen Use';
   static const List<String> oxygenUseList = <String>['Continues','Intermittent'];
 
   static const String heartRate = 'Heart Rate';
   static const List<String> heartRateList = <String>['Regular','Irregular'];
 
-
+  static const String saving = 'Saving...';
 
 }

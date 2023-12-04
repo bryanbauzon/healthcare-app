@@ -80,30 +80,30 @@ class CustomWidgets {
   // List<String> list = Utils.retrieveDropdownList(fieldName, isDropdown);
       return Padding(padding: const EdgeInsets.only(left: 20, right: 20,top: 10),
   child:TextFormField(
-    keyboardType: Utils.getTextInputTypeByField(fieldName),
-    decoration: InputDecoration(
-      hintText: fieldName,
-    focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide(
-        color: AppColors.theme
-      )
-    ),
-      border: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: AppColors.theme,
+
+      maxLines: (fieldName == AppConstants.medicationPlan)? 7: 1,
+      keyboardType: Utils.getTextInputTypeByField(fieldName),
+      decoration: InputDecoration(
+        hintText: fieldName,
+        focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+                color: AppColors.theme
+            )
+        ),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: AppColors.theme,
+          ),
         ),
       ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'This field is required.';
+        }
+        return null;
+      },
     ),
-    validator: (value) {
-      if (value == null || value.isEmpty) {
-        return 'This field is required.';
-      }
-      return null;
-    },
-  )
-
-    
-    ,);}
+    );}
 
   static Widget customMenuTiles(BuildContext context, String title,
           bool isEnabled, VoidCallback onTap, IconData ic) =>
@@ -292,8 +292,59 @@ class CustomWidgets {
       ],
     ));}
 
+  static Widget painLevelFields(BuildContext context, String fieldname){
+    String getPlaceholder(String fieldname){
+      if(fieldname.contains(AppConstants.painLevelToday)){
+        return AppConstants.bodyLocationToday;
+      }
+      return AppConstants.bodyLocationTLastVisit;
+    }
+    return SafeArea(child:  Column(
+      children: [
+        setFormTitle(fieldname),
+        Align(
+          alignment: Alignment.centerLeft,
+          child:  SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child:  Row(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left:10, right: 20),
+                    child:  CustomWidgets.customTextFormField(context,fieldname),
+                  ),),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left:10),
+                    child:  CustomWidgets.customTextFormField(context,getPlaceholder(fieldname)),
+                  ),),
+              ],
+            )
+
+          ),
+        )
+      ],
+    ));}
+
+  static Widget medicationPlan(BuildContext context){
+    return SafeArea(child:  Column(
+      children: [
+        setFormTitle(AppConstants.medicationPlan),
+        Align(
+          alignment: Alignment.centerLeft,
+          child:  SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child:   Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(left:10),
+                child:  CustomWidgets.customTextFormField(context,AppConstants.medicationPlan),
+              ),),),
+        )
+      ],
+    ));}
+
   static Widget setFormTitle(String title) =>
-      Padding(padding:  const EdgeInsets.only(left: 20,top: 20),child:  Align(
+      Padding(padding:  const EdgeInsets.only(left: 25,top: 20),child:  Align(
         alignment: Alignment.centerLeft,
         child:  Text(
             title,

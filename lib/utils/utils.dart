@@ -29,20 +29,23 @@ class Utils{
     TextInputType type = TextInputType.text;
     if(AppConstants.typeInputNumberList.contains(field)){
        type = TextInputType.number;
-    }else if(field.contains(AppConstants.birthday)){
-      type = TextInputType.datetime;
     }
     return type;
   }
 
-  static List<String> retrieveDropdownList(String fieldName){
+  static List<String> retrieveDropdownListByFieldName(String fieldName){
     List<String> list = [];
-      if(fieldName.contains(AppConstants.respiratoryRate)){
-        list = AppConstants.respiratoryRateList;
-      }else if(fieldName.contains(AppConstants.heartRate)){
-        list = AppConstants.heartRateList;
-      }else if(fieldName.contains(AppConstants.respiratoryRateList.last)){
-        list = AppConstants.diminishedList;
+      switch(fieldName){
+        case AppConstants.respiratoryRate:
+          return AppConstants.respiratoryRateList;
+        case AppConstants.heartRate:
+          return AppConstants.heartRateList;
+        case AppConstants.diminished:
+          return AppConstants.diminishedList;
+        case AppConstants.sortOfBreath:
+          return AppConstants.sortOfBreathList;
+        case AppConstants.oxygenUse:
+          return AppConstants.oxygenUseList;
       }
     return list;
   }
