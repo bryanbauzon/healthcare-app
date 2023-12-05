@@ -37,11 +37,25 @@ class Utils{
           return AppConstants.heartRateList;
         case AppConstants.diminished:
           return AppConstants.diminishedList;
-        case AppConstants.sortOfBreath:
-          return AppConstants.sortOfBreathList;
+        case AppConstants.shortOfBreath:
+          return AppConstants.shortOfBreathList;
         case AppConstants.oxygenUse:
           return AppConstants.oxygenUseList;
       }
     return list;
   }
+
+  static bool isNotEmpty(String data){
+    return data.trim().isNotEmpty;
+  }
+
+  static bool isListNotEmpty(List<String> list){
+    for(String str in list){
+      if(isNotEmpty(str)){
+        return true;
+      }
+    }
+    return false;
+  }
+
 }
