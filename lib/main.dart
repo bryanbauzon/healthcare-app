@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:holy_trinity_healthcare/screens/splash.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
