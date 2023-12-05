@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/app_constants.dart';
 import '../constants/widgets.dart';
 import '../utils/utils.dart';
+import 'home.dart';
 
 class Forms extends StatefulWidget {
   const Forms({super.key, required this.title});
@@ -85,6 +86,19 @@ class _FormsState extends State<Forms> {
         if(Utils.isNotEmpty(value)){
           controllerList[i].text = value;
         }
+    }
+  }
+
+  _removeData() async{
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String value = "";
+    String key = "";
+    for(int i = 0; i < AppConstants.keysVitalSigns.length; i++){
+      key = AppConstants.keysVitalSigns[i].replaceAll(' ', '');
+      value = prefs.getString(key) ?? '';
+      if(Utils.isNotEmpty(value)){
+        await prefs.remove(key);
+      }
     }
   }
 
@@ -297,7 +311,10 @@ class _FormsState extends State<Forms> {
             children: [
               CustomWidgets.customButton(context, AppConstants.saveForNow, validateForm),
               CustomWidgets.customButton(
-                  context, AppConstants.submit, (){}),
+                  context, AppConstants.submit, (){
+                _removeData();
+                Utils.navigateToScreen(context, const Home());
+              }),
             ],
           ),
         ));
