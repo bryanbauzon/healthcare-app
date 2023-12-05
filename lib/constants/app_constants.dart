@@ -13,7 +13,7 @@ class AppConstants {
   static const String dummyDescriptionShort =
       'Compiled nurses document for new patient care';
   static const String appDescriptionDetailed =
-      'HTH Holy Trinity Healthcare  has been providing quality home health care services in the Houston and surrounding Southeast Texas communities since 2006.  We provide highly skilled, compassionate, reliable Professionals and Care Givers to individuals in need of home health care.';
+      'The HIPAA Privacy Rule requires appropriate safeguards to protect the privacy of protected health information and sets limits and conditions on the uses and disclosures that may be made of such information without an authorization.';
   static const String comingSoon = 'COMING SOON!';
 
   static const String vitalSign = 'VITAL SIGNS';
