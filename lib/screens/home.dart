@@ -15,27 +15,28 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
+      body: Column(
         children: [
           CustomWidgets.customAppBar(
               context, AppConstants.appName, AppConstants.appDescription),
-           const Padding(
-              padding:  EdgeInsets.only(top: 20, left: 25, right: 25),
-              child:  Text(
-                'WELCOME!',
-                style: TextStyle(fontSize: AppConstants.headerFontSize, fontWeight: FontWeight.bold),
-              ),
-
-              ),
-
-          Expanded(child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.only(top:20, left: 25, right: 25, bottom: 40),
+          const Padding(
+            padding: EdgeInsets.only(top: 20, left: 25, right: 25),
+            child: Text(
+              'WELCOME!',
+              style: TextStyle(
+                  fontSize: AppConstants.headerFontSize,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+                child: Padding(
+              padding: const EdgeInsets.only(
+                  top: 20, left: 25, right: 25, bottom: 40),
               child: Column(
                 children: [
-
                   const Text(
-                    AppConstants.dummyDescriptionLong,
+                    AppConstants.appDescriptionDetailed,
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 18),
                   ),
@@ -44,15 +45,12 @@ class _HomeState extends State<Home> {
                     Utils.navigateToScreen(context, const NursesDocument());
                   }, Icons.account_tree_outlined),
                   CustomWidgets.comingSoonMenuTiles(context),
-
                   CustomWidgets.comingSoonMenuTiles(context),
                   CustomWidgets.comingSoonMenuTiles(context),
-
                 ],
               ),
-            )
-          ),),
-
+            )),
+          ),
         ],
       ),
     );
