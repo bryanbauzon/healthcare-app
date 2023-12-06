@@ -131,6 +131,8 @@ class _FormsState extends State<Forms> {
         });
       }
     }
+
+    setFieldData();
   }
 
   _removeData() async {
@@ -146,7 +148,7 @@ class _FormsState extends State<Forms> {
     }
   }
 
-  void saveVitalSigns() {
+  void setFieldData(){
     setState(() {
       fieldData = [
         lName.text,
@@ -170,6 +172,9 @@ class _FormsState extends State<Forms> {
         oxygenUse.text,
       ];
     });
+  }
+  void saveVitalSigns() {
+    setFieldData();
 
     //set the [save for now] button to disabled to prevent users to click Save button multiple times in a row.
     setState(() {
@@ -218,14 +223,14 @@ class _FormsState extends State<Forms> {
 
   void convertToPdf() {
     if (_formKey.currentState!.validate()) {
+      setFieldData();
       if (Utils.isListNotEmpty(fieldData)) {
-
         Utils.navigateToScreen(
             context,
             PdfViewer(
               data: fieldData,
             ));
-        _removeData();
+     //   _removeData();// <- uncomment this line to destroy the data
       }
     }
   }
