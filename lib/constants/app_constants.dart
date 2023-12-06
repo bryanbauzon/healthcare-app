@@ -83,8 +83,9 @@ class AppConstants {
   static const List<String> diminishedList = <String>[
     'Right Upper Lobe',
     'Right Middle Lobe',
-    ' Right Lower Lobe',
-    ' Left Upper Lobe',
+    'Right Lower Lobe',
+    'Left Upper Lobe',
+    'Left Middle Lobe',
     'Left Lower Lobe'
   ];
 

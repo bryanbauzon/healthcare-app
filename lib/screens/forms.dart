@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -45,6 +46,9 @@ class _FormsState extends State<Forms> {
   final medicationPlan = TextEditingController();
 
   List<TextEditingController> controllerList = [];
+
+  bool isDiminished = false;
+
   @override
   void initState() {
     super.initState();
@@ -84,6 +88,12 @@ class _FormsState extends State<Forms> {
     for(int i = 0; i < AppConstants.keysVitalSigns.length; i++){
         value = prefs.getString(AppConstants.keysVitalSigns[i].replaceAll(' ', '')) ?? '';
         if(Utils.isNotEmpty(value)){
+          if(AppConstants.keysVitalSigns[i].replaceAll(' ', '') == AppConstants.respiratoryRate.replaceAll(' ', '')
+             && value == AppConstants.diminished){
+            setState(() {
+              isDiminished = true;
+            });
+          }
           controllerList[i].text = value;
         }
     }
@@ -154,7 +164,7 @@ class _FormsState extends State<Forms> {
     }
   }
 
-  bool isDiminished = false;
+
 
   Future<void> saveDataToSharedPref(List<String> values)async{
     final SharedPreferences prefs = await _prefs;
@@ -209,8 +219,76 @@ class _FormsState extends State<Forms> {
 
   @override
   Widget build(BuildContext context) {
+    //Dropdown
     Widget customDropdown(String fieldName, TextEditingController controller) {
       List<String> list = Utils.retrieveDropdownListByFieldName(fieldName);
+
+      int getIndex(){
+        if(controller.text.isNotEmpty){
+          for(int i = 0; i < list.length; i++){
+            if(controller.text == list[i]){
+              return i;
+            }
+          }
+        }
+        return 0;
+      }
+
+      void validateVitalSignFields(String value){
+        if(widget.title.contains(AppConstants.vitalSign)){
+          if (fieldName.contains(AppConstants.respiratoryRate)) {
+            isDiminished = false;
+            if (value.contains(AppConstants.respiratoryRateList.last)) {
+              isDiminished = true;
+            }
+          }
+        }
+      }
+
+      Widget dropdownField(){
+        if(controller.text.isNotEmpty){
+          return DropdownButtonFormField(
+            value: list[getIndex()],
+            decoration: CustomWidgets.fieldInputDecoration(fieldName),
+            items: list.map<DropdownMenuItem<String>>((String val) {
+              return DropdownMenuItem<String>(value: val, child: Text(val));
+            }).toList(),
+            onChanged: (String? value) {
+              setState(() {
+
+                validateVitalSignFields(value!);
+                controller.text = value;
+              });
+            },
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'This field is required.';
+              }
+              return null;
+            },
+          );
+
+        }
+        return DropdownButtonFormField(
+          decoration: CustomWidgets.fieldInputDecoration(fieldName),
+          items: list.map<DropdownMenuItem<String>>((String val) {
+            return DropdownMenuItem<String>(value: val, child: Text(val));
+          }).toList(),
+          onChanged: (String? value) {
+            setState(() {
+
+              validateVitalSignFields(value!);
+              controller.text = value;
+            });
+          },
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'This field is required.';
+            }
+            return null;
+          },
+        );
+      }
       return Align(
         alignment: Alignment.centerLeft,
         child: Column(
@@ -218,35 +296,50 @@ class _FormsState extends State<Forms> {
             CustomWidgets.setFormTitle(fieldName),
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
-              child: DropdownButtonFormField(
-                decoration: CustomWidgets.fieldInputDecoration(fieldName),
-                items: list.map<DropdownMenuItem<String>>((String val) {
-                  return DropdownMenuItem<String>(value: val, child: Text(val));
-                }).toList(),
-                onChanged: (String? value) {
-                  setState(() {
-                    if (fieldName.contains(AppConstants.respiratoryRate)) {
-                      isDiminished = false;
-                      if (value!
-                          .contains(AppConstants.respiratoryRateList.last)) {
-                        isDiminished = true;
-                      }
-                    }
-
-                    controller.text = value!;
-                  });
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'This field is required.';
-                  }
-                  return null;
-                },
-              ),
+              child:dropdownField()
             )
           ],
         ),
       );
+    }
+
+    Widget vitalSigns() => Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        CustomWidgets.personalInfo(
+            context, lName, fName, mName, bDay, age, address),
+        CustomWidgets.bloodPressure(context, rightArm, leftArm),
+        customDropdown(AppConstants.heartRate, hearRate),
+        customDropdown(
+            AppConstants.respiratoryRate, respiratoryRate),
+        isDiminished
+            ? customDropdown(
+            AppConstants.respiratoryRateList.last,
+            diminished)
+            : Container(),
+        CustomWidgets.oxygenStats(context, oxygenStats),
+        customDropdown(
+            AppConstants.shortOfBreath, shortnessOfBreath),
+        customDropdown(AppConstants.oxygenUse, oxygenUse),
+        CustomWidgets.painLevelFields(
+            context,
+            AppConstants.painLevelToday,
+            painLevelToday,
+            locationPainLevelToday),
+        CustomWidgets.painLevelFields(
+            context,
+            AppConstants.painLevelLastVisit,
+            painLevelPast,
+            locationPainLevelPast),
+        CustomWidgets.medicationPlan(context, medicationPlan),
+      ],
+    );
+
+    Widget retrieveFormFields(){
+      if(widget.title.contains(AppConstants.vitalSign)){
+        return vitalSigns();
+      }
+      return Container();
     }
 
     return Scaffold(
@@ -269,37 +362,7 @@ class _FormsState extends State<Forms> {
                       const EdgeInsets.only(left: 10, right: 10, bottom: 50),
                   child: Form(
                     key: _formKey,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CustomWidgets.personalInfo(
-                            context, lName, fName, mName, bDay, age, address),
-                        CustomWidgets.bloodPressure(context, rightArm, leftArm),
-                        customDropdown(AppConstants.heartRate, hearRate),
-                        customDropdown(
-                            AppConstants.respiratoryRate, respiratoryRate),
-                        isDiminished
-                            ? customDropdown(
-                                AppConstants.respiratoryRateList.last,
-                                diminished)
-                            : Container(),
-                        CustomWidgets.oxygenStats(context, oxygenStats),
-                        customDropdown(
-                            AppConstants.shortOfBreath, shortnessOfBreath),
-                        customDropdown(AppConstants.oxygenUse, oxygenUse),
-                        CustomWidgets.painLevelFields(
-                            context,
-                            AppConstants.painLevelToday,
-                            painLevelToday,
-                            locationPainLevelToday),
-                        CustomWidgets.painLevelFields(
-                            context,
-                            AppConstants.painLevelLastVisit,
-                            painLevelPast,
-                            locationPainLevelPast),
-                        CustomWidgets.medicationPlan(context, medicationPlan),
-                      ],
-                    ),
+                    child: retrieveFormFields()
                   ))
             ],
           ),
