@@ -31,7 +31,7 @@ class _SplashState extends State<Splash> {
         break;
       }
     }
-    Future.delayed(const Duration(seconds: 5), () {
+    Future.delayed(const Duration(seconds: 8), () {
       if(container.isNotEmpty){
         Utils.navigateToScreen(context, const Forms(title: AppConstants.vitalSign,));
       }else{

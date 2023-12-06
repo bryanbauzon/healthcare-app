@@ -1,6 +1,7 @@
 class AppConstants {
   static const String logo = 'images/logo.png';
   static const String splash = 'images/splashScreen.png';
+  static const String greetings = 'WELCOME!';
   static const String appName = 'Holy Trinity Healthcare ';
   static const String appDescription =
       'Meeting the needs of today' 's patients at home';

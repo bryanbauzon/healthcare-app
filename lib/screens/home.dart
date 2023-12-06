@@ -22,12 +22,21 @@ class _HomeState extends State<Home> {
           const Padding(
             padding: EdgeInsets.only(top: 20, left: 25, right: 25),
             child: Text(
-              'WELCOME!',
+              AppConstants.greetings,
               style: TextStyle(
                   fontSize: AppConstants.headerFontSize,
                   fontWeight: FontWeight.bold),
             ),
           ),
+          const Padding(
+            padding: EdgeInsets.only(top: 20, left: 25, right: 25, bottom: 10),
+            child:  Text(
+              AppConstants.appDescriptionDetailed,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+
           Expanded(
             child: SingleChildScrollView(
                 child: Padding(
@@ -35,11 +44,7 @@ class _HomeState extends State<Home> {
                   top: 20, left: 25, right: 25, bottom: 40),
               child: Column(
                 children: [
-                  const Text(
-                    AppConstants.appDescriptionDetailed,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 18),
-                  ),
+
                   CustomWidgets.customMenuTiles(
                       context, AppConstants.nursesDocument, true, () {
                     Utils.navigateToScreen(context, const NursesDocument());

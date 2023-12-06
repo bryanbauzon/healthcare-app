@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:holy_trinity_healthcare/constants/app_constants.dart';
 
-
 class Utils{
 
   //Reference: https://api.flutter.dev/flutter/material/Icons-class.html
@@ -46,7 +45,7 @@ class Utils{
   }
 
   static bool isNotEmpty(String data){
-    return data.trim().isNotEmpty;
+    return data.isNotEmpty;
   }
 
   static bool isListNotEmpty(List<String> list){
@@ -59,5 +58,14 @@ class Utils{
   }
 
   static String removeEmptyString(String str) => str.replaceAll(' ', '').trim();
+  static String stringCapitalize(String s) {
+    if (s.trim().isEmpty) {
+      return '';
+    }
+    return s.split(' ')
+        .map((element) =>
+    "${element[0].toUpperCase()}${element.substring(1).toLowerCase()}")
+        .join(" ");
+  }
 
 }

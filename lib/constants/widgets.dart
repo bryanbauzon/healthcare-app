@@ -53,7 +53,7 @@ class CustomWidgets {
                               showSnackBar(context, 'info here...');
                             },
                             icon: Icon(
-                              Icons.info_outline,
+                              Icons.account_circle,
                               size: 50,
                               color: AppColors.white,
                             )),
@@ -62,17 +62,19 @@ class CustomWidgets {
                   ))));
 
   static Widget customButton(
-      BuildContext context, String text, VoidCallback onTap) {
+      BuildContext context, String text, VoidCallback onTap, bool isEnabled) {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: GestureDetector(
-        onTap: onTap,
+        onTap: isEnabled? onTap:(){},
         child: Container(
             height: 60,
             width: 130,
             decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
-                color: AppColors.theme),
+                color: isEnabled?AppColors.theme:AppColors.disabled
+
+            ),
             child: Center(
               child: Text(
                 text,
