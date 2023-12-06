@@ -58,4 +58,6 @@ class Utils{
     return false;
   }
 
+  static String removeEmptyString(String str) => str.replaceAll(' ', '').trim();
+
 }

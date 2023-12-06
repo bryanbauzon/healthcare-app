@@ -86,9 +86,9 @@ class _FormsState extends State<Forms> {
 
     String value = "";
     for(int i = 0; i < AppConstants.keysVitalSigns.length; i++){
-        value = prefs.getString(AppConstants.keysVitalSigns[i].replaceAll(' ', '')) ?? '';
+        value = prefs.getString(Utils.removeEmptyString(AppConstants.keysVitalSigns[i])) ?? '';
         if(Utils.isNotEmpty(value)){
-          if(AppConstants.keysVitalSigns[i].replaceAll(' ', '') == AppConstants.respiratoryRate.replaceAll(' ', '')
+          if(Utils.removeEmptyString(AppConstants.keysVitalSigns[i]) ==  Utils.removeEmptyString( AppConstants.respiratoryRate)
              && value == AppConstants.diminished){
             setState(() {
               isDiminished = true;
@@ -104,7 +104,9 @@ class _FormsState extends State<Forms> {
     String value = "";
     String key = "";
     for(int i = 0; i < AppConstants.keysVitalSigns.length; i++){
-      key = AppConstants.keysVitalSigns[i].replaceAll(' ', '');
+
+
+      key = Utils.removeEmptyString(AppConstants.keysVitalSigns[i]);
       value = prefs.getString(key) ?? '';
       if(Utils.isNotEmpty(value)){
         await prefs.remove(key);
@@ -173,7 +175,7 @@ class _FormsState extends State<Forms> {
 
       for(int i = 0 ; i < values.length; i++){
         if(values[i].isNotEmpty){
-          prefs.setString(AppConstants.keysVitalSigns[i].replaceAll(' ', ''), values[i]);
+          prefs.setString( Utils.removeEmptyString(AppConstants.keysVitalSigns[i]), values[i]);
         }
       }
 
