@@ -235,7 +235,7 @@ class _FormsState extends State<Forms> {
             PdfViewer(
               data: fieldData,
             ));
-       _removeData();// <- uncomment this line to destroy the data
+       _removeData();
       }
     }
   }
