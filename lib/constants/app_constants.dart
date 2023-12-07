@@ -27,7 +27,7 @@ class AppConstants {
   static const String birthday = 'Birthday';
   static const String age = 'Age';
   static const String address = 'Address';
-  // static const String temperature = 'Temperature';
+  static const String temperature = 'Temperature';
   static const String painLevelToday = 'Pain Level Today';
   static const String bodyLocationToday = 'Location of Pain';
   static const String painLevelLastVisit = 'Pain Level Last Visit';
@@ -44,7 +44,8 @@ class AppConstants {
     bloodPressureRightArm,
     bloodPressureLeftArm,
     oxygenStat,
-    birthday
+    birthday,
+    temperature
   ];
   static const List<String> keysVitalSigns = [
     lName,
@@ -65,7 +66,8 @@ class AppConstants {
     bodyLocationToday,
     painLevelLastVisit,
     bodyLocationTLastVisit,
-    medicationPlan
+    medicationPlan,
+    temperature
   ];
 
   static const String bloodPressure = 'Blood Pressure';
@@ -108,4 +110,5 @@ class AppConstants {
 
   static const String saving = 'Saving...';
   static const String nothingToSave = 'There is nothing to save...';
+  static const List<String> actions = ['save','submit'];
 }

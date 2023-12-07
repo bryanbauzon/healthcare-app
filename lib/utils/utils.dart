@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:holy_trinity_healthcare/constants/app_constants.dart';
+import 'package:intl/intl.dart';
 
 class Utils{
 
@@ -68,4 +69,12 @@ class Utils{
         .join(" ");
   }
 
+  static String getFullName(String ln, String fn, String mn){
+    return '$ln, $fn $mn';
+  }
+
+  static String getCurrentDate() {
+    final now = DateTime.now();
+    return DateFormat.yMMMMd('en_US').add_jm().format(now);
+  }
 }

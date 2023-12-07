@@ -314,12 +314,11 @@ class CustomWidgets {
     ));
   }
 
-  static Widget oxygenStats(
-      BuildContext context, TextEditingController controller) {
+  static Widget singeTextFormField(BuildContext context, String label,TextEditingController controller) {
     return SafeArea(
         child: Column(
       children: [
-        setFormTitle(AppConstants.oxygenStat),
+        setFormTitle(label),
         Align(
           alignment: Alignment.centerLeft,
           child: SizedBox(
@@ -327,7 +326,7 @@ class CustomWidgets {
             child: Padding(
               padding: const EdgeInsets.only(left: 10),
               child: CustomWidgets.customTextFormField(
-                  context, AppConstants.oxygenStat, controller),
+                  context, label, controller),
             ),
           ),
         )

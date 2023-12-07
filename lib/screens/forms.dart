@@ -42,13 +42,14 @@ class _FormsState extends State<Forms> {
   late TextEditingController locationPainLevelPast = TextEditingController();
 
   late TextEditingController medicationPlan = TextEditingController();
-
+  late TextEditingController temperature = TextEditingController();
   List<TextEditingController> controllerList = [];
 
   bool isDiminished = false;
   List<String> fieldData = [];
 
   bool saveForNowEnabled = true;
+  String action = '';
 
   @override
   void initState() {
@@ -81,6 +82,7 @@ class _FormsState extends State<Forms> {
     locationPainLevelPast.dispose();
     medicationPlan.dispose();
     oxygenStats.dispose();
+    temperature.dispose();
   }
 
   void setTextEditingControllerList() {
@@ -104,7 +106,8 @@ class _FormsState extends State<Forms> {
         locationPainLevelToday,
         painLevelPast,
         locationPainLevelPast,
-        medicationPlan
+        medicationPlan,
+        temperature
       ];
     });
   }
@@ -157,19 +160,20 @@ class _FormsState extends State<Forms> {
         bDay.text,
         age.text,
         address.text,
+        temperature.text,
         rightArm.text,
         leftArm.text,
         hearRate.text,
         respiratoryRate.text,
         diminished.text,
         oxygenStats.text,
+        shortnessOfBreath.text,
+        oxygenUse.text,
         painLevelToday.text,
         locationPainLevelToday.text,
         painLevelPast.text,
         locationPainLevelPast.text,
         medicationPlan.text,
-        shortnessOfBreath.text,
-        oxygenUse.text,
       ];
     });
   }
@@ -188,10 +192,12 @@ class _FormsState extends State<Forms> {
     });
 
     if (Utils.isListNotEmpty(fieldData)) {
-      CustomWidgets.showSnackBar(context, AppConstants.saving);
+      // CustomWidgets.showSnackBar(context, AppConstants.saving);
       saveDataToSharedPref(fieldData);
     } else {
-      CustomWidgets.showSnackBar(context, AppConstants.nothingToSave);
+     if(action == AppConstants.actions[0]){
+       CustomWidgets.showSnackBar(context, AppConstants.nothingToSave);
+     }
     }
   }
 
@@ -210,27 +216,26 @@ class _FormsState extends State<Forms> {
   }
 
   void validateForm() {
+    setState(() {
+      action = AppConstants.actions[0];//save
+    });
     saveVitalSigns();
-
-    // Navigator.pop(context);
-    //  if (_formKey.currentState!.validate()) {
-    //
-    //    ScaffoldMessenger.of(context).showSnackBar(
-    //      const SnackBar(content: Text('Processing Data')),
-    //    );
-    //  }
   }
 
   void convertToPdf() {
+    setState(() {
+      action = AppConstants.actions[1];//submit
+    });
+
     if (_formKey.currentState!.validate()) {
-      setFieldData();
+      saveVitalSigns();
       if (Utils.isListNotEmpty(fieldData)) {
         Utils.navigateToScreen(
             context,
             PdfViewer(
               data: fieldData,
             ));
-     //   _removeData();// <- uncomment this line to destroy the data
+       _removeData();// <- uncomment this line to destroy the data
       }
     }
   }
@@ -320,6 +325,7 @@ class _FormsState extends State<Forms> {
         children: [
           CustomWidgets.personalInfo(
               context, lName, fName, mName, bDay, age, address),
+          CustomWidgets.singeTextFormField(context, AppConstants.temperature,temperature),
           CustomWidgets.bloodPressure(context, rightArm, leftArm),
           customDropdown(AppConstants.heartRate, hearRate),
           customDropdown(AppConstants.respiratoryRate, respiratoryRate),
@@ -327,7 +333,7 @@ class _FormsState extends State<Forms> {
               ? customDropdown(
                   AppConstants.respiratoryRateList.last, diminished)
               : Container(),
-          CustomWidgets.oxygenStats(context, oxygenStats),
+          CustomWidgets.singeTextFormField(context,AppConstants.oxygenUse, oxygenStats),
           customDropdown(AppConstants.shortOfBreath, shortnessOfBreath),
           customDropdown(AppConstants.oxygenUse, oxygenUse),
           CustomWidgets.painLevelFields(context, AppConstants.painLevelToday,
