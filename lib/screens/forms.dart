@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:holy_trinity_healthcare/screens/forms/personalDetails.dart';
+import 'package:holy_trinity_healthcare/screens/home.dart';
 import 'package:holy_trinity_healthcare/screens/pdf.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/app_constants.dart';
@@ -219,7 +221,11 @@ class _FormsState extends State<Forms> {
     setState(() {
       action = AppConstants.actions[0];//save
     });
-    saveVitalSigns();
+    // saveVitalSigns();
+    _removeData();
+    Utils.navigateToScreen(
+        context,
+        const Home());
   }
 
   void convertToPdf() {
@@ -323,8 +329,7 @@ class _FormsState extends State<Forms> {
   Widget vitalSignsForms() => Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CustomWidgets.personalInfo(
-              context, lName, fName, mName, bDay, age, address),
+          PersonalDetails(lName: lName,fName: fName,mName: mName,bDay: bDay,age: age, address:address),
           CustomWidgets.singeTextFormField(context, AppConstants.temperature,temperature),
           CustomWidgets.bloodPressure(context, rightArm, leftArm),
           customDropdown(AppConstants.heartRate, hearRate),
@@ -371,10 +376,10 @@ class _FormsState extends State<Forms> {
                       fontWeight: FontWeight.bold),
                 ),
               ),
-              Padding(
+              SafeArea(child: Padding(
                   padding:
-                      const EdgeInsets.only(left: 10, right: 10, bottom: 50),
-                  child: Form(key: _formKey, child: retrieveFormFields()))
+                  const EdgeInsets.only(left: 10, right: 10, bottom: 50),
+                  child: Form(key: _formKey, child: retrieveFormFields())))
             ],
           ),
         ),

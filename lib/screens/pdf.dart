@@ -93,7 +93,7 @@ class _PdfViewerState extends State<PdfViewer> {
                           ),
                           pw.Align(
                             alignment: pw.Alignment.centerLeft,
-                            child: pw.Text('Date: ${Utils.getCurrentDate()}',
+                            child: pw.Text('Date: ${Utils.formatDate(DateTime.now(), true)}',
                                 style: pw.TextStyle(
                                     font: font, fontSize: fontSize)),
                           ),

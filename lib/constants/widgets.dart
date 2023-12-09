@@ -90,9 +90,9 @@ class CustomWidgets {
 
   static Widget customTextFormField(BuildContext context, String fieldName,
       TextEditingController controller) {
-    // List<String> list = Utils.retrieveDropdownList(fieldName, isDropdown);
-    return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+    return SizedBox(child:
+    Padding(
+      padding: AppConstants.formPadding,
       child: TextFormField(
         controller: controller,
         maxLines: (fieldName == AppConstants.medicationPlan) ? 7 : 1,
@@ -105,7 +105,7 @@ class CustomWidgets {
           return null;
         },
       ),
-    );
+    ),);
   }
 
   static InputDecoration fieldInputDecoration(String fieldName) =>
@@ -232,57 +232,6 @@ class CustomWidgets {
         SnackBar(content: Text(message)),
       );
 
-  static Widget personalInfo(
-      BuildContext context,
-      TextEditingController lName,
-      TextEditingController fName,
-      TextEditingController mName,
-      TextEditingController bDay,
-      TextEditingController age,
-      TextEditingController address) {
-    return SafeArea(
-        child: Column(
-      children: [
-        setFormTitle(AppConstants.personalInfo),
-        Flex(
-          direction: Axis.horizontal,
-          children: [
-            Expanded(
-              child: CustomWidgets.customTextFormField(
-                  context, AppConstants.lName, lName),
-            ),
-            Expanded(
-              child: CustomWidgets.customTextFormField(
-                  context, AppConstants.fName, fName),
-            ),
-            Expanded(
-              child: CustomWidgets.customTextFormField(
-                  context, AppConstants.mName, mName),
-            )
-          ],
-        ),
-        Flex(
-          direction: Axis.horizontal,
-          children: [
-            Expanded(
-                child: Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: CustomWidgets.customTextFormField(
-                  context, AppConstants.birthday, bDay),
-            )),
-            SizedBox(
-              width: 220,
-              child: CustomWidgets.customTextFormField(
-                  context, AppConstants.age, age),
-            )
-          ],
-        ),
-        CustomWidgets.customTextFormField(
-            context, AppConstants.address, address),
-      ],
-    ));
-  }
-
   static Widget bloodPressure(
     BuildContext context,
     TextEditingController right,
@@ -399,7 +348,7 @@ class CustomWidgets {
   }
 
   static Widget setFormTitle(String title) => Padding(
-        padding: const EdgeInsets.only(left: 25, top: 20),
+        padding: const EdgeInsets.only(left: 10, top: 20),
         child: Align(
             alignment: Alignment.centerLeft,
             child: Text(title,

@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class AppConstants {
   static const String logo = 'images/logo.png';
   static const String splash = 'images/splashScreen.png';
@@ -111,4 +113,12 @@ class AppConstants {
   static const String saving = 'Saving...';
   static const String nothingToSave = 'There is nothing to save...';
   static const List<String> actions = ['save','submit'];
+
+  static const String month = 'month';
+  static const String day = 'day';
+  static const String year = 'year';
+
+  static const String selectDate = 'Select Date';
+
+  static const EdgeInsetsGeometry formPadding =  EdgeInsets.all(10);
 }
