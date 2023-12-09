@@ -153,7 +153,7 @@ class _FormsState extends State<Forms> {
     }
   }
 
-  void setFieldData(){
+  void setFieldData() {
     setState(() {
       fieldData = [
         lName.text,
@@ -179,6 +179,7 @@ class _FormsState extends State<Forms> {
       ];
     });
   }
+
   void saveVitalSigns() {
     setFieldData();
 
@@ -186,7 +187,7 @@ class _FormsState extends State<Forms> {
     setState(() {
       saveForNowEnabled = false;
     });
-    Future.delayed(const Duration(seconds:4),(){
+    Future.delayed(const Duration(seconds: 4), () {
       //enabled the button after 4 seconds
       setState(() {
         saveForNowEnabled = true;
@@ -197,9 +198,9 @@ class _FormsState extends State<Forms> {
       // CustomWidgets.showSnackBar(context, AppConstants.saving);
       saveDataToSharedPref(fieldData);
     } else {
-     if(action == AppConstants.actions[0]){
-       CustomWidgets.showSnackBar(context, AppConstants.nothingToSave);
-     }
+      if (action == AppConstants.actions[0]) {
+        CustomWidgets.showSnackBar(context, AppConstants.nothingToSave);
+      }
     }
   }
 
@@ -219,18 +220,16 @@ class _FormsState extends State<Forms> {
 
   void validateForm() {
     setState(() {
-      action = AppConstants.actions[0];//save
+      action = AppConstants.actions[0]; //save
     });
-    // saveVitalSigns();
-    _removeData();
-    Utils.navigateToScreen(
-        context,
-        const Home());
+    saveVitalSigns();
+   // _removeData();
+    Utils.navigateToScreen(context, const Home());
   }
 
   void convertToPdf() {
     setState(() {
-      action = AppConstants.actions[1];//submit
+      action = AppConstants.actions[1]; //submit
     });
 
     if (_formKey.currentState!.validate()) {
@@ -241,7 +240,7 @@ class _FormsState extends State<Forms> {
             PdfViewer(
               data: fieldData,
             ));
-       _removeData();
+        _removeData();
       }
     }
   }
@@ -329,8 +328,15 @@ class _FormsState extends State<Forms> {
   Widget vitalSignsForms() => Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          PersonalDetails(lName: lName,fName: fName,mName: mName,bDay: bDay,age: age, address:address),
-          CustomWidgets.singeTextFormField(context, AppConstants.temperature,temperature),
+          PersonalDetails(
+              lName: lName,
+              fName: fName,
+              mName: mName,
+              bDay: bDay,
+              age: age,
+              address: address),
+          CustomWidgets.singeTextFormField(
+              context, AppConstants.temperature, temperature),
           CustomWidgets.bloodPressure(context, rightArm, leftArm),
           customDropdown(AppConstants.heartRate, hearRate),
           customDropdown(AppConstants.respiratoryRate, respiratoryRate),
@@ -338,7 +344,8 @@ class _FormsState extends State<Forms> {
               ? customDropdown(
                   AppConstants.respiratoryRateList.last, diminished)
               : Container(),
-          CustomWidgets.singeTextFormField(context,AppConstants.oxygenUse, oxygenStats),
+          CustomWidgets.singeTextFormField(
+              context, AppConstants.oxygenUse, oxygenStats),
           customDropdown(AppConstants.shortOfBreath, shortnessOfBreath),
           customDropdown(AppConstants.oxygenUse, oxygenUse),
           CustomWidgets.painLevelFields(context, AppConstants.painLevelToday,
@@ -376,10 +383,11 @@ class _FormsState extends State<Forms> {
                       fontWeight: FontWeight.bold),
                 ),
               ),
-              SafeArea(child: Padding(
-                  padding:
-                  const EdgeInsets.only(left: 10, right: 10, bottom: 50),
-                  child: Form(key: _formKey, child: retrieveFormFields())))
+              SafeArea(
+                  child: Padding(
+                      padding: const EdgeInsets.only(
+                          left: 10, right: 10, bottom: 50),
+                      child: Form(key: _formKey, child: retrieveFormFields())))
             ],
           ),
         ),
@@ -388,8 +396,8 @@ class _FormsState extends State<Forms> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CustomWidgets.customButton(
-                  context, AppConstants.saveForNow, validateForm,saveForNowEnabled),
+              CustomWidgets.customButton(context, AppConstants.saveForNow,
+                  validateForm, saveForNowEnabled),
               CustomWidgets.customButton(
                   context, AppConstants.submit, convertToPdf, true),
             ],

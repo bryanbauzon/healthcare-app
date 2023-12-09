@@ -26,34 +26,47 @@ class PersonalDetails extends StatefulWidget {
 }
 
 class _PersonalDetailsState extends State<PersonalDetails> {
-
   DateTime selectedDate = DateTime.now();
   bool isSelected = false;
-  String birthYear = '';
+
+  @override
+  initState() {
+    super.initState();
+    if (widget.bDay.text != null) {
+
+      setState(() {
+        isSelected = true;
+
+        widget.age.text = Utils.getAgeByBirthdate(selectedDate).toString();
+
+      });
+    }
+  }
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
         firstDate: DateTime(1960, 8),
-        lastDate: DateTime( DateTime.now().year + 1));
+        lastDate: DateTime(DateTime.now().year + 1));
     if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
-        birthYear = Utils.getSpecificValueByDateTime(selectedDate,AppConstants.year);
+
         isSelected = true;
-        widget.age.text = Utils.getAgeByYear(birthYear).toString();
-        widget.bDay.text = Utils.formatDate(selectedDate,false);
+        widget.age.text = Utils.getAgeByBirthdate(selectedDate).toString();
+        widget.bDay.text = Utils.formatDate(selectedDate, false);
       });
     }
   }
-  Widget label(String label)=>  Padding(
-    padding: const EdgeInsets.only(right:20, left: 20),
-    child:  Text('$label:',
-      style: const TextStyle(fontSize: 20,
-          fontWeight: FontWeight.bold),
-    ),
-  );
+
+  Widget label(String label) => Padding(
+        padding: const EdgeInsets.only(right: 20, left: 20),
+        child: Text(
+          '$label:',
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+      );
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -76,27 +89,27 @@ class _PersonalDetailsState extends State<PersonalDetails> {
           ],
         ),
         Padding(
-          padding:  AppConstants.formPadding,
+          padding: AppConstants.formPadding,
           child: Row(
             children: [
               label(AppConstants.birthday),
-
-              ElevatedButton(onPressed:()=>_selectDate(context),
-                  style: ButtonStyle(
-                   foregroundColor: MaterialStateProperty.resolveWith((states) {
-                     return AppColors.theme;
-                   })
-                  ),
-                  child: Text(!isSelected? AppConstants.selectDate:widget.bDay.text)),
+              ElevatedButton(
+                  onPressed: () => _selectDate(context),
+                  style: ButtonStyle(foregroundColor:
+                      MaterialStateProperty.resolveWith((states) {
+                    return AppColors.theme;
+                  })),
+                  child: Text(!isSelected
+                      ? AppConstants.selectDate
+                      : widget.bDay.text)),
               label(AppConstants.age),
-              Text(widget.age.text)
+              Text(Utils.ageFormatter(widget.age.text),
+              style: const TextStyle(fontSize: 20),)
             ],
           ),
         ),
-
         CustomWidgets.customTextFormField(
             context, AppConstants.address, widget.address),
-
       ],
     );
   }

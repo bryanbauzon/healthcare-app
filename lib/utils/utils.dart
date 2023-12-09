@@ -70,27 +70,53 @@ class Utils {
   }
 
   static String formatDate(DateTime date, bool isPdf) {
-    if(isPdf){
+    if (isPdf) {
       //add_jm() to add time
       return DateFormat.yMMMMd('en_US').add_jm().format(date);
     }
     return DateFormat.yMMMMd('en_US').format(date);
   }
-  static String getSpecificValueByDateTime(DateTime dt, String valueToGet){
-    switch(valueToGet){
+
+  static int getSpecificValueByDateTime(DateTime dt, String valueToGet) {
+    switch (valueToGet) {
       case AppConstants.year:
-        return DateFormat.y('en_US').format(dt);
+        return int.parse(DateFormat.y('en_US').format(dt));
+      case AppConstants.month:
+        return int.parse(DateFormat('M').format(dt));
+      case AppConstants.day:
+        return int.parse(DateFormat('d').format(dt));
     }
-    return '';
+    return 0;
   }
 
   static int convertStringToInt(String str) => int.parse(str);
-  static int getAgeByYear(String bYear){
-    int currYear = convertStringToInt(
-        getSpecificValueByDateTime(DateTime.now(),AppConstants.year)
-    );
-    int birthYear = convertStringToInt(bYear);
+  static int getAgeByBirthdate(DateTime bDate) {
+    DateTime now = DateTime.now();
+    int currMonth = getSpecificValueByDateTime(now, AppConstants.month);
+    int currDay = getSpecificValueByDateTime(now, AppConstants.day);
+    int currYear = getSpecificValueByDateTime(now, AppConstants.year);
 
-    return currYear - birthYear;
+    int birthMonth = getSpecificValueByDateTime(bDate, AppConstants.month);
+    int birthDay = getSpecificValueByDateTime(bDate, AppConstants.day);
+    int birthYear = getSpecificValueByDateTime(bDate, AppConstants.year);
+
+    if (birthYear < currYear) {
+      if (currMonth > birthMonth) {
+        return currYear - birthYear;
+      } else if (currMonth == birthMonth) {
+        if (birthDay > currDay) {
+          return (currYear - birthYear) - 1;
+        }
+        return currYear - birthYear;
+      }
+    }
+    return 0;
+  }
+  
+  static String ageFormatter(String age){
+    if(convertStringToInt(age) > 1){
+      return '$age years old.';
+    }
+    return '$age year old.';
   }
 }
