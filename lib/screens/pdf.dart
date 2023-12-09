@@ -137,54 +137,54 @@ class _PdfViewerState extends State<PdfViewer> {
               ),
               pw.Align(
                 alignment: pw.Alignment.centerLeft,
-                child: pw.Text('''Blood Pressure: ${data[7]} - Right Arm
-                                  ${data[8]} - Left Arm''',
+                child: pw.Text('''Blood Pressure: Right Arm: ${data[7]}/${data[8]}
+                                  Left Arm: ${data[9]}/${data[10]}''',
                     style: pw.TextStyle(font: font, fontSize: fontSize)),
               ),
               pw.Align(
                 alignment: pw.Alignment.centerLeft,
-                child: pw.Text('Heart Rate: ${data[9]}',
+                child: pw.Text('Heart Rate: ${data[11]}',
                     style: pw.TextStyle(font: font, fontSize: fontSize)),
               ),
               pw.Align(
                 alignment: pw.Alignment.centerLeft,
-                child: pw.Text('Respiratory Rate: ${data[10]}',
+                child: pw.Text('Respiratory Rate: ${data[12]}',
                     style: pw.TextStyle(font: font, fontSize: fontSize)),
               ),
               pw.Align(
                 alignment: pw.Alignment.centerLeft,
-                child: pw.Text('Diminished: ${data[11]}',
+                child: pw.Text('Diminished: ${data[13]}',
                     style: pw.TextStyle(font: font, fontSize: fontSize)),
               ),
               pw.Align(
                 alignment: pw.Alignment.centerLeft,
-                child: pw.Text('Oxygen Status: ${data[12]}',
+                child: pw.Text('Oxygen Status: ${data[14]}',
                     style: pw.TextStyle(font: font, fontSize: fontSize)),
               ),
               pw.Align(
                 alignment: pw.Alignment.centerLeft,
-                child: pw.Text('Shortness of Breath: ${data[13]}',
+                child: pw.Text('Shortness of Breath: ${data[15]}',
                     style: pw.TextStyle(font: font, fontSize: fontSize)),
               ),
               pw.Align(
                 alignment: pw.Alignment.centerLeft,
-                child: pw.Text('Oxygen Use: ${data[14]}',
+                child: pw.Text('Oxygen Use: ${data[16]}',
                     style: pw.TextStyle(font: font, fontSize: fontSize)),
               ),
               pw.Align(
                 alignment: pw.Alignment.centerLeft,
-                child: pw.Text('Pain Level Today: ${data[15]} - ${data[16]}',
+                child: pw.Text('Pain Level Today: ${data[17]} - ${data[18]}',
                     style: pw.TextStyle(font: font, fontSize: fontSize)),
               ),
               pw.Align(
                 alignment: pw.Alignment.centerLeft,
                 child: pw.Text(
-                    'Pain Level Last Visit: ${data[17]} - ${data[18]}',
+                    'Pain Level Last Visit: ${data[19]} - ${data[20]}',
                     style: pw.TextStyle(font: font, fontSize: fontSize)),
               ),
               pw.Align(
                 alignment: pw.Alignment.centerLeft,
-                child: pw.Text('Medication Plan: ${data[19]}',
+                child: pw.Text('Medication Plan: ${data[21]}',
                     style: pw.TextStyle(font: font, fontSize: fontSize)),
               ),
               pw.Padding(

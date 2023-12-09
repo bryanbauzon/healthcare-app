@@ -232,36 +232,6 @@ class CustomWidgets {
         SnackBar(content: Text(message)),
       );
 
-  static Widget bloodPressure(
-    BuildContext context,
-    TextEditingController right,
-    TextEditingController left,
-  ) {
-    return SafeArea(
-        child: Column(
-      children: [
-        setFormTitle(AppConstants.bloodPressure),
-        Flex(
-          direction: Axis.horizontal,
-          children: [
-            Expanded(
-                child: Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: CustomWidgets.customTextFormField(
-                  context, AppConstants.bloodPressureRightArm, right),
-            )),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: CustomWidgets.customTextFormField(
-                    context, AppConstants.bloodPressureLeftArm, left),
-              ),
-            ),
-          ],
-        ),
-      ],
-    ));
-  }
 
   static Widget singeTextFormField(BuildContext context, String label,TextEditingController controller) {
     return SafeArea(

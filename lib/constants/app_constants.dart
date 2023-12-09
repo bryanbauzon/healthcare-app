@@ -43,8 +43,8 @@ class AppConstants {
 
   static const List<String> typeInputNumberList = <String>[
     age,
-    bloodPressureRightArm,
-    bloodPressureLeftArm,
+    systolic,
+    diastolic,
     oxygenStat,
     birthday,
     temperature
@@ -53,11 +53,15 @@ class AppConstants {
     lName,
     fName,
     mName,
+
     birthday,
     age,
     address,
-    bloodPressureRightArm,
-    bloodPressureLeftArm,
+    temperature,
+    'rSystolicArm',
+    'rDiastolicArm',
+    'lSystolicArm',
+    'lDiastolicArm',
     heartRate,
     respiratoryRate,
     diminished,
@@ -68,13 +72,14 @@ class AppConstants {
     bodyLocationToday,
     painLevelLastVisit,
     bodyLocationTLastVisit,
-    medicationPlan,
-    temperature
+    medicationPlan
   ];
 
   static const String bloodPressure = 'Blood Pressure';
   static const String bloodPressureRightArm = 'Right Arm';
   static const String bloodPressureLeftArm = 'Left Arm';
+  static const String systolic = 'Systolic';
+  static const String diastolic = 'Diastolic';
 
   static const String respiratoryRate = 'Respiratory Rate';
   static const List<String> respiratoryRateList = <String>[

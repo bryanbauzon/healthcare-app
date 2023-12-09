@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:holy_trinity_healthcare/screens/forms/personalDetails.dart';
+import 'package:holy_trinity_healthcare/screens/forms/vital_signs.dart';
 import 'package:holy_trinity_healthcare/screens/home.dart';
 import 'package:holy_trinity_healthcare/screens/pdf.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,10 +28,12 @@ class _FormsState extends State<Forms> {
   late TextEditingController age = TextEditingController();
   late TextEditingController address = TextEditingController();
 
-  late TextEditingController rightArm = TextEditingController();
-  late TextEditingController leftArm = TextEditingController();
+  late TextEditingController rSystolicArm = TextEditingController();
+  late TextEditingController rDiastolicArm = TextEditingController();
+  late TextEditingController lSystolicArm = TextEditingController();
+  late TextEditingController lDiastolicArm = TextEditingController();
 
-  late TextEditingController hearRate = TextEditingController();
+  late TextEditingController heartRate = TextEditingController();
   late TextEditingController respiratoryRate = TextEditingController();
   late TextEditingController diminished = TextEditingController();
   late TextEditingController oxygenStats = TextEditingController();
@@ -71,9 +74,11 @@ class _FormsState extends State<Forms> {
     bDay.dispose();
     age.dispose();
     address.dispose();
-    rightArm.dispose();
-    leftArm.dispose();
-    hearRate.dispose();
+    rSystolicArm.dispose();
+    rDiastolicArm.dispose();
+    lSystolicArm.dispose();
+    lDiastolicArm.dispose();
+    heartRate.dispose();
     respiratoryRate.dispose();
     diminished.dispose();
     shortnessOfBreath.dispose();
@@ -89,6 +94,7 @@ class _FormsState extends State<Forms> {
 
   void setTextEditingControllerList() {
     setState(() {
+      //TODO
       controllerList = [
         lName,
         fName,
@@ -96,9 +102,12 @@ class _FormsState extends State<Forms> {
         bDay,
         age,
         address,
-        rightArm,
-        leftArm,
-        hearRate,
+        temperature,
+        rSystolicArm,
+        rDiastolicArm,
+        lSystolicArm,
+        lDiastolicArm,
+        heartRate,
         respiratoryRate,
         diminished,
         oxygenStats,
@@ -108,8 +117,8 @@ class _FormsState extends State<Forms> {
         locationPainLevelToday,
         painLevelPast,
         locationPainLevelPast,
-        medicationPlan,
-        temperature
+        medicationPlan
+
       ];
     });
   }
@@ -163,9 +172,11 @@ class _FormsState extends State<Forms> {
         age.text,
         address.text,
         temperature.text,
-        rightArm.text,
-        leftArm.text,
-        hearRate.text,
+        rSystolicArm.text,
+        rDiastolicArm.text,
+        lSystolicArm.text,
+        lDiastolicArm.text,
+        heartRate.text,
         respiratoryRate.text,
         diminished.text,
         oxygenStats.text,
@@ -223,7 +234,7 @@ class _FormsState extends State<Forms> {
       action = AppConstants.actions[0]; //save
     });
     saveVitalSigns();
-   // _removeData();
+    // _removeData();
     Utils.navigateToScreen(context, const Home());
   }
 
@@ -245,86 +256,6 @@ class _FormsState extends State<Forms> {
     }
   }
 
-  //Dropdown
-  Widget customDropdown(String fieldName, TextEditingController controller) {
-    List<String> list = Utils.retrieveDropdownListByFieldName(fieldName);
-    int getIndex() {
-      if (controller.text.isNotEmpty) {
-        for (int i = 0; i < list.length; i++) {
-          if (controller.text == list[i]) {
-            return i;
-          }
-        }
-      }
-      return 0;
-    }
-
-    void validateVitalSignFields(String value) {
-      if (widget.title.contains(AppConstants.vitalSign)) {
-        if (fieldName.contains(AppConstants.respiratoryRate)) {
-          isDiminished = false;
-          if (value.contains(AppConstants.respiratoryRateList.last)) {
-            isDiminished = true;
-          }
-        }
-      }
-    }
-
-    Widget dropdownFieldChecker() {
-      if (controller.text.isNotEmpty) {
-        return DropdownButtonFormField(
-          value: list[getIndex()],
-          decoration: CustomWidgets.fieldInputDecoration(fieldName),
-          items: list.map<DropdownMenuItem<String>>((String val) {
-            return DropdownMenuItem<String>(value: val, child: Text(val));
-          }).toList(),
-          onChanged: (String? value) {
-            setState(() {
-              validateVitalSignFields(value!);
-              controller.text = value;
-            });
-          },
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'This field is required.';
-            }
-            return null;
-          },
-        );
-      }
-      return DropdownButtonFormField(
-        decoration: CustomWidgets.fieldInputDecoration(fieldName),
-        items: list.map<DropdownMenuItem<String>>((String val) {
-          return DropdownMenuItem<String>(value: val, child: Text(val));
-        }).toList(),
-        onChanged: (String? value) {
-          setState(() {
-            validateVitalSignFields(value!);
-            controller.text = value;
-          });
-        },
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'This field is required.';
-          }
-          return null;
-        },
-      );
-    }
-
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Column(
-        children: [
-          CustomWidgets.setFormTitle(fieldName),
-          Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
-              child: dropdownFieldChecker())
-        ],
-      ),
-    );
-  }
-
   Widget vitalSignsForms() => Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -335,27 +266,23 @@ class _FormsState extends State<Forms> {
               bDay: bDay,
               age: age,
               address: address),
-          CustomWidgets.singeTextFormField(
-              context, AppConstants.temperature, temperature),
-          CustomWidgets.bloodPressure(context, rightArm, leftArm),
-          customDropdown(AppConstants.heartRate, hearRate),
-          customDropdown(AppConstants.respiratoryRate, respiratoryRate),
-          isDiminished
-              ? customDropdown(
-                  AppConstants.respiratoryRateList.last, diminished)
-              : Container(),
-          CustomWidgets.singeTextFormField(
-              context, AppConstants.oxygenUse, oxygenStats),
-          customDropdown(AppConstants.shortOfBreath, shortnessOfBreath),
-          customDropdown(AppConstants.oxygenUse, oxygenUse),
-          CustomWidgets.painLevelFields(context, AppConstants.painLevelToday,
-              painLevelToday, locationPainLevelToday),
-          CustomWidgets.painLevelFields(
-              context,
-              AppConstants.painLevelLastVisit,
-              painLevelPast,
-              locationPainLevelPast),
-          CustomWidgets.medicationPlan(context, medicationPlan),
+          VitalSigns(
+              temperature: temperature,
+              rSystolicArm: rSystolicArm,
+              rDiastolicArm: rDiastolicArm,
+              lSystolicArm: lSystolicArm,
+              lDiastolicArm: lDiastolicArm,
+              heartRate: heartRate,
+              respiratoryRate: respiratoryRate,
+              diminished: diminished,
+              oxygenStats: oxygenStats,
+              shortnessOfBreath: shortnessOfBreath,
+              oxygenUse: oxygenUse,
+              painLevelToday: painLevelToday,
+              locationPainLevelToday: locationPainLevelToday,
+              painLevelPast: painLevelPast,
+              locationPainLevelPast: locationPainLevelPast,
+              medicationPlan: medicationPlan)
         ],
       );
 
