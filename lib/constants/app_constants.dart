@@ -20,6 +20,7 @@ class AppConstants {
   static const String comingSoon = 'COMING SOON!';
 
   static const String vitalSign = 'VITAL SIGNS';
+  static const String neurological = 'NEUROLOGICAL';
 
   static const String personalInfo = 'Personal Info';
   //Fields
@@ -53,7 +54,6 @@ class AppConstants {
     lName,
     fName,
     mName,
-
     birthday,
     age,
     address,
@@ -73,6 +73,33 @@ class AppConstants {
     painLevelLastVisit,
     bodyLocationTLastVisit,
     medicationPlan
+  ];
+
+  static const List<String> keysNeurological = [
+    lName,
+    fName,
+    mName,
+    birthday,
+    age,
+    address,
+
+    'memoryIssues',
+    'psychologicalIssues',
+    'cLeftSidedWeakness',
+    'cRightSidedWeakness',
+    'sinceWhen',
+    'mobility',
+    'aDls',
+    'riskFall',
+    'medicalEquipmentUsed',
+    'safetyUseToDME',
+    'unSafetyUseToME',
+    'reason',
+    'cardiacIssues',
+    'peripheralPulses',
+    'edema',
+    'isDiuretic',
+    'inVDiagnostics'
   ];
 
   static const String bloodPressure = 'Blood Pressure';
@@ -117,13 +144,38 @@ class AppConstants {
 
   static const String saving = 'Saving...';
   static const String nothingToSave = 'There is nothing to save...';
-  static const List<String> actions = ['save','submit'];
-
+  static const List<String> actions = ['save', 'submit'];
   static const String month = 'month';
   static const String day = 'day';
   static const String year = 'year';
 
   static const String selectDate = 'Select Date';
 
-  static const EdgeInsetsGeometry formPadding =  EdgeInsets.all(10);
+  static const EdgeInsetsGeometry formPadding = EdgeInsets.all(10);
+
+  static const String memoryIssuesPlaceholder =
+      'Memory Issues: (Indicate the type of Dementia Applicable)';
+  static const String psychologicalIssues = 'Psychological Issues';
+  static const String cva =
+      'Cerebral Vascular Accident/Transient Ischemic Attack';
+
+  static const String rightWeakness = 'Right Sided Weakness';
+  static const String leftWeakness = 'Left Sided Weakness';
+  static const String sinceWhen = 'Since When?';
+  static const String mobility = 'Affecting Mobility';
+  static const String adl =
+      'Affecting Activities of Daily Living/Instrumental Activities of Daily Living';
+  static const String riskFall = 'Risk Fall';
+  static const String dme = 'Durable Medical Equipment Used';
+  static const String safetyUseOfDME = 'Safety use to DME';
+  static const String unSafetyUseOfDME = 'Unsafety use to DME';
+  static const String reason = 'Reason';
+  static const String cardiacIssues = 'Cardiac Issues';
+  static const String peripheralPulses = 'Peripheral Pulses';
+  static const String edema = 'Edema: Indicate severity and location';
+  static const String diuretic = 'Is Patient on Diuretic?';
+  static const String ivd = 'In Vitro Diagnostics';
+  static const String sob = 'If positive and patient is having SOB - Call MD.';
+
+  static const String form = 'form';
 }

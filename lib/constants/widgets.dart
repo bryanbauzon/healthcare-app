@@ -95,7 +95,7 @@ class CustomWidgets {
       padding: AppConstants.formPadding,
       child: TextFormField(
         controller: controller,
-        maxLines: (fieldName == AppConstants.medicationPlan) ? 7 : 1,
+        maxLines: Utils.maxLinesByLabel(fieldName),
         keyboardType: Utils.getTextInputTypeByField(fieldName),
         decoration: fieldInputDecoration(fieldName),
         validator: (value) {
@@ -241,7 +241,7 @@ class CustomWidgets {
         Align(
           alignment: Alignment.centerLeft,
           child: SizedBox(
-            width: 250,
+            width: 320,
             child: Padding(
               padding: const EdgeInsets.only(left: 10),
               child: CustomWidgets.customTextFormField(
@@ -253,17 +253,38 @@ class CustomWidgets {
     ));
   }
 
-  static Widget painLevelFields(
+  static String changePlaceholderByLabel(String label){
+    if(label == AppConstants.memoryIssuesPlaceholder){
+      return AppConstants.memoryIssuesPlaceholder;
+    }
+    return label;
+  }
+
+  static Widget multipleTextField(
     BuildContext context,
     String fieldName,
-    TextEditingController pain,
-    TextEditingController location,
+    TextEditingController controller1,
+    TextEditingController controller2,
   ) {
-    String getPlaceholder(String fieldName) {
-      if (fieldName.contains(AppConstants.painLevelToday)) {
-        return AppConstants.bodyLocationToday;
+    String getPlaceholder(String fieldName, bool isRightField) {
+
+    if(isRightField) {
+      switch (fieldName) {
+        case AppConstants.painLevelToday:
+          return AppConstants.bodyLocationToday;
+        case AppConstants.painLevelLastVisit:
+          return AppConstants.bodyLocationTLastVisit;
+        case AppConstants.cva:
+          return AppConstants.rightWeakness;
       }
-      return AppConstants.bodyLocationTLastVisit;
+    }else{
+      if(fieldName == AppConstants.cva){
+        return AppConstants.leftWeakness;
+      }
+      return fieldName;
+    }
+
+      return 'unhandled placeholder';
     }
 
     return SafeArea(
@@ -279,14 +300,14 @@ class CustomWidgets {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 10, right: 20),
                   child: CustomWidgets.customTextFormField(
-                      context, fieldName, pain),
+                      context,  getPlaceholder(fieldName, false), controller1),
                 ),
               ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: CustomWidgets.customTextFormField(
-                      context, getPlaceholder(fieldName), location),
+                      context, getPlaceholder(fieldName, true), controller2),
                 ),
               ),
             ],
@@ -296,12 +317,12 @@ class CustomWidgets {
     ));
   }
 
-  static Widget medicationPlan(
-      BuildContext context, TextEditingController controller) {
+  static Widget customTextArea(
+      BuildContext context,String label, TextEditingController controller) {
     return SafeArea(
         child: Column(
       children: [
-        setFormTitle(AppConstants.medicationPlan),
+        setFormTitle(label),
         Align(
           alignment: Alignment.centerLeft,
           child: SizedBox(
@@ -309,7 +330,7 @@ class CustomWidgets {
             child: Padding(
               padding: const EdgeInsets.only(left: 10),
               child: CustomWidgets.customTextFormField(
-                  context, AppConstants.medicationPlan, controller),
+                  context, label, controller),
             ),
           ),
         )

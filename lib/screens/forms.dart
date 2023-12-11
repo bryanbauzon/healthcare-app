@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/app_constants.dart';
 import '../constants/widgets.dart';
 import '../utils/utils.dart';
+import 'forms/neurological.dart';
 
 class Forms extends StatefulWidget {
   const Forms({super.key, required this.title});
@@ -20,7 +21,8 @@ class _FormsState extends State<Forms> {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   final _formKey = GlobalKey<FormState>();
-
+  String form = '';
+//Personal Details
   late TextEditingController lName = TextEditingController();
   late TextEditingController fName = TextEditingController();
   late TextEditingController mName = TextEditingController();
@@ -28,26 +30,42 @@ class _FormsState extends State<Forms> {
   late TextEditingController age = TextEditingController();
   late TextEditingController address = TextEditingController();
 
+  // Vital Signs
   late TextEditingController rSystolicArm = TextEditingController();
   late TextEditingController rDiastolicArm = TextEditingController();
   late TextEditingController lSystolicArm = TextEditingController();
   late TextEditingController lDiastolicArm = TextEditingController();
-
   late TextEditingController heartRate = TextEditingController();
   late TextEditingController respiratoryRate = TextEditingController();
   late TextEditingController diminished = TextEditingController();
   late TextEditingController oxygenStats = TextEditingController();
-
   late TextEditingController shortnessOfBreath = TextEditingController();
   late TextEditingController oxygenUse = TextEditingController();
-
   late TextEditingController painLevelToday = TextEditingController();
   late TextEditingController locationPainLevelToday = TextEditingController();
   late TextEditingController painLevelPast = TextEditingController();
   late TextEditingController locationPainLevelPast = TextEditingController();
-
   late TextEditingController medicationPlan = TextEditingController();
   late TextEditingController temperature = TextEditingController();
+
+  // Neurological
+  late TextEditingController memoryIssues = TextEditingController();
+  late TextEditingController psychologicalIssues = TextEditingController();
+  late TextEditingController cLeftSidedWeakness = TextEditingController();
+  late TextEditingController cRightSidedWeakness = TextEditingController();
+  late TextEditingController sinceWhen = TextEditingController();
+  late TextEditingController mobility = TextEditingController();
+  late TextEditingController aDls = TextEditingController();
+  late TextEditingController riskFall = TextEditingController();
+  late TextEditingController medicalEquipmentUsed = TextEditingController();
+  late TextEditingController safetyUseToDME = TextEditingController();
+  late TextEditingController unSafetyUseToME = TextEditingController();
+  late TextEditingController reason = TextEditingController();
+  late TextEditingController cardiacIssues = TextEditingController();
+  late TextEditingController peripheralPulses = TextEditingController();
+  late TextEditingController edema = TextEditingController();
+  late TextEditingController isDiuretic = TextEditingController();
+  late TextEditingController inVDiagnostics = TextEditingController();
   List<TextEditingController> controllerList = [];
 
   bool isDiminished = false;
@@ -59,9 +77,10 @@ class _FormsState extends State<Forms> {
   @override
   void initState() {
     super.initState();
-
+    form = widget.title;
     setTextEditingControllerList();
     _retrieveData();
+
   }
 
   @override
@@ -90,37 +109,84 @@ class _FormsState extends State<Forms> {
     medicationPlan.dispose();
     oxygenStats.dispose();
     temperature.dispose();
+
+    memoryIssues.dispose();
+    psychologicalIssues.dispose();
+    cLeftSidedWeakness.dispose();
+    cRightSidedWeakness.dispose();
+    sinceWhen.dispose();
+    mobility.dispose();
+    aDls.dispose();
+    riskFall.dispose();
+    medicalEquipmentUsed.dispose();
+    safetyUseToDME.dispose();
+    unSafetyUseToME.dispose();
+    reason.dispose();
+    cardiacIssues.dispose();
+    peripheralPulses.dispose();
+    edema.dispose();
+    isDiuretic.dispose();
+    inVDiagnostics.dispose();
   }
 
   void setTextEditingControllerList() {
-    setState(() {
-      //TODO
-      controllerList = [
-        lName,
-        fName,
-        mName,
-        bDay,
-        age,
-        address,
-        temperature,
-        rSystolicArm,
-        rDiastolicArm,
-        lSystolicArm,
-        lDiastolicArm,
-        heartRate,
-        respiratoryRate,
-        diminished,
-        oxygenStats,
-        shortnessOfBreath,
-        oxygenUse,
-        painLevelToday,
-        locationPainLevelToday,
-        painLevelPast,
-        locationPainLevelPast,
-        medicationPlan
+    if (form == AppConstants.vitalSign) {
+      setState(() {
+        controllerList = [
+          lName,
+          fName,
+          mName,
+          bDay,
+          age,
+          address,
+          temperature,
+          rSystolicArm,
+          rDiastolicArm,
+          lSystolicArm,
+          lDiastolicArm,
+          heartRate,
+          respiratoryRate,
+          diminished,
+          oxygenStats,
+          shortnessOfBreath,
+          oxygenUse,
+          painLevelToday,
+          locationPainLevelToday,
+          painLevelPast,
+          locationPainLevelPast,
+          medicationPlan
+        ];
+      });
+    } else if (form == AppConstants.neurological) {
+      setState(() {
+        controllerList = [
+          lName,
+          fName,
+          mName,
+          bDay,
+          age,
+          address,
 
-      ];
-    });
+          memoryIssues,
+          psychologicalIssues,
+          cLeftSidedWeakness,
+          cRightSidedWeakness,
+          sinceWhen,
+          mobility,
+          aDls,
+          riskFall,
+          medicalEquipmentUsed,
+          safetyUseToDME,
+          unSafetyUseToME,
+          reason,
+          cardiacIssues,
+          peripheralPulses,
+          edema,
+          isDiuretic,
+          inVDiagnostics
+        ];
+      });
+    }
   }
 
   //DATA RETRIEVAL
@@ -128,21 +194,35 @@ class _FormsState extends State<Forms> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     String value = "";
-    for (int i = 0; i < AppConstants.keysVitalSigns.length; i++) {
-      value = prefs.getString(
-              Utils.removeEmptyString(AppConstants.keysVitalSigns[i])) ??
-          '';
-      if (Utils.isNotEmpty(value)) {
-        if (Utils.removeEmptyString(AppConstants.keysVitalSigns[i]) ==
-                Utils.removeEmptyString(AppConstants.respiratoryRate) &&
-            value == AppConstants.diminished) {
+
+    if (form == AppConstants.vitalSign) {
+      for (int i = 0; i < AppConstants.keysVitalSigns.length; i++) {
+        value = prefs.getString(
+                Utils.removeEmptyString(AppConstants.keysVitalSigns[i])) ??
+            '';
+        if (Utils.isNotEmpty(value)) {
+          if (Utils.removeEmptyString(AppConstants.keysVitalSigns[i]) ==
+                  Utils.removeEmptyString(AppConstants.respiratoryRate) &&
+              value == AppConstants.diminished) {
+            setState(() {
+              isDiminished = true;
+            });
+          }
           setState(() {
-            isDiminished = true;
+            controllerList[i].text = value;
           });
         }
-        setState(() {
-          controllerList[i].text = value;
-        });
+      }
+    }else if(form == AppConstants.neurological){
+      for(int i = 0; i < AppConstants.keysNeurological.length; i++){
+        value = prefs.getString(
+            Utils.removeEmptyString(AppConstants.keysNeurological[i])) ??
+            '';
+        if (Utils.isNotEmpty(value)) {
+          setState(() {
+            controllerList[i].text = value;
+          });
+        }
       }
     }
 
@@ -153,8 +233,9 @@ class _FormsState extends State<Forms> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String value = "";
     String key = "";
-    for (int i = 0; i < AppConstants.keysVitalSigns.length; i++) {
-      key = Utils.removeEmptyString(AppConstants.keysVitalSigns[i]);
+    List<String> keys = Utils.getKeys(form);
+    for (int i = 0; i < keys.length; i++) {
+      key = Utils.removeEmptyString(keys[i]);
       value = prefs.getString(key) ?? '';
       if (Utils.isNotEmpty(value)) {
         await prefs.remove(key);
@@ -163,32 +244,63 @@ class _FormsState extends State<Forms> {
   }
 
   void setFieldData() {
-    setState(() {
-      fieldData = [
-        lName.text,
-        fName.text,
-        mName.text,
-        bDay.text,
-        age.text,
-        address.text,
-        temperature.text,
-        rSystolicArm.text,
-        rDiastolicArm.text,
-        lSystolicArm.text,
-        lDiastolicArm.text,
-        heartRate.text,
-        respiratoryRate.text,
-        diminished.text,
-        oxygenStats.text,
-        shortnessOfBreath.text,
-        oxygenUse.text,
-        painLevelToday.text,
-        locationPainLevelToday.text,
-        painLevelPast.text,
-        locationPainLevelPast.text,
-        medicationPlan.text,
-      ];
-    });
+    if (form == AppConstants.vitalSign) {
+      setState(() {
+        fieldData = [
+          lName.text,
+          fName.text,
+          mName.text,
+          bDay.text,
+          age.text,
+          address.text,
+          temperature.text,
+          rSystolicArm.text,
+          rDiastolicArm.text,
+          lSystolicArm.text,
+          lDiastolicArm.text,
+          heartRate.text,
+          respiratoryRate.text,
+          diminished.text,
+          oxygenStats.text,
+          shortnessOfBreath.text,
+          oxygenUse.text,
+          painLevelToday.text,
+          locationPainLevelToday.text,
+          painLevelPast.text,
+          locationPainLevelPast.text,
+          medicationPlan.text,
+        ];
+      });
+    } else if (form == AppConstants.neurological) {
+      setState(() {
+        fieldData = [
+          lName.text,
+          fName.text,
+          mName.text,
+          bDay.text,
+          age.text,
+          address.text,
+
+          memoryIssues.text,
+          psychologicalIssues.text,
+          cLeftSidedWeakness.text,
+          cRightSidedWeakness.text,
+          sinceWhen.text,
+          mobility.text,
+          aDls.text,
+          riskFall.text,
+          medicalEquipmentUsed.text,
+          safetyUseToDME.text,
+          unSafetyUseToME.text,
+          reason.text,
+          cardiacIssues.text,
+          peripheralPulses.text,
+          edema.text,
+          isDiuretic.text,
+          inVDiagnostics.text,
+        ];
+      });
+    }
   }
 
   void saveVitalSigns() {
@@ -218,16 +330,17 @@ class _FormsState extends State<Forms> {
   Future<void> saveDataToSharedPref(List<String> values) async {
     final SharedPreferences prefs = await _prefs;
 
-    if (AppConstants.keysVitalSigns.length == values.length) {
-      for (int i = 0; i < values.length; i++) {
-        if (values[i].isNotEmpty) {
-          prefs.setString(
-              Utils.removeEmptyString(AppConstants.keysVitalSigns[i]),
-              values[i]);
-        }
+    List<String> keys =  Utils.getKeys(form);
+
+    for (int i = 0; i < values.length; i++) {
+      if (values[i].isNotEmpty) {
+        prefs.setString(Utils.removeEmptyString(keys[i]), values[i]);
       }
     }
+    prefs.setString(AppConstants.form, form);
   }
+
+
 
   void validateForm() {
     setState(() {
@@ -235,7 +348,7 @@ class _FormsState extends State<Forms> {
     });
     saveVitalSigns();
     // _removeData();
-    Utils.navigateToScreen(context, const Home());
+    //Utils.navigateToScreen(context, const Home());
   }
 
   void convertToPdf() {
@@ -250,6 +363,7 @@ class _FormsState extends State<Forms> {
             context,
             PdfViewer(
               data: fieldData,
+              form: form,
             ));
         _removeData();
       }
@@ -286,10 +400,44 @@ class _FormsState extends State<Forms> {
         ],
       );
 
+  Widget neurologicalForms() => Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          PersonalDetails(
+              lName: lName,
+              fName: fName,
+              mName: mName,
+              bDay: bDay,
+              age: age,
+              address: address),
+          Neurological(
+              memoryIssues: memoryIssues,
+              psychologicalIssues: psychologicalIssues,
+              cLeftSidedWeakness: cLeftSidedWeakness,
+              cRightSidedWeakness: cRightSidedWeakness,
+              sinceWhen: sinceWhen,
+              mobility: mobility,
+              aDls: aDls,
+              riskFall: riskFall,
+              medicalEquipmentUsed: medicalEquipmentUsed,
+              safetyUseToDME: safetyUseToDME,
+              unSafetyUseToME: unSafetyUseToME,
+              reason: reason,
+              cardiacIssues: cardiacIssues,
+              peripheralPulses: peripheralPulses,
+              edema: edema,
+              isDiuretic: isDiuretic,
+              inVDiagnostics: inVDiagnostics)
+        ],
+      );
   Widget retrieveFormFields() {
-    if (widget.title.contains(AppConstants.vitalSign)) {
-      return vitalSignsForms();
+    switch (widget.title) {
+      case AppConstants.vitalSign:
+        return vitalSignsForms();
+      case AppConstants.neurological:
+        return neurologicalForms();
     }
+
     return Container();
   }
 

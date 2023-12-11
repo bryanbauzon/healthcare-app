@@ -30,7 +30,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
   bool isSelected = false;
 
   @override
-  initState() {
+  void initState() {
     super.initState();
     if (widget.bDay.text.isNotEmpty) {
       setState(() {
@@ -39,8 +39,6 @@ class _PersonalDetailsState extends State<PersonalDetails> {
         widget.age.text = Utils.getAgeByBirthdate(selectedDate).toString();
       });
     }
-
-    print('isSelected: $isSelected');
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -102,13 +100,17 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                   child: Text(!isSelected
                       ? AppConstants.selectDate
                       : widget.bDay.text)),
-             !isSelected?Container():Row(
-               children: [ label(AppConstants.age),
-                 Text(
-                   Utils.ageFormatter(widget.age.text),
-                   style: const TextStyle(fontSize: 20),
-                 )],
-             )
+              !isSelected
+                  ? Container()
+                  : Row(
+                      children: [
+                        label(AppConstants.age),
+                        Text(
+                          Utils.ageFormatter(widget.age.text),
+                          style: const TextStyle(fontSize: 20),
+                        )
+                      ],
+                    )
             ],
           ),
         ),

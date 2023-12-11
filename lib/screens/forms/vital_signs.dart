@@ -4,8 +4,25 @@ import '../../constants/app_constants.dart';
 import '../../constants/widgets.dart';
 import '../../utils/utils.dart';
 
-class VitalSigns extends StatefulWidget{
-  const VitalSigns({super.key, required this.temperature, required this.rSystolicArm, required this.rDiastolicArm, required this.lSystolicArm, required this.lDiastolicArm, required this.heartRate, required this.respiratoryRate, required this.diminished, required this.oxygenStats, required this.shortnessOfBreath, required this.oxygenUse, required this.painLevelToday, required this.locationPainLevelToday, required this.painLevelPast, required this.locationPainLevelPast, required this.medicationPlan});
+class VitalSigns extends StatefulWidget {
+  const VitalSigns(
+      {super.key,
+      required this.temperature,
+      required this.rSystolicArm,
+      required this.rDiastolicArm,
+      required this.lSystolicArm,
+      required this.lDiastolicArm,
+      required this.heartRate,
+      required this.respiratoryRate,
+      required this.diminished,
+      required this.oxygenStats,
+      required this.shortnessOfBreath,
+      required this.oxygenUse,
+      required this.painLevelToday,
+      required this.locationPainLevelToday,
+      required this.painLevelPast,
+      required this.locationPainLevelPast,
+      required this.medicationPlan});
 
   final TextEditingController temperature;
 
@@ -29,19 +46,18 @@ class VitalSigns extends StatefulWidget{
   final TextEditingController medicationPlan;
 
   @override
-  State<VitalSigns> createState()=> _VitalSignsState();
+  State<VitalSigns> createState() => _VitalSignsState();
 }
 
-class _VitalSignsState extends State<VitalSigns>{
-
-  Widget label(String title)=>  Padding(
-      padding: const EdgeInsets.only(left:20),
+class _VitalSignsState extends State<VitalSigns> {
+  Widget label(String title) => Padding(
+      padding: const EdgeInsets.only(left: 20),
       child: Align(
           alignment: Alignment.centerLeft,
-          child:Text(title,
-            style:const TextStyle(fontSize: 20),)
-      )
-  );
+          child: Text(
+            title,
+            style: const TextStyle(fontSize: 20),
+          )));
 
   bool isDiminished = false;
   //Dropdown
@@ -59,11 +75,11 @@ class _VitalSignsState extends State<VitalSigns>{
     }
 
     void validateVitalSignFields(String value) {
-        if (fieldName.contains(AppConstants.respiratoryRate)) {
-          isDiminished = false;
-          if (value.contains(AppConstants.respiratoryRateList.last)) {
-            isDiminished = true;
-          }
+      if (fieldName.contains(AppConstants.respiratoryRate)) {
+        isDiminished = false;
+        if (value.contains(AppConstants.respiratoryRateList.last)) {
+          isDiminished = true;
+        }
       }
     }
 
@@ -121,6 +137,7 @@ class _VitalSignsState extends State<VitalSigns>{
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -136,13 +153,12 @@ class _VitalSignsState extends State<VitalSigns>{
               children: [
                 SizedBox(
                     width: 250,
-                    child:CustomWidgets.customTextFormField(context, AppConstants.systolic, widget.rSystolicArm)
-                ),
-
+                    child: CustomWidgets.customTextFormField(
+                        context, AppConstants.systolic, widget.rSystolicArm)),
                 SizedBox(
                     width: 250,
-                    child:CustomWidgets.customTextFormField(context, AppConstants.diastolic, widget.rDiastolicArm)
-                )
+                    child: CustomWidgets.customTextFormField(
+                        context, AppConstants.diastolic, widget.rDiastolicArm))
               ],
             ),
             //LEFT ARM
@@ -151,36 +167,36 @@ class _VitalSignsState extends State<VitalSigns>{
               children: [
                 SizedBox(
                     width: 250,
-                    child:CustomWidgets.customTextFormField(context, AppConstants.systolic, widget.lSystolicArm)
-                ),SizedBox(
+                    child: CustomWidgets.customTextFormField(
+                        context, AppConstants.systolic, widget.lSystolicArm)),
+                SizedBox(
                     width: 250,
-                    child:CustomWidgets.customTextFormField(context, AppConstants.diastolic, widget.lDiastolicArm)
-                )
+                    child: CustomWidgets.customTextFormField(
+                        context, AppConstants.diastolic, widget.lDiastolicArm))
               ],
             )
           ],
         ),
         customDropdown(AppConstants.heartRate, widget.heartRate),
-
         customDropdown(AppConstants.respiratoryRate, widget.respiratoryRate),
         isDiminished
             ? customDropdown(
-            AppConstants.respiratoryRateList.last, widget.diminished)
+                AppConstants.respiratoryRateList.last, widget.diminished)
             : Container(),
         CustomWidgets.singeTextFormField(
             context, AppConstants.oxygenStat, widget.oxygenStats),
         customDropdown(AppConstants.shortOfBreath, widget.shortnessOfBreath),
         customDropdown(AppConstants.oxygenUse, widget.oxygenUse),
-        CustomWidgets.painLevelFields(context, AppConstants.painLevelToday,
+        CustomWidgets.multipleTextField(context, AppConstants.painLevelToday,
             widget.painLevelToday, widget.locationPainLevelToday),
-        CustomWidgets.painLevelFields(
+        CustomWidgets.multipleTextField(
             context,
             AppConstants.painLevelLastVisit,
             widget.painLevelPast,
             widget.locationPainLevelPast),
-        CustomWidgets.medicationPlan(context, widget.medicationPlan),
+        CustomWidgets.customTextArea(
+            context, AppConstants.medicationPlan, widget.medicationPlan),
       ],
     );
   }
-
 }

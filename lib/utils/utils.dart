@@ -7,6 +7,8 @@ class Utils {
   static IconData documentTilesIcon(String title) {
     if (title.contains(AppConstants.vitalSign)) {
       return Icons.monitor_heart_outlined;
+    } else if (title.contains(AppConstants.neurological)) {
+      return Icons.document_scanner;
     }
     return Icons.account_tree_outlined;
   }
@@ -21,6 +23,24 @@ class Utils {
       type = TextInputType.number;
     }
     return type;
+  }
+
+  static int maxLinesByLabel(String label) {
+    switch (label) {
+      case AppConstants.medicationPlan:
+        return 7;
+      case AppConstants.memoryIssuesPlaceholder:
+        return 7;
+      case AppConstants.psychologicalIssues:
+        return 7;
+      case AppConstants.dme:
+        return 3;
+      case AppConstants.reason:
+        return 3;
+      case AppConstants.edema:
+        return 4;
+    }
+    return 1;
   }
 
   static List<String> retrieveDropdownListByFieldName(String fieldName) {
@@ -112,11 +132,22 @@ class Utils {
     }
     return 0;
   }
-  
-  static String ageFormatter(String age){
-    if(convertStringToInt(age) > 1){
+
+  static String ageFormatter(String age) {
+    if (convertStringToInt(age) > 1) {
       return '$age years old.';
     }
     return '$age year old.';
+  }
+
+  static List<String> getKeys(String form) {
+    switch (form) {
+      case AppConstants.vitalSign:
+        return AppConstants.keysVitalSigns;
+      case AppConstants.neurological:
+        return AppConstants.keysNeurological;
+    }
+
+    return [];
   }
 }

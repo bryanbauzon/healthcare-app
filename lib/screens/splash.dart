@@ -24,7 +24,11 @@ class _SplashState extends State<Splash> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     String container = "";
-    for(String key in AppConstants.keysVitalSigns){
+
+    String form = prefs.getString(AppConstants.form) ?? '';
+    List<String> keys =  Utils.getKeys(form);
+
+    for(String key in keys){
       key = key.replaceAll(' ', '');
       container =  prefs.getString(key) ?? '';
       if(container.isNotEmpty){
@@ -33,7 +37,7 @@ class _SplashState extends State<Splash> {
     }
     Future.delayed(const Duration(seconds: 8), () {
       if(container.isNotEmpty){
-        Utils.navigateToScreen(context, const Forms(title: AppConstants.vitalSign,));
+        Utils.navigateToScreen(context,  Forms(title: form,));
       }else{
         Utils.navigateToScreen(context, const Home());
       }
