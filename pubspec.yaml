@@ -16,6 +16,7 @@ dependencies:
   pdf: ^3.10.7
   printing: ^5.11.1
   shared_preferences: ^2.2.2
+  sqflite: ^2.3.0
 
 dev_dependencies:
   flutter_test:
