@@ -4,7 +4,7 @@ import 'package:holy_trinity_healthcare/screens/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/utils.dart';
-import 'forms.dart';
+import 'main_forms.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -15,33 +15,36 @@ class Splash extends StatefulWidget {
 
 class _SplashState extends State<Splash> {
   @override
-  void initState()  {
+  void initState() {
     super.initState();
     _redirect();
   }
 
-  _redirect() async{
+  _redirect() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     String container = "";
 
     String form = prefs.getString(AppConstants.form) ?? '';
-    List<String> keys =  Utils.getKeys(form);
+    List<String> keys = Utils.getKeys(form);
 
-    for(String key in keys){
+    for (String key in keys) {
       key = key.replaceAll(' ', '');
-      container =  prefs.getString(key) ?? '';
-      if(container.isNotEmpty){
+      container = prefs.getString(key) ?? '';
+      if (container.isNotEmpty) {
         break;
       }
     }
     Future.delayed(const Duration(seconds: 8), () {
-      if(container.isNotEmpty){
-        Utils.navigateToScreen(context,  Forms(title: form,));
-      }else{
+      if (container.isNotEmpty) {
+        Utils.navigateToScreen(
+            context,
+            MainForms(
+              title: form,
+            ));
+      } else {
         Utils.navigateToScreen(context, const Home());
       }
-
     });
   }
 

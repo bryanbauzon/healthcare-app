@@ -8,15 +8,15 @@ import '../constants/widgets.dart';
 import '../utils/utils.dart';
 import 'forms/neurological.dart';
 
-class Forms extends StatefulWidget {
-  const Forms({super.key, required this.title});
+class MainForms extends StatefulWidget {
+  const MainForms({super.key, required this.title});
   final String title;
 
   @override
-  State<Forms> createState() => _FormsState();
+  State<MainForms> createState() => _MainFormsState();
 }
 
-class _FormsState extends State<Forms> {
+class _MainFormsState extends State<MainForms> {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   final _formKey = GlobalKey<FormState>();
@@ -79,7 +79,6 @@ class _FormsState extends State<Forms> {
     form = widget.title;
     setTextEditingControllerList();
     _retrieveData();
-
   }
 
   @override
@@ -165,7 +164,6 @@ class _FormsState extends State<Forms> {
           bDay,
           age,
           address,
-
           memoryIssues,
           psychologicalIssues,
           cLeftSidedWeakness,
@@ -212,10 +210,10 @@ class _FormsState extends State<Forms> {
           });
         }
       }
-    }else if(form == AppConstants.neurological){
-      for(int i = 0; i < AppConstants.keysNeurological.length; i++){
+    } else if (form == AppConstants.neurological) {
+      for (int i = 0; i < AppConstants.keysNeurological.length; i++) {
         value = prefs.getString(
-            Utils.removeEmptyString(AppConstants.keysNeurological[i])) ??
+                Utils.removeEmptyString(AppConstants.keysNeurological[i])) ??
             '';
         if (Utils.isNotEmpty(value)) {
           setState(() {
@@ -279,7 +277,6 @@ class _FormsState extends State<Forms> {
           bDay.text,
           age.text,
           address.text,
-
           memoryIssues.text,
           psychologicalIssues.text,
           cLeftSidedWeakness.text,
@@ -329,7 +326,7 @@ class _FormsState extends State<Forms> {
   Future<void> saveDataToSharedPref(List<String> values) async {
     final SharedPreferences prefs = await _prefs;
 
-    List<String> keys =  Utils.getKeys(form);
+    List<String> keys = Utils.getKeys(form);
 
     for (int i = 0; i < values.length; i++) {
       if (values[i].isNotEmpty) {
@@ -338,8 +335,6 @@ class _FormsState extends State<Forms> {
     }
     prefs.setString(AppConstants.form, form);
   }
-
-
 
   void validateForm() {
     setState(() {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:holy_trinity_healthcare/constants/colors.dart';
 import 'package:holy_trinity_healthcare/constants/app_constants.dart';
 
-import '../screens/forms.dart';
+import '../screens/main_forms.dart';
 import '../utils/utils.dart';
 
 class CustomWidgets {
@@ -66,15 +66,13 @@ class CustomWidgets {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: GestureDetector(
-        onTap: isEnabled? onTap:(){},
+        onTap: isEnabled ? onTap : () {},
         child: Container(
             height: 60,
             width: 130,
             decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
-                color: isEnabled?AppColors.theme:AppColors.disabled
-
-            ),
+                color: isEnabled ? AppColors.theme : AppColors.disabled),
             child: Center(
               child: Text(
                 text,
@@ -90,22 +88,23 @@ class CustomWidgets {
 
   static Widget customTextFormField(BuildContext context, String fieldName,
       TextEditingController controller) {
-    return SizedBox(child:
-    Padding(
-      padding: AppConstants.formPadding,
-      child: TextFormField(
-        controller: controller,
-        maxLines: Utils.maxLinesByLabel(fieldName),
-        keyboardType: Utils.getTextInputTypeByField(fieldName),
-        decoration: fieldInputDecoration(fieldName),
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'This field is required.';
-          }
-          return null;
-        },
+    return SizedBox(
+      child: Padding(
+        padding: AppConstants.formPadding,
+        child: TextFormField(
+          controller: controller,
+          maxLines: Utils.maxLinesByLabel(fieldName),
+          keyboardType: Utils.getTextInputTypeByField(fieldName),
+          decoration: fieldInputDecoration(fieldName),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'This field is required.';
+            }
+            return null;
+          },
+        ),
       ),
-    ),);
+    );
   }
 
   static InputDecoration fieldInputDecoration(String fieldName) =>
@@ -196,7 +195,7 @@ class CustomWidgets {
         child: GestureDetector(
           onTap: () {
             if (isEnabled) {
-              Utils.navigateToScreen(context, Forms(title: title));
+              Utils.navigateToScreen(context, MainForms(title: title));
             }
           },
           child: Container(
@@ -232,8 +231,8 @@ class CustomWidgets {
         SnackBar(content: Text(message)),
       );
 
-
-  static Widget singeTextFormField(BuildContext context, String label,TextEditingController controller) {
+  static Widget singeTextFormField(
+      BuildContext context, String label, TextEditingController controller) {
     return SafeArea(
         child: Column(
       children: [
@@ -244,8 +243,8 @@ class CustomWidgets {
             width: 320,
             child: Padding(
               padding: const EdgeInsets.only(left: 10),
-              child: CustomWidgets.customTextFormField(
-                  context, label, controller),
+              child:
+                  CustomWidgets.customTextFormField(context, label, controller),
             ),
           ),
         )
@@ -253,8 +252,8 @@ class CustomWidgets {
     ));
   }
 
-  static String changePlaceholderByLabel(String label){
-    if(label == AppConstants.memoryIssuesPlaceholder){
+  static String changePlaceholderByLabel(String label) {
+    if (label == AppConstants.memoryIssuesPlaceholder) {
       return AppConstants.memoryIssuesPlaceholder;
     }
     return label;
@@ -267,22 +266,21 @@ class CustomWidgets {
     TextEditingController controller2,
   ) {
     String getPlaceholder(String fieldName, bool isRightField) {
-
-    if(isRightField) {
-      switch (fieldName) {
-        case AppConstants.painLevelToday:
-          return AppConstants.bodyLocationToday;
-        case AppConstants.painLevelLastVisit:
-          return AppConstants.bodyLocationTLastVisit;
-        case AppConstants.cva:
-          return AppConstants.rightWeakness;
+      if (isRightField) {
+        switch (fieldName) {
+          case AppConstants.painLevelToday:
+            return AppConstants.bodyLocationToday;
+          case AppConstants.painLevelLastVisit:
+            return AppConstants.bodyLocationTLastVisit;
+          case AppConstants.cva:
+            return AppConstants.rightWeakness;
+        }
+      } else {
+        if (fieldName == AppConstants.cva) {
+          return AppConstants.leftWeakness;
+        }
+        return fieldName;
       }
-    }else{
-      if(fieldName == AppConstants.cva){
-        return AppConstants.leftWeakness;
-      }
-      return fieldName;
-    }
 
       return 'unhandled placeholder';
     }
@@ -300,7 +298,7 @@ class CustomWidgets {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 10, right: 20),
                   child: CustomWidgets.customTextFormField(
-                      context,  getPlaceholder(fieldName, false), controller1),
+                      context, getPlaceholder(fieldName, false), controller1),
                 ),
               ),
               Expanded(
@@ -318,7 +316,7 @@ class CustomWidgets {
   }
 
   static Widget customTextArea(
-      BuildContext context,String label, TextEditingController controller) {
+      BuildContext context, String label, TextEditingController controller) {
     return SafeArea(
         child: Column(
       children: [
@@ -329,8 +327,8 @@ class CustomWidgets {
             width: MediaQuery.of(context).size.width,
             child: Padding(
               padding: const EdgeInsets.only(left: 10),
-              child: CustomWidgets.customTextFormField(
-                  context, label, controller),
+              child:
+                  CustomWidgets.customTextFormField(context, label, controller),
             ),
           ),
         )
