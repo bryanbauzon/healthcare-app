@@ -178,4 +178,14 @@ class AppConstants {
   static const String sob = 'If positive and patient is having SOB - Call MD.';
 
   static const String form = 'form';
+
+  static const String registration = 'Registration';
+  static const String login = 'Login';
+  static const String register = 'Register';
+
+  static const String position = 'Position';
+  static const String username = 'Employee ID';
+  static const String password = 'Password';
+
+
 }

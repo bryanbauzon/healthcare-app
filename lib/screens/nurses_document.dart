@@ -19,7 +19,7 @@ class _NursesDocument extends State<NursesDocument> {
         child: Column(
           children: [
             CustomWidgets.customAppBar(context, AppConstants.appName,
-                AppConstants.appDescription),
+                AppConstants.appDescription, false),
             const Padding(
               padding: EdgeInsets.only(top: 20, bottom: 20),
               child: Text(AppConstants.nursesDocument,

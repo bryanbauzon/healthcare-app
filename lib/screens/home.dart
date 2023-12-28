@@ -19,7 +19,7 @@ class _HomeState extends State<Home> {
       body: Column(
         children: [
           CustomWidgets.customAppBar(
-              context, AppConstants.appName, AppConstants.appDescription),
+              context, AppConstants.appName, AppConstants.appDescription, false),
           const Padding(
             padding: EdgeInsets.only(top: 20, left: 25, right: 25),
             child: Text(

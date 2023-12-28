@@ -13,7 +13,8 @@ class PersonalDetails extends StatefulWidget {
       required this.mName,
       required this.bDay,
       required this.age,
-      required this.address});
+      required this.address,
+      required this.isFormScreen});
 
   final TextEditingController lName;
   final TextEditingController fName;
@@ -21,6 +22,7 @@ class PersonalDetails extends StatefulWidget {
   final TextEditingController bDay;
   final TextEditingController age;
   final TextEditingController address;
+  final bool isFormScreen;
   @override
   State<PersonalDetails> createState() => _PersonalDetailsState();
 }
@@ -86,7 +88,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
             )
           ],
         ),
-        Padding(
+        widget.isFormScreen ? Padding(
           padding: AppConstants.formPadding,
           child: Row(
             children: [
@@ -113,7 +115,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                     )
             ],
           ),
-        ),
+        ):Container(),
         CustomWidgets.customTextFormField(
             context, AppConstants.address, widget.address),
       ],

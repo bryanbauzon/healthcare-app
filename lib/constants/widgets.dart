@@ -7,7 +7,7 @@ import '../utils/utils.dart';
 
 class CustomWidgets {
   static Widget customAppBar(
-          BuildContext context, String appName, String appDescription) =>
+          BuildContext context, String appName, String appDescription, bool isRegistration) =>
       Container(
           height: 150,
           width: MediaQuery.of(context).size.width,
@@ -50,10 +50,12 @@ class CustomWidgets {
                         alignment: Alignment.centerRight,
                         child: IconButton(
                             onPressed: () {
-                              showSnackBar(context, 'info here...');
+                             if(isRegistration){
+                               Navigator.pop(context);
+                             }
                             },
                             icon: Icon(
-                              Icons.account_circle,
+                              !isRegistration? Icons.account_circle : Icons.arrow_back_rounded,
                               size: 50,
                               color: AppColors.white,
                             )),
@@ -72,14 +74,17 @@ class CustomWidgets {
             width: 130,
             decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
-                color: isEnabled ? AppColors.theme : AppColors.disabled),
+                color: text == AppConstants.register
+                    ? Colors.transparent
+                    : (isEnabled ? AppColors.theme : AppColors.disabled)),
             child: Center(
               child: Text(
                 text,
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.white),
+                    color:
+                        text == AppConstants.register ? AppColors.theme : AppColors.white),
               ),
             )),
       ),
@@ -94,6 +99,8 @@ class CustomWidgets {
         child: TextFormField(
           controller: controller,
           maxLines: Utils.maxLinesByLabel(fieldName),
+          readOnly: (fieldName == AppConstants.password),
+          obscureText: (fieldName == AppConstants.password),
           keyboardType: Utils.getTextInputTypeByField(fieldName),
           decoration: fieldInputDecoration(fieldName),
           validator: (value) {
@@ -248,6 +255,29 @@ class CustomWidgets {
             ),
           ),
         )
+      ],
+    ));
+  }
+
+  static Widget loginTextFormField(
+      BuildContext context, String label, TextEditingController controller) {
+    return SafeArea(
+        child: Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: setFormTitle(label),
+        ),
+        Align(
+            alignment: Alignment.center,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: CustomWidgets.customTextFormField(
+                    context, label, controller),
+              ),
+            ))
       ],
     ));
   }

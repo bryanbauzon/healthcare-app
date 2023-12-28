@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:holy_trinity_healthcare/screens/forms/personalDetails.dart';
+import 'package:holy_trinity_healthcare/screens/forms/personal_details.dart';
 import 'package:holy_trinity_healthcare/screens/forms/vital_signs.dart';
 import 'package:holy_trinity_healthcare/screens/pdf.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -373,7 +373,8 @@ class _MainFormsState extends State<MainForms> {
               mName: mName,
               bDay: bDay,
               age: age,
-              address: address),
+              address: address,
+          isFormScreen: true,),
           VitalSigns(
               temperature: temperature,
               rSystolicArm: rSystolicArm,
@@ -403,7 +404,8 @@ class _MainFormsState extends State<MainForms> {
               mName: mName,
               bDay: bDay,
               age: age,
-              address: address),
+              address: address,
+          isFormScreen: true,),
           Neurological(
               memoryIssues: memoryIssues,
               psychologicalIssues: psychologicalIssues,
@@ -442,7 +444,7 @@ class _MainFormsState extends State<MainForms> {
           child: Column(
             children: [
               CustomWidgets.customAppBar(
-                  context, AppConstants.appName, AppConstants.appDescription),
+                  context, AppConstants.appName, AppConstants.appDescription, false),
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: Text(
