@@ -367,7 +367,7 @@ class CustomWidgets {
   }
 
   static Widget setFormTitle(String title) => Padding(
-        padding: const EdgeInsets.only(left: 10, top: 20),
+        padding: const EdgeInsets.only(left: 20, top: 10),
         child: Align(
             alignment: Alignment.centerLeft,
             child: Text(title,

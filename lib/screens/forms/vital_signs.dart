@@ -138,6 +138,26 @@ class _VitalSignsState extends State<VitalSigns> {
     );
   }
 
+
+  Widget painLevelWidgets(String fieldName, TextEditingController controller,String fieldName2, TextEditingController controller2)=> Row(
+    children: [
+      SizedBox(
+        width: MediaQuery.of(context).size.width / 3,
+        child: customDropdown(
+            fieldName, controller),
+      ),
+      Expanded(child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child:Padding(
+            padding: const EdgeInsets.only(top:55),
+            child:  CustomWidgets.customTextFormField(
+                context,
+                fieldName2,
+                controller2),
+          )
+      ))
+    ],
+  );
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -187,13 +207,10 @@ class _VitalSignsState extends State<VitalSigns> {
             context, AppConstants.oxygenStat, widget.oxygenStats),
         customDropdown(AppConstants.shortOfBreath, widget.shortnessOfBreath),
         customDropdown(AppConstants.oxygenUse, widget.oxygenUse),
-        CustomWidgets.multipleTextField(context, AppConstants.painLevelToday,
-            widget.painLevelToday, widget.locationPainLevelToday),
-        CustomWidgets.multipleTextField(
-            context,
-            AppConstants.painLevelLastVisit,
-            widget.painLevelPast,
-            widget.locationPainLevelPast),
+        painLevelWidgets(AppConstants.painLevelToday, widget.painLevelToday, AppConstants.bodyLocationToday, widget.locationPainLevelToday),
+        painLevelWidgets(AppConstants.painLevelLastVisit, widget.painLevelPast, AppConstants.bodyLocationTLastVisit, widget.locationPainLevelPast),
+
+
         CustomWidgets.customTextArea(
             context, AppConstants.medicationPlan, widget.medicationPlan),
       ],

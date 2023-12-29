@@ -56,6 +56,12 @@ class Utils {
         return AppConstants.shortOfBreathList;
       case AppConstants.oxygenUse:
         return AppConstants.oxygenUseList;
+      case AppConstants.painLevelToday ||
+           AppConstants.painLevelLastVisit:{
+       for(var i = 1; i <= 10; i++){
+         list.add(i.toString());
+       }
+      }
     }
     return list;
   }

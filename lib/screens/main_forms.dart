@@ -7,6 +7,7 @@ import '../constants/app_constants.dart';
 import '../constants/widgets.dart';
 import '../utils/utils.dart';
 import 'forms/neurological.dart';
+import 'home.dart';
 
 class MainForms extends StatefulWidget {
   const MainForms({super.key, required this.title});
@@ -342,7 +343,7 @@ class _MainFormsState extends State<MainForms> {
     });
     saveVitalSigns();
     // _removeData();
-    //Utils.navigateToScreen(context, const Home());
+    Utils.navigateToScreen(context, const Home());
   }
 
   void convertToPdf() {
