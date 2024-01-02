@@ -77,14 +77,5 @@ create table $tableUSER (
     return user;
   }
 
-  // Future<User> getUser(int id) async {
-  //   List<Map> maps = await db.query(tableUSER,
-  //       columns: [colID, colLN, colFN,colFN,colMN,colAddress,colEmpId, colPosition, colPassword],
-  //       where: '$colPassword = ?',
-  //       whereArgs: [id]);
-  //   if (maps.isNotEmpty) {
-  //     return User.fromMap(maps.first);
-  //   }
-  //   return null;
-  // }
+
 }

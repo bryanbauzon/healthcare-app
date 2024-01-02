@@ -17,8 +17,7 @@ class Neurological extends StatefulWidget {
       required this.aDls,
       required this.riskFall,
       required this.medicalEquipmentUsed,
-      required this.safetyUseToDME,
-      required this.unSafetyUseToME,
+      required this.dmeStatus,
       required this.reason,
       required this.cardiacIssues,
       required this.peripheralPulses,
@@ -35,8 +34,8 @@ class Neurological extends StatefulWidget {
   final TextEditingController aDls;
   final TextEditingController riskFall;
   final TextEditingController medicalEquipmentUsed;
-  final TextEditingController safetyUseToDME;
-  final TextEditingController unSafetyUseToME;
+  final TextEditingController dmeStatus;
+
   final TextEditingController reason;
   final TextEditingController cardiacIssues;
   final TextEditingController peripheralPulses;
@@ -49,12 +48,32 @@ class Neurological extends StatefulWidget {
 
 class _NeurologicalState extends State<Neurological> {
   DateTime selectedDate = DateTime.now();
-  String selectedDateStr = '';
-
+  String selectedDateStr = 'Retrieving data...';
+  bool isDiminished = false;
+  bool showReason = false;
   @override
   void initState() {
     super.initState();
-    selectedDateStr = AppConstants.selectDate;
+
+    Future.delayed(const Duration(seconds: 1), () {
+      if (widget.sinceWhen.text.isNotEmpty) {
+        setState(() {
+          selectedDateStr = widget.sinceWhen.text;
+        });
+      }else{
+        setState(() {
+          selectedDateStr = AppConstants.selectDate;
+        });
+      }
+
+      print('dmeStatus: ${widget.dmeStatus.text}');
+      showReason = AppConstants.dmeStatusList[1].contains(widget.dmeStatus.text);
+      if(!showReason){
+        setState(() {
+          widget.reason.text = '';
+        });
+      }
+    });
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -82,6 +101,96 @@ class _NeurologicalState extends State<Neurological> {
               color: (label == AppConstants.sob) ? Colors.red : Colors.black),
         ),
       );
+
+
+  //Dropdown
+  Widget customDropdown(String fieldName, TextEditingController controller) {
+    List<String> list = Utils.retrieveDropdownListByFieldName(fieldName);
+    int getIndex() {
+      if (controller.text.isNotEmpty) {
+        for (int i = 0; i < list.length; i++) {
+          if (controller.text == list[i]) {
+            return i;
+          }
+        }
+      }
+      return 0;
+    }
+
+    void validateVitalSignFields(String value) {
+      if (fieldName.contains(AppConstants.respiratoryRate)) {
+        isDiminished = false;
+        if (value.contains(AppConstants.respiratoryRateList.last)) {
+          isDiminished = true;
+        }
+      }
+    }
+
+    bool dMEStatusChecker(String value){
+
+      return value.contains(AppConstants.dmeStatusList.last);
+
+    }
+
+    Widget dropdownFieldChecker() {
+      if (controller.text.isNotEmpty) {
+        return DropdownButtonFormField(
+          value: list[getIndex()],
+          decoration: CustomWidgets.fieldInputDecoration(fieldName),
+          items: list.map<DropdownMenuItem<String>>((String val) {
+            return DropdownMenuItem<String>(value: val, child: Text(val));
+          }).toList(),
+          onChanged: (String? value) {
+            setState(() {
+              validateVitalSignFields(value!);
+              showReason = dMEStatusChecker(value);
+              controller.text = value;
+            });
+          },
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'This field is required.';
+            }
+            return null;
+          },
+        );
+      }
+      return DropdownButtonFormField(
+        decoration: CustomWidgets.fieldInputDecoration(fieldName),
+        items: list.map<DropdownMenuItem<String>>((String val) {
+          return DropdownMenuItem<String>(value: val, child: Text(val));
+        }).toList(),
+        onChanged: (String? value) {
+          setState(() {
+            validateVitalSignFields(value!);
+            showReason = dMEStatusChecker(value);
+            controller.text = value;
+          });
+        },
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'This field is required.';
+          }
+          return null;
+        },
+      );
+    }
+
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: SizedBox(
+        width: 320,
+        child: Column(
+          children: [
+            CustomWidgets.setFormTitle(fieldName),
+            Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+                child: dropdownFieldChecker())
+          ],
+        ),
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -107,27 +216,25 @@ class _NeurologicalState extends State<Neurological> {
             ],
           ),
         ),
-        CustomWidgets.singeTextFormField(
-            context, AppConstants.mobility, widget.mobility),
+       customDropdown( AppConstants.mobility, widget.mobility),
         CustomWidgets.customTextArea(context, AppConstants.adl, widget.aDls),
-        CustomWidgets.singeTextFormField(
-            context, AppConstants.riskFall, widget.riskFall),
+        customDropdown( AppConstants.riskFall, widget.riskFall),
         CustomWidgets.customTextArea(
             context, AppConstants.dme, widget.medicalEquipmentUsed),
-        CustomWidgets.singeTextFormField(
-            context, AppConstants.safetyUseOfDME, widget.safetyUseToDME),
-        CustomWidgets.singeTextFormField(
-            context, AppConstants.unSafetyUseOfDME, widget.unSafetyUseToME),
-        CustomWidgets.customTextArea(
-            context, AppConstants.reason, widget.reason),
+        customDropdown( AppConstants.dmeStatus, widget.dmeStatus),
+        // CustomWidgets.singeTextFormField(
+        //     context, AppConstants.safetyUseOfDME, widget.safetyUseToDME),
+        // CustomWidgets.singeTextFormField(
+        //     context, AppConstants.unSafetyUseOfDME, widget.unSafetyUseToME),
+        showReason ? CustomWidgets.customTextArea(
+            context, AppConstants.reason, widget.reason) : Container(),
         CustomWidgets.singeTextFormField(
             context, AppConstants.cardiacIssues, widget.cardiacIssues),
         CustomWidgets.singeTextFormField(
             context, AppConstants.peripheralPulses, widget.peripheralPulses),
         CustomWidgets.customTextArea(context, AppConstants.edema, widget.edema),
-        CustomWidgets.singeTextFormField(
-            context, AppConstants.diuretic, widget.isDiuretic),
-        CustomWidgets.singeTextFormField(
+        customDropdown( AppConstants.diuretic, widget.isDiuretic),
+        CustomWidgets.customTextArea(
             context, AppConstants.ivd, widget.inVDiagnostics),
         label(AppConstants.sob)
       ],

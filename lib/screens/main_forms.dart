@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:holy_trinity_healthcare/screens/forms/personal_details.dart';
 import 'package:holy_trinity_healthcare/screens/forms/vital_signs.dart';
+import 'package:holy_trinity_healthcare/screens/nurses_document.dart';
 import 'package:holy_trinity_healthcare/screens/pdf.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/app_constants.dart';
 import '../constants/widgets.dart';
 import '../utils/utils.dart';
 import 'forms/neurological.dart';
-import 'home.dart';
 
 class MainForms extends StatefulWidget {
   const MainForms({super.key, required this.title});
@@ -58,8 +58,7 @@ class _MainFormsState extends State<MainForms> {
   late TextEditingController aDls = TextEditingController();
   late TextEditingController riskFall = TextEditingController();
   late TextEditingController medicalEquipmentUsed = TextEditingController();
-  late TextEditingController safetyUseToDME = TextEditingController();
-  late TextEditingController unSafetyUseToME = TextEditingController();
+  late TextEditingController dmeStatus = TextEditingController();
   late TextEditingController reason = TextEditingController();
   late TextEditingController cardiacIssues = TextEditingController();
   late TextEditingController peripheralPulses = TextEditingController();
@@ -118,8 +117,7 @@ class _MainFormsState extends State<MainForms> {
     aDls.dispose();
     riskFall.dispose();
     medicalEquipmentUsed.dispose();
-    safetyUseToDME.dispose();
-    unSafetyUseToME.dispose();
+    dmeStatus.dispose();
     reason.dispose();
     cardiacIssues.dispose();
     peripheralPulses.dispose();
@@ -174,8 +172,7 @@ class _MainFormsState extends State<MainForms> {
           aDls,
           riskFall,
           medicalEquipmentUsed,
-          safetyUseToDME,
-          unSafetyUseToME,
+          dmeStatus,
           reason,
           cardiacIssues,
           peripheralPulses,
@@ -206,6 +203,7 @@ class _MainFormsState extends State<MainForms> {
               isDiminished = true;
             });
           }
+
           setState(() {
             controllerList[i].text = value;
           });
@@ -227,19 +225,19 @@ class _MainFormsState extends State<MainForms> {
     setFieldData();
   }
 
-  _removeData() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    String value = "";
-    String key = "";
-    List<String> keys = Utils.getKeys(form);
-    for (int i = 0; i < keys.length; i++) {
-      key = Utils.removeEmptyString(keys[i]);
-      value = prefs.getString(key) ?? '';
-      if (Utils.isNotEmpty(value)) {
-        await prefs.remove(key);
-      }
-    }
-  }
+  // _removeData() async {
+  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   String value = "";
+  //   String key = "";
+  //   List<String> keys = Utils.getKeys(form);
+  //   for (int i = 0; i < keys.length; i++) {
+  //     key = Utils.removeEmptyString(keys[i]);
+  //     value = prefs.getString(key) ?? '';
+  //     if (Utils.isNotEmpty(value)) {
+  //       await prefs.remove(key);
+  //     }
+  //   }
+  // }
 
   void setFieldData() {
     if (form == AppConstants.vitalSign) {
@@ -287,8 +285,7 @@ class _MainFormsState extends State<MainForms> {
           aDls.text,
           riskFall.text,
           medicalEquipmentUsed.text,
-          safetyUseToDME.text,
-          unSafetyUseToME.text,
+          dmeStatus.text,
           reason.text,
           cardiacIssues.text,
           peripheralPulses.text,
@@ -341,9 +338,9 @@ class _MainFormsState extends State<MainForms> {
     setState(() {
       action = AppConstants.actions[0]; //save
     });
-    saveVitalSigns();
     // _removeData();
-    Utils.navigateToScreen(context, const Home());
+    saveVitalSigns();
+    Utils.navigateToScreen(context, const NursesDocument());
   }
 
   void convertToPdf() {
@@ -360,7 +357,7 @@ class _MainFormsState extends State<MainForms> {
               data: fieldData,
               form: form,
             ));
-        _removeData();
+       // _removeData();
       }
     }
   }
@@ -417,9 +414,8 @@ class _MainFormsState extends State<MainForms> {
               aDls: aDls,
               riskFall: riskFall,
               medicalEquipmentUsed: medicalEquipmentUsed,
-              safetyUseToDME: safetyUseToDME,
-              unSafetyUseToME: unSafetyUseToME,
-              reason: reason,
+              dmeStatus: dmeStatus,
+              reason:reason,
               cardiacIssues: cardiacIssues,
               peripheralPulses: peripheralPulses,
               edema: edema,

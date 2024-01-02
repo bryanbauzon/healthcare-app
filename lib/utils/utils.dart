@@ -27,17 +27,16 @@ class Utils {
 
   static int maxLinesByLabel(String label) {
     switch (label) {
-      case AppConstants.medicationPlan:
+
+      case AppConstants.psychologicalIssues ||
+           AppConstants.memoryIssuesPlaceholder ||
+           AppConstants.medicationPlan:
         return 7;
-      case AppConstants.memoryIssuesPlaceholder:
-        return 7;
-      case AppConstants.psychologicalIssues:
-        return 7;
-      case AppConstants.dme:
+      case AppConstants.dme ||
+           AppConstants.reason :
         return 3;
-      case AppConstants.reason:
-        return 3;
-      case AppConstants.edema:
+      case AppConstants.edema ||
+           AppConstants.ivd:
         return 4;
     }
     return 1;
@@ -62,6 +61,10 @@ class Utils {
          list.add(i.toString());
        }
       }
+      case AppConstants.mobility || AppConstants.riskFall || AppConstants.diuretic:
+        return AppConstants.yesOrNo;
+      case AppConstants.dmeStatus:
+        return AppConstants.dmeStatusList;
     }
     return list;
   }

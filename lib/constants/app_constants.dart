@@ -92,8 +92,7 @@ class AppConstants {
     'aDls',
     'riskFall',
     'medicalEquipmentUsed',
-    'safetyUseToDME',
-    'unSafetyUseToME',
+    'dmeStatus',
     'reason',
     'cardiacIssues',
     'peripheralPulses',
@@ -186,6 +185,8 @@ class AppConstants {
   static const String position = 'Position';
   static const String username = 'Employee ID';
   static const String password = 'Password';
-
+  static const List<String> yesOrNo = ['Yes','No'];
+  static const String dmeStatus = 'DME Status';
+  static const List<String> dmeStatusList = ['Safe to Use', 'Unsafe to Use'];
 
 }

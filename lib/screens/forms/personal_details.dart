@@ -30,17 +30,27 @@ class PersonalDetails extends StatefulWidget {
 class _PersonalDetailsState extends State<PersonalDetails> {
   DateTime selectedDate = DateTime.now();
   bool isSelected = false;
+  String displayMessage ='Retrieving data...';
 
   @override
   void initState() {
     super.initState();
-    if (widget.bDay.text.isNotEmpty) {
-      setState(() {
-        isSelected = true;
 
-        widget.age.text = Utils.getAgeByBirthdate(selectedDate).toString();
-      });
-    }
+    Future.delayed(const Duration(seconds: 1), () {
+
+      if (widget.bDay.text.isNotEmpty) {
+        setState(() {
+          isSelected = true;
+
+          widget.age.text = Utils.getAgeByBirthdate(selectedDate).toString();
+        });
+      }else{
+        setState(() {
+          displayMessage = AppConstants.selectDate;
+        });
+      }
+    });
+
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -100,7 +110,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                     return AppColors.theme;
                   })),
                   child: Text(!isSelected
-                      ? AppConstants.selectDate
+                      ? displayMessage
                       : widget.bDay.text)),
               !isSelected
                   ? Container()

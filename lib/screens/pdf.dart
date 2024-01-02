@@ -23,6 +23,7 @@ class _PdfViewerState extends State<PdfViewer> {
   void initState() {
     super.initState();
     form = widget.form;
+    print('size:${widget.data.length}');
   }
 
   //function to generate pdf. styling
@@ -188,45 +189,40 @@ class _PdfViewerState extends State<PdfViewer> {
            • ${data[11]}''', false),
           textWidget('''${AppConstants.adl}:
            • ${data[12]}''', false),
-         pw.Row(
-             mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-           children: [
-             textWidget('''${AppConstants.riskFall}:
+          textWidget('''${AppConstants.riskFall}:
            • ${data[13]}''', false),
-             textWidget('''${AppConstants.dme}:
+          textWidget('''${AppConstants.dme}:
            • ${data[14]}''', false),
-           ]
-         ),
         pw.Row(
           mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
           children: [
-            textWidget('''${AppConstants.safetyUseOfDME}:
+            textWidget('''${AppConstants.dmeStatus}:
            • ${data[15]}''', false),
-            textWidget('''${AppConstants.unSafetyUseOfDME}:
-           • ${data[16]}''', false),
+
+            data[15] == AppConstants.dmeStatusList[1]?(
+            textWidget('''${AppConstants.reason}:
+           • ${data[16]}''', false)):pw.Container(),
           ]
         ),
-          textWidget('''${AppConstants.reason}:
-           • ${data[17]}''', false),
+
         pw.Row(
             mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
           children: [
             textWidget('''${AppConstants.cardiacIssues}:
-           • ${data[18]}''', false),
+           • ${data[17]}''', false),
             textWidget('''${AppConstants.peripheralPulses}:
-           • ${data[19]}''', false),
+           • ${data[18]}''', false),
           ]
         ),
           textWidget('''${AppConstants.edema}:
-           • ${data[20]}''', false),
+           • ${data[19]}''', false),
         pw.Row(
             mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-
           children: [
             textWidget('''${AppConstants.diuretic}:
-           • ${data[21]}''', false),
+           • ${data[20]}''', false),
             textWidget('''${AppConstants.ivd}
-           • ${data[22]}''', false),
+           • ${data[21]}''', false),
           ]
         )
 
