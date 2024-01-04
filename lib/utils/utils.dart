@@ -142,6 +142,17 @@ class Utils {
     return 0;
   }
 
+  static int getAgeByBirthYear(int bYear) {
+    DateTime now = DateTime.now();
+
+    int currYear = getSpecificValueByDateTime(now, AppConstants.year);
+
+    if (bYear < currYear) {
+      return currYear - bYear;
+    }
+    return 0;
+  }
+
   static String ageFormatter(String age) {
     if (convertStringToInt(age) > 1) {
       return '$age years old.';

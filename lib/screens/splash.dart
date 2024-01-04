@@ -20,20 +20,7 @@ class _SplashState extends State<Splash> {
   }
 
   _redirect() async {
-    // final SharedPreferences prefs = await SharedPreferences.getInstance();
-    //
-    // String container = "";
-    //
-    // String form = prefs.getString(AppConstants.form) ?? '';
-    // List<String> keys = Utils.getKeys(form);
-    //
-    // for (String key in keys) {
-    //   key = key.replaceAll(' ', '');
-    //   container = prefs.getString(key) ?? '';
-    //   if (container.isNotEmpty) {
-    //     break;
-    //   }
-    // }
+
     Future.delayed(const Duration(seconds: 8), () {
       // if (container.isNotEmpty) {
         Utils.navigateToScreen(

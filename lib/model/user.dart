@@ -1,4 +1,3 @@
-import 'package:sqflite/sqflite.dart';
 
 const String tableUSER = 'user';
 const String colID = '_id';
@@ -11,7 +10,7 @@ const String colPosition = 'position';
 const String colPassword = 'password';
 
 class User {
-  late int id;
+  // late int id;
   late String lastName;
   late String firstName;
   late String middleName;
@@ -19,6 +18,17 @@ class User {
   late String empId;
   late String position;
   late String password;
+
+  User({
+    // required this.id,
+    required this.lastName,
+    required this.firstName,
+    required this.middleName,
+    required this.address,
+    required this.empId,
+    required this.position,
+    required this.password,
+  });
 
   Map<String, Object?> toMap() {
     var map = <String, Object?>{
@@ -31,51 +41,28 @@ class User {
       colPassword: password,
     };
 
-    if (id > 0) {
-      map[colID] = id;
-    }
+
 
     return map;
   }
 
-  User();
-  User.fromMap(Map<String, Object?> map) {
-    id = map[colID] as int;
-    lastName = map[colLN] as String;
-    firstName = map[colFN] as String;
-    middleName = map[colMN] as String;
-    address = map[colAddress] as String;
-    empId = map[colEmpId] as String;
-    position = map[colPosition] as String;
-    password = map[colPassword] as String;
+  factory User.fromJson(Map<String, dynamic> map) {
+    return User(
+        lastName: map[colLN],
+        firstName: map[colFN],
+        middleName: map[colMN],
+        address: map[colAddress],
+        empId: map[colEmpId],
+        position: map[colPosition],
+        password: map[colPassword]);
   }
-}
-
-class UserProvider {
-  late Database db;
-
-  Future open(String path) async {
-    db = await openDatabase(path, version: 1,
-        onCreate: (Database db, int version) async {
-      await db.execute('''
-create table $tableUSER ( 
-  $colID integer primary key autoincrement, 
-  $colLN text not null,
-  $colFN text not null,
-  $colMN text not null,
-  
-  $colAddress text not null,
-  $colEmpId text not null,
-  $colPosition text not null,
-  $colPassword text not null)
-''');
-    });
+  User.fromMap(Map<String, dynamic> map){
+    lastName= map[colLN];
+    firstName= map[colFN];
+    middleName= map[colMN];
+    address= map[colAddress];
+    empId= map[colEmpId];
+    position= map[colPosition];
+    password= map[colPassword];
   }
-
-  Future<User> insert(User user) async {
-    user.id = await db.insert(tableUSER, user.toMap());
-    return user;
-  }
-
-
 }

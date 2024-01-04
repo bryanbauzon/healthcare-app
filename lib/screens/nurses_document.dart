@@ -3,10 +3,12 @@ import 'package:holy_trinity_healthcare/constants/colors.dart';
 
 import '../constants/app_constants.dart';
 import '../constants/widgets.dart';
+import '../model/user.dart';
 
 class NursesDocument extends StatefulWidget {
-  const NursesDocument({super.key});
+  const NursesDocument({super.key, required this.user});
 
+  final User user;
   @override
   State<NursesDocument> createState() => _NursesDocument();
 }
@@ -19,7 +21,7 @@ class _NursesDocument extends State<NursesDocument> {
         child: Column(
           children: [
             CustomWidgets.customAppBar(context, AppConstants.appName,
-                AppConstants.appDescription, false),
+                AppConstants.appDescription, false, widget.user),
             const Padding(
               padding: EdgeInsets.only(top: 20, bottom: 20),
               child: Text(AppConstants.nursesDocument,
@@ -29,14 +31,14 @@ class _NursesDocument extends State<NursesDocument> {
             ),
             Wrap(
               children: [
-                CustomWidgets.documentTiles(context, AppConstants.vitalSign,true),
-                CustomWidgets.documentTiles(context, AppConstants.neurological,true)
+                CustomWidgets.documentTiles(context, AppConstants.vitalSign,true, widget.user),
+                CustomWidgets.documentTiles(context, AppConstants.neurological,true, widget.user)
               ],
             ),
             Wrap(
               children: [
-                CustomWidgets.documentTiles(context, 'Document 3',false),
-                CustomWidgets.documentTiles(context, 'Document 4',false)
+                CustomWidgets.documentTiles(context, 'Document 3',false, widget.user),
+                CustomWidgets.documentTiles(context, 'Document 4',false, widget.user)
               ],
             ),
           ],

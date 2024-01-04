@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:holy_trinity_healthcare/constants/colors.dart';
 import 'package:holy_trinity_healthcare/constants/app_constants.dart';
+import 'package:holy_trinity_healthcare/model/user.dart';
 
+import '../screens/login.dart';
 import '../screens/main_forms.dart';
 import '../utils/utils.dart';
 
 class CustomWidgets {
-  static Widget customAppBar(
-          BuildContext context, String appName, String appDescription, bool isRegistration) =>
+  static Widget customAppBar(BuildContext context, String appName,
+          String appDescription, bool isRegistration, User user) =>
       Container(
           height: 150,
           width: MediaQuery.of(context).size.width,
@@ -32,34 +34,76 @@ class CustomWidgets {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            appName,
+                            appName.toUpperCase(),
                             style: TextStyle(
-                                fontSize: 30,
+                                fontSize: 20,
                                 fontWeight: FontWeight.bold,
                                 color: AppColors.white),
                           ),
                           Text(
                             appDescription,
                             style:
-                                TextStyle(fontSize: 20, color: AppColors.white),
+                                TextStyle(fontSize: 15, color: AppColors.white),
                           ),
                         ],
                       ),
                       Expanded(
                           child: Align(
-                        alignment: Alignment.centerRight,
-                        child: IconButton(
-                            onPressed: () {
-                             if(isRegistration){
-                               Navigator.pop(context);
-                             }
-                            },
-                            icon: Icon(
-                              !isRegistration? Icons.account_circle : Icons.arrow_back_rounded,
-                              size: 50,
-                              color: AppColors.white,
-                            )),
-                      ))
+                              alignment: Alignment.centerRight,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '${user.firstName.toUpperCase()} ${user.lastName.toUpperCase()}',
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            color: AppColors.white),
+                                      ),
+                                      Text(
+                                        user.position,
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: AppColors.white),
+                                      ),
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 10),
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: InkWell(
+                                        onLongPress: () {
+                                          if (!isRegistration) {
+                                            showSnackBar(context,
+                                                'Click to logout your account.');
+                                          }
+                                        },
+                                        onTap: () {
+                                          if (isRegistration) {
+                                            Navigator.pop(context);
+                                          } else {
+                                            Utils.navigateToScreen(
+                                                context, const Login());
+                                          }
+                                        },
+                                        child: Icon(
+                                          !isRegistration
+                                              ? Icons.logout
+                                              : Icons.arrow_back_rounded,
+                                          size: 50,
+                                          color: AppColors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              )))
                     ],
                   ))));
 
@@ -83,8 +127,9 @@ class CustomWidgets {
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color:
-                        text == AppConstants.register ? AppColors.theme : AppColors.white),
+                    color: text == AppConstants.register
+                        ? AppColors.theme
+                        : AppColors.white),
               ),
             )),
       ),
@@ -99,7 +144,7 @@ class CustomWidgets {
         child: TextFormField(
           controller: controller,
           maxLines: Utils.maxLinesByLabel(fieldName),
-          readOnly: (fieldName == AppConstants.password),
+          // readOnly: (fieldName == AppConstants.password),
           obscureText: (fieldName == AppConstants.password),
           keyboardType: Utils.getTextInputTypeByField(fieldName),
           decoration: fieldInputDecoration(fieldName),
@@ -196,13 +241,18 @@ class CustomWidgets {
       }, Icons.warning_amber);
 
   static Widget documentTiles(
-          BuildContext context, String title, bool isEnabled) =>
+          BuildContext context, String title, bool isEnabled, User user) =>
       Padding(
         padding: const EdgeInsets.all(10),
         child: GestureDetector(
           onTap: () {
             if (isEnabled) {
-              Utils.navigateToScreen(context, MainForms(title: title));
+              Utils.navigateToScreen(
+                  context,
+                  MainForms(
+                    title: title,
+                    user: user,
+                  ));
             }
           },
           child: Container(

@@ -5,12 +5,15 @@ import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';
 import 'package:pdf/widgets.dart' as pw;
 
+import '../model/user.dart';
 import '../utils/utils.dart';
 
 class PdfViewer extends StatefulWidget {
-  const PdfViewer({super.key, required this.data, required this.form});
+  const PdfViewer({super.key, required this.data, required this.form, required this.user});
   final List<String> data;
   final String form;
+
+  final User user;
 
   @override
   State<PdfViewer> createState() => _PdfViewerState();
@@ -23,21 +26,18 @@ class _PdfViewerState extends State<PdfViewer> {
   void initState() {
     super.initState();
     form = widget.form;
-    print('size:${widget.data.length}');
   }
 
   //function to generate pdf. styling
   Future<Uint8List> _generatePdf(List<String> data) async {
     final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
     final font = await PdfGoogleFonts.abhayaLibreRegular();
-    final fontFooter = await PdfGoogleFonts.courierPrimeItalic();
     final imageByteData = await rootBundle.load(AppConstants.logo);
     final imageUint8List = imageByteData.buffer
         .asUint8List(imageByteData.offsetInBytes, imageByteData.lengthInBytes);
 
     double fontSize = 14;
     double titleFontSize = 16;
-    double footerFontSize = 10;
 
     pw.Padding divisionWidget() => pw.Padding(
           padding: const pw.EdgeInsets.only(top: 10, bottom: 10),
@@ -137,10 +137,25 @@ class _PdfViewerState extends State<PdfViewer> {
 
     pw.Padding footer() => pw.Padding(
         padding: const pw.EdgeInsets.only(top: 50),
-        child: pw.Footer(
-            title: pw.Text('End of Document',
-                style:
-                    pw.TextStyle(font: fontFooter, fontSize: footerFontSize))));
+        child: pw.Column(
+          children: [
+            pw.Container(
+                height: 30
+            ),
+            pw.Footer(
+                title: pw.Column(
+                    children: [
+                      textWidget('${widget.user.firstName} ${widget.user.lastName}', true),
+                      pw.Text(
+                          '${widget.user.empId}/${widget.user.position}',
+                          style: pw.TextStyle(
+                              font: font, fontSize:10)
+                      )
+                    ]
+                )
+            )
+          ]
+        ));
     pw.Column vitalSignsData() => pw.Column(
           mainAxisAlignment: pw.MainAxisAlignment.start,
           children: [
@@ -224,8 +239,9 @@ class _PdfViewerState extends State<PdfViewer> {
             textWidget('''${AppConstants.ivd}
            • ${data[21]}''', false),
           ]
-        )
+        ),
 
+          footer()
         ]);
 
     pdf.addPage(

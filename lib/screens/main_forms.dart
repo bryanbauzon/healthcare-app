@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:holy_trinity_healthcare/screens/forms/personal_details.dart';
 import 'package:holy_trinity_healthcare/screens/forms/vital_signs.dart';
-import 'package:holy_trinity_healthcare/screens/nurses_document.dart';
 import 'package:holy_trinity_healthcare/screens/pdf.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/app_constants.dart';
 import '../constants/widgets.dart';
+import '../model/user.dart';
 import '../utils/utils.dart';
 import 'forms/neurological.dart';
 
 class MainForms extends StatefulWidget {
-  const MainForms({super.key, required this.title});
+  const MainForms({super.key, required this.title, required this.user});
   final String title;
+  final User user;
 
   @override
   State<MainForms> createState() => _MainFormsState();
@@ -340,8 +341,8 @@ class _MainFormsState extends State<MainForms> {
     });
     // _removeData();
     saveVitalSigns();
-    Utils.navigateToScreen(context, const NursesDocument());
-  }
+    // Utils.navigateToScreen(context,  NursesDocument(user: widget.user,));
+   }
 
   void convertToPdf() {
     setState(() {
@@ -356,6 +357,7 @@ class _MainFormsState extends State<MainForms> {
             PdfViewer(
               data: fieldData,
               form: form,
+              user: widget.user,
             ));
        // _removeData();
       }
@@ -441,7 +443,7 @@ class _MainFormsState extends State<MainForms> {
           child: Column(
             children: [
               CustomWidgets.customAppBar(
-                  context, AppConstants.appName, AppConstants.appDescription, false),
+                  context, AppConstants.appName, AppConstants.appDescription, false, widget.user),
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: Text(

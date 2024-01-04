@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:holy_trinity_healthcare/constants/app_constants.dart';
 import 'package:holy_trinity_healthcare/constants/widgets.dart';
+import 'package:holy_trinity_healthcare/model/user.dart';
 import 'package:holy_trinity_healthcare/screens/forms/personal_details.dart';
-import 'package:holy_trinity_healthcare/screens/login.dart';
 
-import '../utils/utils.dart';
+import '../services/repository.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -14,6 +14,19 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  bool isExists = false;
+  bool registered = false;
+
+  @override
+  void initState() {
+    initDb();
+    super.initState();
+  }
+
+  void initDb() async {
+    await Repository.instance.database;
+  }
+
   //Personal Details
   final TextEditingController lName = TextEditingController();
   final TextEditingController fName = TextEditingController();
@@ -22,8 +35,18 @@ class _RegisterState extends State<Register> {
   final TextEditingController empId = TextEditingController();
   final TextEditingController position = TextEditingController();
 
-  final _formKey = GlobalKey<FormState>();
+  final User user =  User(lastName: '',
+      firstName: '',
+      middleName: '',
+      address: '',
+      empId: '',
+      position: '',
+      password: '');
 
+  final _formKey = GlobalKey<FormState>();
+  void showMessage(String message)=>CustomWidgets.showSnackBar(context, message);
+
+  void navigateToLogin()=>Navigator.pop(context);
   TextEditingController controller = TextEditingController();
   Widget textWidget(String text, bool isHeader) => Align(
       alignment: Alignment.centerLeft,
@@ -49,6 +72,37 @@ class _RegisterState extends State<Register> {
               ],
             ),
           ));
+
+  void createUser() async {
+    User user = User(
+        lastName: lName.text,
+        firstName: fName.text,
+        middleName: mName.text,
+        address: address.text,
+        empId: empId.text,
+        position: position.text,
+        password: empId.text);
+
+    await Repository.instance.insert(user: user);
+  }
+
+  Future<bool> checkIfUserExists() async {
+    return await Repository.instance.checkIfUserExists(empId: empId.text);
+  }
+
+  Widget message() {
+    String message = '';
+    if (!registered && isExists) {
+      message = 'User already exists!';
+    } else if (registered) {
+      message = 'Successfully Registered!';
+    }
+    return Text(
+      message,
+      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +112,7 @@ class _RegisterState extends State<Register> {
           child: Column(
             children: [
               CustomWidgets.customAppBar(context, AppConstants.appName,
-                  AppConstants.appDescription, true),
+                  AppConstants.appDescription, true, user),
               Padding(
                   padding: const EdgeInsets.only(top: 50, left: 30, right: 30),
                   child: Column(
@@ -67,6 +121,7 @@ class _RegisterState extends State<Register> {
                       Container(
                         height: 100,
                       ),
+                      message(),
                       PersonalDetails(
                         lName: lName,
                         fName: fName,
@@ -80,10 +135,34 @@ class _RegisterState extends State<Register> {
                       textField(AppConstants.position, position, false),
                       textField(AppConstants.password, empId, false),
                       CustomWidgets.customButton(context, AppConstants.register,
-                          () {
-                        // if (_formKey.currentState!.validate()) {}
-                            Utils.navigateToScreen(context, const Login());
-                      }, true)
+                          () async {
+                            FocusScope.of(context).unfocus();
+                        if (_formKey.currentState!.validate()) {
+                          bool flag = await checkIfUserExists();
+
+                          if (!flag) {
+                            createUser();
+                            registered = true;
+                          } else {
+                            setState(() {
+                              isExists = true;
+                            });
+
+                            Future.delayed(const Duration(seconds: 3), () {
+                              if (isExists) {
+                                setState(() {
+                                  isExists = false;
+                                });
+                              }
+                            });
+                          }
+
+                          if(registered){
+                            showMessage('Successfully Registered');
+                            navigateToLogin();
+                          }
+                        }
+                      }, true),
                     ],
                   ))
             ],
