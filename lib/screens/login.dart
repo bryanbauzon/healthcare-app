@@ -9,6 +9,7 @@ import '../constants/app_constants.dart';
 import '../model/user.dart';
 import '../services/repository.dart';
 import '../utils/utils.dart';
+import 'home.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -71,6 +72,8 @@ class _LoginState extends State<Login> {
 
     if(container.isNotEmpty){
      redirect('mainForm');
+    }else{
+      redirect('home');
     }
   }
   void redirect(String screen) {
@@ -85,11 +88,13 @@ class _LoginState extends State<Login> {
           return Utils.navigateToScreen(context, const Register());
         }
 
-      case 'home': {
+      case 'checkSharedPref': {
         return checkSharedPref();
       }
       case 'mainForm':
         return Utils.navigateToScreen(context, MainForms(title: form, user: user));
+      case 'home':
+        return Utils.navigateToScreen(context, Home( user: user));
 
     }
   }
@@ -156,7 +161,7 @@ class _LoginState extends State<Login> {
                     validateUserCredentials = await validateCredentials();
                     if (validateUserCredentials) {
                       user = await getUserDetails();
-                      redirect('home');
+                      redirect('checkSharedPref');
                     }
                   }
                 }, true)

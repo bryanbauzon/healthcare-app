@@ -65,8 +65,8 @@ class _PersonalDetailsState extends State<PersonalDetails> {
         selectedDate = picked;
 
         isSelected = true;
-        widget.age.text = Utils.getAgeByBirthdate(selectedDate).toString();
         widget.bDay.text = Utils.formatDate(selectedDate, false);
+        widget.age.text = Utils.getAgeByBirthYear(int.parse(widget.bDay.text.substring(widget.bDay.text.length - 5))).toString();
       });
     }
   }

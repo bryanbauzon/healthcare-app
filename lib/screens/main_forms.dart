@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:holy_trinity_healthcare/screens/forms/personal_details.dart';
 import 'package:holy_trinity_healthcare/screens/forms/vital_signs.dart';
+import 'package:holy_trinity_healthcare/screens/nurses_document.dart';
 import 'package:holy_trinity_healthcare/screens/pdf.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/app_constants.dart';
@@ -126,6 +127,7 @@ class _MainFormsState extends State<MainForms> {
     isDiuretic.dispose();
     inVDiagnostics.dispose();
   }
+
 
   void setTextEditingControllerList() {
     if (form == AppConstants.vitalSign) {
@@ -317,6 +319,7 @@ class _MainFormsState extends State<MainForms> {
       saveDataToSharedPref(fieldData);
     } else {
       if (action == AppConstants.actions[0]) {
+        Utils.navigateToScreen(context, NursesDocument( user: widget.user));
         CustomWidgets.showSnackBar(context, AppConstants.nothingToSave);
       }
     }
