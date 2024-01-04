@@ -226,19 +226,19 @@ class _MainFormsState extends State<MainForms> {
     setFieldData();
   }
 
-  // _removeData() async {
-  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   String value = "";
-  //   String key = "";
-  //   List<String> keys = Utils.getKeys(form);
-  //   for (int i = 0; i < keys.length; i++) {
-  //     key = Utils.removeEmptyString(keys[i]);
-  //     value = prefs.getString(key) ?? '';
-  //     if (Utils.isNotEmpty(value)) {
-  //       await prefs.remove(key);
-  //     }
-  //   }
-  // }
+  _removeData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String value = "";
+    String key = "";
+    List<String> keys = Utils.getKeys(form);
+    for (int i = 0; i < keys.length; i++) {
+      key = Utils.removeEmptyString(keys[i]);
+      value = prefs.getString(key) ?? '';
+      if (Utils.isNotEmpty(value)) {
+        await prefs.remove(key);
+      }
+    }
+  }
 
   void setFieldData() {
     if (form == AppConstants.vitalSign) {
@@ -298,7 +298,7 @@ class _MainFormsState extends State<MainForms> {
     }
   }
 
-  void saveVitalSigns() {
+  void save() {
     setFieldData();
 
     //set the [save for now] button to disabled to prevent users to click Save button multiple times in a row.
@@ -340,7 +340,7 @@ class _MainFormsState extends State<MainForms> {
       action = AppConstants.actions[0]; //save
     });
     // _removeData();
-    saveVitalSigns();
+    save();
     // Utils.navigateToScreen(context,  NursesDocument(user: widget.user,));
    }
 
@@ -350,7 +350,7 @@ class _MainFormsState extends State<MainForms> {
     });
 
     if (_formKey.currentState!.validate()) {
-      saveVitalSigns();
+      save();
       if (Utils.isListNotEmpty(fieldData)) {
         Utils.navigateToScreen(
             context,
@@ -359,7 +359,7 @@ class _MainFormsState extends State<MainForms> {
               form: form,
               user: widget.user,
             ));
-       // _removeData();
+       _removeData();
       }
     }
   }
