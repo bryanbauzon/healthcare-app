@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:holy_trinity_healthcare/constants/app_constants.dart';
 
-
 import '../utils/utils.dart';
 import 'login.dart';
 
@@ -20,15 +19,8 @@ class _SplashState extends State<Splash> {
   }
 
   _redirect() async {
-
     Future.delayed(const Duration(seconds: 8), () {
-      // if (container.isNotEmpty) {
-        Utils.navigateToScreen(
-            context,
-            const Login());
-      // } else {
-      //   Utils.navigateToScreen(context, const Home());
-      // }
+      Utils.navigateToScreen(context, const Login());
     });
   }
 

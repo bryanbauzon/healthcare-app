@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:holy_trinity_healthcare/screens/forms/personal_details.dart';
 import 'package:holy_trinity_healthcare/screens/forms/vital_signs.dart';
@@ -20,6 +21,9 @@ class MainForms extends StatefulWidget {
 }
 
 class _MainFormsState extends State<MainForms> {
+  bool isPhone = Utils.isMobile();
+
+  FilePickerResult? result;
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   final _formKey = GlobalKey<FormState>();
@@ -127,7 +131,6 @@ class _MainFormsState extends State<MainForms> {
     isDiuretic.dispose();
     inVDiagnostics.dispose();
   }
-
 
   void setTextEditingControllerList() {
     if (form == AppConstants.vitalSign) {
@@ -319,7 +322,7 @@ class _MainFormsState extends State<MainForms> {
       saveDataToSharedPref(fieldData);
     } else {
       if (action == AppConstants.actions[0]) {
-        Utils.navigateToScreen(context, NursesDocument( user: widget.user));
+        Utils.navigateToScreen(context, NursesDocument(user: widget.user));
         CustomWidgets.showSnackBar(context, AppConstants.nothingToSave);
       }
     }
@@ -345,7 +348,7 @@ class _MainFormsState extends State<MainForms> {
     // _removeData();
     save();
     // Utils.navigateToScreen(context,  NursesDocument(user: widget.user,));
-   }
+  }
 
   void convertToPdf() {
     setState(() {
@@ -362,7 +365,7 @@ class _MainFormsState extends State<MainForms> {
               form: form,
               user: widget.user,
             ));
-       _removeData();
+        _removeData();
       }
     }
   }
@@ -371,13 +374,14 @@ class _MainFormsState extends State<MainForms> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           PersonalDetails(
-              lName: lName,
-              fName: fName,
-              mName: mName,
-              bDay: bDay,
-              age: age,
-              address: address,
-          isFormScreen: true,),
+            lName: lName,
+            fName: fName,
+            mName: mName,
+            bDay: bDay,
+            age: age,
+            address: address,
+            isFormScreen: true,
+          ),
           VitalSigns(
               temperature: temperature,
               rSystolicArm: rSystolicArm,
@@ -402,13 +406,14 @@ class _MainFormsState extends State<MainForms> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           PersonalDetails(
-              lName: lName,
-              fName: fName,
-              mName: mName,
-              bDay: bDay,
-              age: age,
-              address: address,
-          isFormScreen: true,),
+            lName: lName,
+            fName: fName,
+            mName: mName,
+            bDay: bDay,
+            age: age,
+            address: address,
+            isFormScreen: true,
+          ),
           Neurological(
               memoryIssues: memoryIssues,
               psychologicalIssues: psychologicalIssues,
@@ -420,12 +425,26 @@ class _MainFormsState extends State<MainForms> {
               riskFall: riskFall,
               medicalEquipmentUsed: medicalEquipmentUsed,
               dmeStatus: dmeStatus,
-              reason:reason,
+              reason: reason,
               cardiacIssues: cardiacIssues,
               peripheralPulses: peripheralPulses,
               edema: edema,
               isDiuretic: isDiuretic,
-              inVDiagnostics: inVDiagnostics)
+              inVDiagnostics: inVDiagnostics),
+          // ElevatedButton(
+          //   onPressed: () async {
+          //     result = await FilePicker.platform.pickFiles(allowMultiple: true);
+          //     if (result == null) {
+          //       print("No file selected");
+          //     } else {
+          //       setState(() {});
+          //       for (var element in result!.files) {
+          //         print(element.name);
+          //       }
+          //     }
+          //   },
+          //   child: const Text("File Picker"),
+          // ),
         ],
       );
   Widget retrieveFormFields() {
@@ -445,22 +464,25 @@ class _MainFormsState extends State<MainForms> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              CustomWidgets.customAppBar(
-                  context, AppConstants.appName, AppConstants.appDescription, false, widget.user),
+              CustomWidgets.customAppBar(context, AppConstants.appName,
+                  AppConstants.appDescription, false, widget.user),
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: Text(
                   widget.title,
-                  style: const TextStyle(
-                      fontSize: AppConstants.headerFontSize,
+                  style: TextStyle(
+                      fontSize: isPhone ? 24 : AppConstants.headerFontSize,
                       fontWeight: FontWeight.bold),
                 ),
               ),
-              SafeArea(
-                  child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: 10, right: 10, bottom: 50),
-                      child: Form(key: _formKey, child: retrieveFormFields())))
+              isPhone
+                  ? Form(key: _formKey, child: retrieveFormFields())
+                  : SafeArea(
+                      child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 10, right: 10, bottom: 50),
+                          child:
+                              Form(key: _formKey, child: retrieveFormFields())))
             ],
           ),
         ),

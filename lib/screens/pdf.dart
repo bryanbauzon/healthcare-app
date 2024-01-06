@@ -9,7 +9,8 @@ import '../model/user.dart';
 import '../utils/utils.dart';
 
 class PdfViewer extends StatefulWidget {
-  const PdfViewer({super.key, required this.data, required this.form, required this.user});
+  const PdfViewer(
+      {super.key, required this.data, required this.form, required this.user});
   final List<String> data;
   final String form;
 
@@ -137,25 +138,17 @@ class _PdfViewerState extends State<PdfViewer> {
 
     pw.Padding footer() => pw.Padding(
         padding: const pw.EdgeInsets.only(top: 50),
-        child: pw.Column(
-          children: [
-            pw.Container(
-                height: 30
-            ),
-            pw.Footer(
-                title: pw.Column(
-                    children: [
-                      textWidget('${widget.user.firstName} ${widget.user.lastName}', true),
-                      pw.Text(
-                          '${widget.user.empId}/${widget.user.position}',
-                          style: pw.TextStyle(
-                              font: font, fontSize:10)
-                      )
-                    ]
-                )
-            )
-          ]
-        ));
+        child: pw.Column(children: [
+          pw.Container(height: 30),
+          pw.Footer(
+              title: pw.Column(children: [
+            textWidget(
+                '${widget.user.firstName.toUpperCase()} ${widget.user.lastName.toUpperCase()}',
+                true),
+            pw.Text('${widget.user.empId}/${widget.user.position}',
+                style: pw.TextStyle(font: font, fontSize: 10))
+          ]))
+        ]));
     pw.Column vitalSignsData() => pw.Column(
           mainAxisAlignment: pw.MainAxisAlignment.start,
           children: [
@@ -190,16 +183,14 @@ class _PdfViewerState extends State<PdfViewer> {
            • ${data[6]}''', false),
           textWidget('''${AppConstants.psychologicalIssues}:
            • ${data[7]}''', false),
-         pw.Row(
-             mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-
-           children: [
-             textWidget('''${AppConstants.cva}:
+          pw.Row(
+              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+              children: [
+                textWidget('''${AppConstants.cva}:
            • ${data[8]} / ${data[9]}''', false),
-             textWidget('''${AppConstants.sinceWhen}
+                textWidget('''${AppConstants.sinceWhen}
            • ${data[10]}''', false),
-           ]
-         ),
+              ]),
           textWidget('''${AppConstants.mobility}:
            • ${data[11]}''', false),
           textWidget('''${AppConstants.adl}:
@@ -208,39 +199,34 @@ class _PdfViewerState extends State<PdfViewer> {
            • ${data[13]}''', false),
           textWidget('''${AppConstants.dme}:
            • ${data[14]}''', false),
-        pw.Row(
-          mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-          children: [
-            textWidget('''${AppConstants.dmeStatus}:
+          pw.Row(
+              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+              children: [
+                textWidget('''${AppConstants.dmeStatus}:
            • ${data[15]}''', false),
-
-            data[15] == AppConstants.dmeStatusList[1]?(
-            textWidget('''${AppConstants.reason}:
-           • ${data[16]}''', false)):pw.Container(),
-          ]
-        ),
-
-        pw.Row(
-            mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-          children: [
-            textWidget('''${AppConstants.cardiacIssues}:
+                data[15] == AppConstants.dmeStatusList[1]
+                    ? (textWidget('''${AppConstants.reason}:
+           • ${data[16]}''', false))
+                    : pw.Container(),
+              ]),
+          pw.Row(
+              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+              children: [
+                textWidget('''${AppConstants.cardiacIssues}:
            • ${data[17]}''', false),
-            textWidget('''${AppConstants.peripheralPulses}:
+                textWidget('''${AppConstants.peripheralPulses}:
            • ${data[18]}''', false),
-          ]
-        ),
+              ]),
           textWidget('''${AppConstants.edema}:
            • ${data[19]}''', false),
-        pw.Row(
-            mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-          children: [
-            textWidget('''${AppConstants.diuretic}:
+          pw.Row(
+              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+              children: [
+                textWidget('''${AppConstants.diuretic}:
            • ${data[20]}''', false),
-            textWidget('''${AppConstants.ivd}
+                textWidget('''${AppConstants.ivd}
            • ${data[21]}''', false),
-          ]
-        ),
-
+              ]),
           footer()
         ]);
 

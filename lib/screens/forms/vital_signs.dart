@@ -50,6 +50,8 @@ class VitalSigns extends StatefulWidget {
 }
 
 class _VitalSignsState extends State<VitalSigns> {
+  bool isPhone = Utils.isMobile();
+
   Widget label(String title) => Padding(
       padding: const EdgeInsets.only(left: 20),
       child: Align(
@@ -130,34 +132,51 @@ class _VitalSignsState extends State<VitalSigns> {
       child: Column(
         children: [
           CustomWidgets.setFormTitle(fieldName),
-          Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
-              child: dropdownFieldChecker())
+          !isPhone
+              ? Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+                  child: dropdownFieldChecker())
+              : Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+                  child: dropdownFieldChecker())
         ],
       ),
     );
   }
 
-
-  Widget painLevelWidgets(String fieldName, TextEditingController controller,String fieldName2, TextEditingController controller2)=> Row(
-    children: [
-      SizedBox(
-        width: MediaQuery.of(context).size.width / 3,
-        child: customDropdown(
-            fieldName, controller),
-      ),
-      Expanded(child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child:Padding(
-            padding: const EdgeInsets.only(top:55),
-            child:  CustomWidgets.customTextFormField(
-                context,
-                fieldName2,
-                controller2),
+  Widget painLevelWidgets(String fieldName, TextEditingController controller,
+      String fieldName2, TextEditingController controller2) {
+    return isPhone
+        ? Column(
+            children: [
+              customDropdown(fieldName, controller),
+              SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: CustomWidgets.customTextFormField(
+                        context, fieldName2, controller2),
+                  )),
+            ],
           )
-      ))
-    ],
-  );
+        : Row(
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 3,
+                child: customDropdown(fieldName, controller),
+              ),
+              Expanded(
+                  child: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 55),
+                        child: CustomWidgets.customTextFormField(
+                            context, fieldName2, controller2),
+                      )))
+            ],
+          );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -169,32 +188,63 @@ class _VitalSignsState extends State<VitalSigns> {
             CustomWidgets.setFormTitle(AppConstants.bloodPressure),
             //RIGHT ARM
             label(AppConstants.bloodPressureRightArm),
-            Row(
-              children: [
-                SizedBox(
-                    width: 250,
-                    child: CustomWidgets.customTextFormField(
-                        context, AppConstants.systolic, widget.rSystolicArm)),
-                SizedBox(
-                    width: 250,
-                    child: CustomWidgets.customTextFormField(
-                        context, AppConstants.diastolic, widget.rDiastolicArm))
-              ],
-            ),
+            isPhone
+                ? Row(
+                    children: [
+                      SizedBox(
+                        width: (MediaQuery.of(context).size.width / 2) - 10,
+                        child: CustomWidgets.customTextFormField(context,
+                            AppConstants.systolic, widget.rSystolicArm),
+                      ),
+                      SizedBox(
+                        width: (MediaQuery.of(context).size.width / 2) - 10,
+                        child: CustomWidgets.customTextFormField(context,
+                            AppConstants.diastolic, widget.rDiastolicArm),
+                      ),
+                    ],
+                  )
+                : Row(
+                    children: [
+                      SizedBox(
+                          width: 250,
+                          child: CustomWidgets.customTextFormField(context,
+                              AppConstants.systolic, widget.rSystolicArm)),
+                      SizedBox(
+                          width: 250,
+                          child: CustomWidgets.customTextFormField(context,
+                              AppConstants.diastolic, widget.rDiastolicArm))
+                    ],
+                  ),
             //LEFT ARM
             label(AppConstants.bloodPressureLeftArm),
-            Row(
-              children: [
-                SizedBox(
-                    width: 250,
-                    child: CustomWidgets.customTextFormField(
-                        context, AppConstants.systolic, widget.lSystolicArm)),
-                SizedBox(
-                    width: 250,
-                    child: CustomWidgets.customTextFormField(
-                        context, AppConstants.diastolic, widget.lDiastolicArm))
-              ],
-            )
+
+            isPhone
+                ? Row(
+                    children: [
+                      SizedBox(
+                        width: (MediaQuery.of(context).size.width / 2) - 10,
+                        child: CustomWidgets.customTextFormField(context,
+                            AppConstants.systolic, widget.lSystolicArm),
+                      ),
+                      SizedBox(
+                        width: (MediaQuery.of(context).size.width / 2) - 10,
+                        child: CustomWidgets.customTextFormField(context,
+                            AppConstants.diastolic, widget.lDiastolicArm),
+                      )
+                    ],
+                  )
+                : Row(
+                    children: [
+                      SizedBox(
+                          width: 250,
+                          child: CustomWidgets.customTextFormField(context,
+                              AppConstants.systolic, widget.lSystolicArm)),
+                      SizedBox(
+                          width: 250,
+                          child: CustomWidgets.customTextFormField(context,
+                              AppConstants.diastolic, widget.lDiastolicArm))
+                    ],
+                  )
           ],
         ),
         customDropdown(AppConstants.heartRate, widget.heartRate),
@@ -207,10 +257,10 @@ class _VitalSignsState extends State<VitalSigns> {
             context, AppConstants.oxygenStat, widget.oxygenStats),
         customDropdown(AppConstants.shortOfBreath, widget.shortnessOfBreath),
         customDropdown(AppConstants.oxygenUse, widget.oxygenUse),
-        painLevelWidgets(AppConstants.painLevelToday, widget.painLevelToday, AppConstants.bodyLocationToday, widget.locationPainLevelToday),
-        painLevelWidgets(AppConstants.painLevelLastVisit, widget.painLevelPast, AppConstants.bodyLocationTLastVisit, widget.locationPainLevelPast),
-
-
+        painLevelWidgets(AppConstants.painLevelToday, widget.painLevelToday,
+            AppConstants.bodyLocationToday, widget.locationPainLevelToday),
+        painLevelWidgets(AppConstants.painLevelLastVisit, widget.painLevelPast,
+            AppConstants.bodyLocationTLastVisit, widget.locationPainLevelPast),
         CustomWidgets.customTextArea(
             context, AppConstants.medicationPlan, widget.medicationPlan),
       ],

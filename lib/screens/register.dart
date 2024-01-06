@@ -3,6 +3,7 @@ import 'package:holy_trinity_healthcare/constants/app_constants.dart';
 import 'package:holy_trinity_healthcare/constants/widgets.dart';
 import 'package:holy_trinity_healthcare/model/user.dart';
 import 'package:holy_trinity_healthcare/screens/forms/personal_details.dart';
+import 'package:holy_trinity_healthcare/utils/utils.dart';
 
 import '../services/repository.dart';
 
@@ -16,6 +17,11 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   bool isExists = false;
   bool registered = false;
+
+  bool isPhone = Utils.isMobile();
+
+  String btnString = AppConstants.register;
+  bool btnFlag = true;
 
   @override
   void initState() {
@@ -35,7 +41,8 @@ class _RegisterState extends State<Register> {
   final TextEditingController empId = TextEditingController();
   final TextEditingController position = TextEditingController();
 
-  final User user =  User(lastName: '',
+  final User user = User(
+      lastName: '',
       firstName: '',
       middleName: '',
       address: '',
@@ -44,20 +51,24 @@ class _RegisterState extends State<Register> {
       password: '');
 
   final _formKey = GlobalKey<FormState>();
-  void showMessage(String message)=>CustomWidgets.showSnackBar(context, message);
+  void showMessage(String message) =>
+      CustomWidgets.showSnackBar(context, message);
 
-  void navigateToLogin()=>Navigator.pop(context);
+  void navigateToLogin() => Navigator.pop(context);
   TextEditingController controller = TextEditingController();
-  Widget textWidget(String text, bool isHeader) => Align(
-      alignment: Alignment.centerLeft,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 10),
-        child: Text(
-          text,
-          style: TextStyle(
-              fontSize: isHeader ? 40 : 25, fontWeight: FontWeight.bold),
-        ),
-      ));
+  Widget textWidget(String text, bool isHeader) {
+    return Align(
+        alignment: isHeader ? Alignment.center : Alignment.centerLeft,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text(
+            text,
+            style: TextStyle(
+                fontSize: isPhone ? 20 : (isHeader ? 40 : 25),
+                fontWeight: FontWeight.bold),
+          ),
+        ));
+  }
 
   Widget textField(
           String label, TextEditingController controller, bool isExpanded) =>
@@ -90,19 +101,6 @@ class _RegisterState extends State<Register> {
     return await Repository.instance.checkIfUserExists(empId: empId.text);
   }
 
-  Widget message() {
-    String message = '';
-    if (!registered && isExists) {
-      message = 'User already exists!';
-    } else if (registered) {
-      message = 'Successfully Registered!';
-    }
-    return Text(
-      message,
-      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,14 +112,16 @@ class _RegisterState extends State<Register> {
               CustomWidgets.customAppBar(context, AppConstants.appName,
                   AppConstants.appDescription, true, user),
               Padding(
-                  padding: const EdgeInsets.only(top: 50, left: 30, right: 30),
+                  padding: EdgeInsets.only(
+                      top: 50,
+                      left: isPhone ? 10 : 30,
+                      right: isPhone ? 10 : 30),
                   child: Column(
                     children: [
-                      textWidget(AppConstants.registration, true),
+                      textWidget(AppConstants.registration.toUpperCase(), true),
                       Container(
-                        height: 100,
+                        height: isPhone ? 10 : 100,
                       ),
-                      message(),
                       PersonalDetails(
                         lName: lName,
                         fName: fName,
@@ -134,41 +134,51 @@ class _RegisterState extends State<Register> {
                       textField(AppConstants.username, empId, false),
                       textField(AppConstants.position, position, false),
                       textField(AppConstants.password, empId, false),
-                      CustomWidgets.customButton(context, AppConstants.register,
-                          () async {
-                            FocusScope.of(context).unfocus();
-                        if (_formKey.currentState!.validate()) {
-                          bool flag = await checkIfUserExists();
-
-                          if (!flag) {
-                            createUser();
-                            registered = true;
-                          } else {
-                            setState(() {
-                              isExists = true;
-                            });
-
-                            Future.delayed(const Duration(seconds: 3), () {
-                              if (isExists) {
-                                setState(() {
-                                  isExists = false;
-                                });
-                              }
-                            });
-                          }
-
-                          if(registered){
-                            showMessage('Successfully Registered');
-                            navigateToLogin();
-                          }
-                        }
-                      }, true),
                     ],
                   ))
             ],
           ),
         ),
       ),
+      bottomNavigationBar:
+          CustomWidgets.customButton(context, btnString, () async {
+        FocusScope.of(context).unfocus();
+        if (_formKey.currentState!.validate()) {
+          bool flag = await checkIfUserExists();
+
+          if (!flag) {
+            createUser();
+            registered = true;
+          } else {
+            setState(() {
+              isExists = true;
+              btnString = 'User already exists!';
+              btnFlag = false;
+            });
+
+            Future.delayed(const Duration(seconds: 3), () {
+              if (isExists) {
+                setState(() {
+                  isExists = false;
+                  btnString = AppConstants.register;
+                  btnFlag = true;
+                });
+              }
+            });
+          }
+
+          if (registered) {
+            showMessage('Successfully Registered');
+            setState(() {
+              btnString = 'Please wait...';
+              btnFlag = false;
+            });
+            Future.delayed(const Duration(seconds: 2), () {
+              navigateToLogin();
+            });
+          }
+        }
+      }, btnFlag),
     );
   }
 }

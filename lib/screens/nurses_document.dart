@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:holy_trinity_healthcare/constants/colors.dart';
+import 'package:holy_trinity_healthcare/screens/home.dart';
+import 'package:holy_trinity_healthcare/utils/utils.dart';
 
 import '../constants/app_constants.dart';
 import '../constants/widgets.dart';
@@ -14,6 +16,8 @@ class NursesDocument extends StatefulWidget {
 }
 
 class _NursesDocument extends State<NursesDocument> {
+  bool isPhone = Utils.isMobile();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,23 +26,27 @@ class _NursesDocument extends State<NursesDocument> {
           children: [
             CustomWidgets.customAppBar(context, AppConstants.appName,
                 AppConstants.appDescription, false, widget.user),
-            const Padding(
-              padding: EdgeInsets.only(top: 20, bottom: 20),
+            Padding(
+              padding: const EdgeInsets.only(top: 20, bottom: 20),
               child: Text(AppConstants.nursesDocument,
-                  style: TextStyle(fontSize: AppConstants.headerFontSize,
-                  fontWeight: FontWeight.bold
-                  )),
+                  style: TextStyle(
+                      fontSize: isPhone ? 30 : AppConstants.headerFontSize,
+                      fontWeight: FontWeight.bold)),
             ),
             Wrap(
               children: [
-                CustomWidgets.documentTiles(context, AppConstants.vitalSign,true, widget.user),
-                CustomWidgets.documentTiles(context, AppConstants.neurological,true, widget.user)
+                CustomWidgets.documentTiles(
+                    context, AppConstants.vitalSign, true, widget.user),
+                CustomWidgets.documentTiles(
+                    context, AppConstants.neurological, true, widget.user)
               ],
             ),
             Wrap(
               children: [
-                CustomWidgets.documentTiles(context, 'Document 3',false, widget.user),
-                CustomWidgets.documentTiles(context, 'Document 4',false, widget.user)
+                CustomWidgets.documentTiles(
+                    context, 'Document 3', false, widget.user),
+                CustomWidgets.documentTiles(
+                    context, 'Document 4', false, widget.user)
               ],
             ),
           ],
@@ -46,7 +54,7 @@ class _NursesDocument extends State<NursesDocument> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pop(context);
+          Utils.navigateToScreen(context, Home(user: widget.user));
         },
         backgroundColor: AppColors.theme,
         foregroundColor: AppColors.white,

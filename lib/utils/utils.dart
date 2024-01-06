@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:holy_trinity_healthcare/constants/app_constants.dart';
+import 'package:holy_trinity_healthcare/utils/device_type.dart';
 import 'package:intl/intl.dart';
 
 class Utils {
@@ -27,16 +28,13 @@ class Utils {
 
   static int maxLinesByLabel(String label) {
     switch (label) {
-
       case AppConstants.psychologicalIssues ||
-           AppConstants.memoryIssuesPlaceholder ||
-           AppConstants.medicationPlan:
+            AppConstants.memoryIssuesPlaceholder ||
+            AppConstants.medicationPlan:
         return 7;
-      case AppConstants.dme ||
-           AppConstants.reason :
+      case AppConstants.dme || AppConstants.reason:
         return 3;
-      case AppConstants.edema ||
-           AppConstants.ivd:
+      case AppConstants.edema || AppConstants.ivd:
         return 4;
     }
     return 1;
@@ -55,13 +53,15 @@ class Utils {
         return AppConstants.shortOfBreathList;
       case AppConstants.oxygenUse:
         return AppConstants.oxygenUseList;
-      case AppConstants.painLevelToday ||
-           AppConstants.painLevelLastVisit:{
-       for(var i = 1; i <= 10; i++){
-         list.add(i.toString());
-       }
-      }
-      case AppConstants.mobility || AppConstants.riskFall || AppConstants.diuretic:
+      case AppConstants.painLevelToday || AppConstants.painLevelLastVisit:
+        {
+          for (var i = 1; i <= 10; i++) {
+            list.add(i.toString());
+          }
+        }
+      case AppConstants.mobility ||
+            AppConstants.riskFall ||
+            AppConstants.diuretic:
         return AppConstants.yesOrNo;
       case AppConstants.dmeStatus:
         return AppConstants.dmeStatusList;
@@ -170,4 +170,6 @@ class Utils {
 
     return [];
   }
+
+  static bool isMobile() => (getDeviceType() == DeviceType.phone);
 }

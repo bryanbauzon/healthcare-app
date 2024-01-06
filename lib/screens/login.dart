@@ -23,6 +23,12 @@ class _LoginState extends State<Login> {
   TextEditingController pass = TextEditingController();
   late User user;
   bool validateUserCredentials = true;
+  bool isPhone = Utils.isMobile();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   final _formKey = GlobalKey<FormState>();
 
@@ -44,22 +50,24 @@ class _LoginState extends State<Login> {
         padding: const EdgeInsets.only(left: 30, top: 10),
         child: Text(
           message,
-          style: const TextStyle(
-              fontWeight: FontWeight.bold, fontSize: 20, color: Colors.red),
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: isPhone ? 12 : 20,
+              color: Colors.red),
         ),
       ),
     );
   }
 
   late String form;
-  void checkSharedPref()async{
+  void checkSharedPref() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     String container = "";
 
-   setState(() {
-     form = prefs.getString(AppConstants.form) ?? '';
-   });
+    setState(() {
+      form = prefs.getString(AppConstants.form) ?? '';
+    });
     List<String> keys = Utils.getKeys(form);
 
     for (String key in keys) {
@@ -70,12 +78,13 @@ class _LoginState extends State<Login> {
       }
     }
 
-    if(container.isNotEmpty){
-     redirect('mainForm');
-    }else{
+    if (container.isNotEmpty) {
+      redirect('mainForm');
+    } else {
       redirect('home');
     }
   }
+
   void redirect(String screen) {
     switch (screen) {
       case AppConstants.register:
@@ -88,88 +97,123 @@ class _LoginState extends State<Login> {
           return Utils.navigateToScreen(context, const Register());
         }
 
-      case 'checkSharedPref': {
-        return checkSharedPref();
-      }
+      case 'checkSharedPref':
+        {
+          return checkSharedPref();
+        }
       case 'mainForm':
-        return Utils.navigateToScreen(context, MainForms(title: form, user: user));
+        return Utils.navigateToScreen(
+            context, MainForms(title: form, user: user));
       case 'home':
-        return Utils.navigateToScreen(context, Home( user: user));
-
+        return Utils.navigateToScreen(context, Home(user: user));
     }
   }
+
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
         body: Center(
       child: Form(
-        key: _formKey,
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 40, right: 40),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Image.asset(
-                  AppConstants.logo,
-                  height: 200,
-                  width: 200,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        AppConstants.appName,
-                        style: TextStyle(
-                            fontSize: 50,
-                            color: AppColors.theme,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      const Text(
-                        AppConstants.appDescription,
-                        style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
+          key: _formKey,
+          child: SingleChildScrollView(
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Padding(
+                padding: EdgeInsets.only(
+                    left: (isPhone) ? 20 : 40, right: (isPhone) ? 20 : 40),
+                child: isPhone
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            AppConstants.logo,
+                            height: isPhone ? 120 : 200,
+                            width: isPhone ? 120 : 200,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: (isPhone) ? 5 : 20),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  AppConstants.appName.toUpperCase(),
+                                  style: TextStyle(
+                                      fontSize: isPhone ? 22 : 50,
+                                      color: AppColors.theme,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  AppConstants.appDescription,
+                                  style: TextStyle(
+                                      fontSize: isPhone ? 16 : 25,
+                                      fontWeight: FontWeight.bold),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
                       )
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-          CustomWidgets.loginTextFormField(
-              context, AppConstants.username, empId),
-          CustomWidgets.loginTextFormField(
-              context, AppConstants.password, pass),
-          !validateUserCredentials ? message() : const Text(''),
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomWidgets.customButton(context, AppConstants.register,
-                    () => redirect(AppConstants.register), true),
-                CustomWidgets.customButton(context, AppConstants.login,
-                    () async {
-                  FocusScope.of(context).unfocus();
+                    : Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            AppConstants.logo,
+                            height: 200,
+                            width: 200,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: (isPhone) ? 5 : 20),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  AppConstants.appName.toUpperCase(),
+                                  style: TextStyle(
+                                      fontSize: isPhone ? 18 : 50,
+                                      color: AppColors.theme,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  AppConstants.appDescription,
+                                  style: TextStyle(
+                                      fontSize: isPhone ? 12 : 25,
+                                      fontWeight: FontWeight.bold),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+              ),
+              CustomWidgets.loginTextFormField(
+                  context, AppConstants.username, empId),
+              CustomWidgets.loginTextFormField(
+                  context, AppConstants.password, pass),
+              !validateUserCredentials ? message() : const Text(''),
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CustomWidgets.customButton(context, AppConstants.register,
+                        () => redirect(AppConstants.register), true),
+                    CustomWidgets.customButton(context, AppConstants.login,
+                        () async {
+                      FocusScope.of(context).unfocus();
 
-                  if (_formKey.currentState!.validate()) {
-                    validateUserCredentials = await validateCredentials();
-                    if (validateUserCredentials) {
-                      user = await getUserDetails();
-                      redirect('checkSharedPref');
-                    }
-                  }
-                }, true)
-              ],
-            ),
-          )
-        ]),
-      ),
+                      if (_formKey.currentState!.validate()) {
+                        validateUserCredentials = await validateCredentials();
+                        if (validateUserCredentials) {
+                          user = await getUserDetails();
+                          redirect('checkSharedPref');
+                        }
+                      }
+                    }, true)
+                  ],
+                ),
+              )
+            ]),
+          )),
     ));
   }
 }
