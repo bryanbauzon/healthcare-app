@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:holy_trinity_healthcare/constants/colors.dart';
 import 'package:holy_trinity_healthcare/screens/forms/personal_details.dart';
 import 'package:holy_trinity_healthcare/screens/forms/vital_signs.dart';
 import 'package:holy_trinity_healthcare/screens/nurses_document.dart';
@@ -364,11 +367,35 @@ class _MainFormsState extends State<MainForms> {
               data: fieldData,
               form: form,
               user: widget.user,
+              dirImgList: dirList,
             ));
         _removeData();
       }
     }
   }
+
+  File? dir;
+  List<String> dirList = [];
+  String filePickerDisplay = 'Image Picker';
+  Widget filePicker() => ElevatedButton(
+        style: ElevatedButton.styleFrom(foregroundColor: AppColors.theme),
+        onPressed: () async {
+          result = await FilePicker.platform.pickFiles(
+            allowMultiple: true,
+            allowedExtensions: ['jpg'],
+            type: FileType.custom,
+          );
+          if (result != null) {
+            setState(() {
+              filePickerDisplay = 'Image Selected';
+              for (var element in result!.files) {
+                dirList.add(element.path!);
+              }
+            });
+          }
+        },
+        child: Text(filePickerDisplay),
+      );
 
   Widget vitalSignsForms() => Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -398,7 +425,8 @@ class _MainFormsState extends State<MainForms> {
               locationPainLevelToday: locationPainLevelToday,
               painLevelPast: painLevelPast,
               locationPainLevelPast: locationPainLevelPast,
-              medicationPlan: medicationPlan)
+              medicationPlan: medicationPlan),
+          filePicker(),
         ],
       );
 
@@ -431,20 +459,7 @@ class _MainFormsState extends State<MainForms> {
               edema: edema,
               isDiuretic: isDiuretic,
               inVDiagnostics: inVDiagnostics),
-          // ElevatedButton(
-          //   onPressed: () async {
-          //     result = await FilePicker.platform.pickFiles(allowMultiple: true);
-          //     if (result == null) {
-          //       print("No file selected");
-          //     } else {
-          //       setState(() {});
-          //       for (var element in result!.files) {
-          //         print(element.name);
-          //       }
-          //     }
-          //   },
-          //   child: const Text("File Picker"),
-          // ),
+          filePicker(),
         ],
       );
   Widget retrieveFormFields() {

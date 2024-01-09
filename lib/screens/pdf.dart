@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:holy_trinity_healthcare/constants/app_constants.dart';
@@ -10,11 +12,16 @@ import '../utils/utils.dart';
 
 class PdfViewer extends StatefulWidget {
   const PdfViewer(
-      {super.key, required this.data, required this.form, required this.user});
+      {super.key,
+      required this.data,
+      required this.form,
+      required this.user,
+      required this.dirImgList});
   final List<String> data;
   final String form;
 
   final User user;
+  final List<String> dirImgList;
 
   @override
   State<PdfViewer> createState() => _PdfViewerState();
@@ -29,6 +36,18 @@ class _PdfViewerState extends State<PdfViewer> {
     form = widget.form;
   }
 
+  void renderImage(pw.Document pdf, List<pw.MemoryImage> mI, int index) {
+    for (var x = 0; x < mI.length; x++) {
+      pw.MemoryImage m = mI[x];
+      pdf.addPage(pw.Page(
+          pageFormat: PdfPageFormat.a4,
+          build: (context) {
+            return pw.Center(
+                child: pw.Image(m, height: 700, width: 700, dpi: 200.0));
+          }));
+    }
+  }
+
   //function to generate pdf. styling
   Future<Uint8List> _generatePdf(List<String> data) async {
     final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
@@ -36,6 +55,13 @@ class _PdfViewerState extends State<PdfViewer> {
     final imageByteData = await rootBundle.load(AppConstants.logo);
     final imageUint8List = imageByteData.buffer
         .asUint8List(imageByteData.offsetInBytes, imageByteData.lengthInBytes);
+
+    List<pw.MemoryImage> listImg = [];
+    for (String img in widget.dirImgList) {
+      File photo = File(img);
+      pw.MemoryImage mI = pw.MemoryImage(photo.readAsBytesSync());
+      listImg.add(mI);
+    }
 
     double fontSize = 14;
     double titleFontSize = 16;
@@ -240,7 +266,7 @@ class _PdfViewerState extends State<PdfViewer> {
         },
       ),
     );
-
+    renderImage(pdf, listImg, widget.dirImgList.length);
     return pdf.save();
   }
 
