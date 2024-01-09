@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:holy_trinity_healthcare/screens/splash.dart';
 
+import 'screens/login.dart';
+import 'utils/utils.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
@@ -15,6 +18,7 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Splash();
+    bool isPhone = Utils.isMobile();
+    return isPhone ? const Login() : const Splash();
   }
 }
