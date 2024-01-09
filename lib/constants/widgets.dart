@@ -139,7 +139,7 @@ class CustomWidgets {
               child: Text(
                 text.toUpperCase(),
                 style: TextStyle(
-                    fontSize: 18,
+                    fontSize: isPhone ? 14 : 18,
                     fontWeight: FontWeight.bold,
                     color: text == AppConstants.register
                         ? AppColors.theme
@@ -278,7 +278,7 @@ class CustomWidgets {
             width: 420,
             decoration: BoxDecoration(
               color: isEnabled ? AppColors.enabled : AppColors.disabled,
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(isPhone ? 5 : 10),
             ),
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Icon(
