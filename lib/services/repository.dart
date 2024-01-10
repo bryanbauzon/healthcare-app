@@ -52,7 +52,9 @@ class Repository {
     try {
       final db = await database;
       db.insert(tableUSER, user.toMap());
-    } catch (e) {}
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   Future<bool> checkIfUserExists({required String empId}) async {
