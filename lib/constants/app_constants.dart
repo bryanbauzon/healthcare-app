@@ -10,7 +10,7 @@ class AppConstants {
 
   static const String forms = 'Forms';
 
-  static const String saveForNow = 'Save For Now';
+  static const String saveForNow = 'Save';
   static const String submit = 'Submit';
   static const String nursesDocument = 'NURSES DOCUMENT';
   static const String dummyDescriptionShort =
@@ -82,7 +82,6 @@ class AppConstants {
     birthday,
     age,
     address,
-
     'memoryIssues',
     'psychologicalIssues',
     'cLeftSidedWeakness',
@@ -185,8 +184,7 @@ class AppConstants {
   static const String position = 'Position';
   static const String username = 'Employee ID';
   static const String password = 'Password';
-  static const List<String> yesOrNo = ['Yes','No'];
+  static const List<String> yesOrNo = ['Yes', 'No'];
   static const String dmeStatus = 'DME Status';
   static const List<String> dmeStatusList = ['Safe to Use', 'Unsafe to Use'];
-
 }
