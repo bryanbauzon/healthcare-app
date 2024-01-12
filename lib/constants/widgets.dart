@@ -127,7 +127,7 @@ class CustomWidgets {
         onTap: isEnabled ? onTap : () {},
         child: Container(
             height: isPhone ? 45 : 60,
-            width: 130,
+            width: isPhone ? 130 : 150,
             decoration: BoxDecoration(
                 border: Border.all(color: AppColors.theme),
                 borderRadius:
@@ -139,7 +139,7 @@ class CustomWidgets {
               child: Text(
                 text.toUpperCase(),
                 style: TextStyle(
-                    fontSize: isPhone ? 14 : 18,
+                    fontSize: isPhone ? 14 : 16,
                     fontWeight: FontWeight.bold,
                     color: text == AppConstants.register
                         ? AppColors.theme

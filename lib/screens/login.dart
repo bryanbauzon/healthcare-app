@@ -120,7 +120,7 @@ class _LoginState extends State<Login> {
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               Padding(
                 padding: EdgeInsets.only(
-                    left: (isPhone) ? 20 : 40, right: (isPhone) ? 20 : 40),
+                    left: (isPhone) ? 20 : 30, right: (isPhone) ? 20 : 30),
                 child: isPhone
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -162,14 +162,14 @@ class _LoginState extends State<Login> {
                             width: 200,
                           ),
                           Padding(
-                            padding: EdgeInsets.only(left: (isPhone) ? 5 : 20),
+                            padding: EdgeInsets.only(left: (isPhone) ? 5 : 15),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
                                   AppConstants.appName.toUpperCase(),
                                   style: TextStyle(
-                                      fontSize: isPhone ? 18 : 50,
+                                      fontSize: isPhone ? 18 : 40,
                                       color: AppColors.theme,
                                       fontWeight: FontWeight.bold),
                                 ),
